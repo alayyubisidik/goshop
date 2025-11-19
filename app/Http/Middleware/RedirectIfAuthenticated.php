@@ -53,7 +53,7 @@ class RedirectIfAuthenticated
             return route("admin.dashboard");
         }
         if ($guard == "web" || $guard == null) {
-            return route("dashboard");
+            return route("dashboard.index");
         }
         return '/';
     }

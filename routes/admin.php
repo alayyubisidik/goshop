@@ -54,9 +54,4 @@ Route::middleware('auth:admin')
         Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
             ->name('logout');
 
-        // Route::get("/profile", [ProfileController::class, "index"])->name("profile");
-        // Route::put("/profile", [ProfileController::class, "profileUpdate"])->name("profile.update");
-        // Route::put("/profile/password", [ProfileController::class, "passwordUpdate"])->name("password.update");
-
-
     });

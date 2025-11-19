@@ -1,27 +1,38 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Admin Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('admin.layouts.app')
 
-    <form method="POST" action="{{ route('admin.logout') }}">
-        @csrf
+@section('contents')
+    <div class="container-xl">
+        <div class="row row-deck row-cards">
+            <div class="col-12">
+                <div class="row row-cards">
 
-        <x-dropdown-link :href="route('logout')"
-            onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-            {{ __('Log Out') }}
-        </x-dropdown-link>
-    </form>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="card card-sm">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-auto">
+                                        <span class="bg-warning text-white avatar">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
+                                                <path
+                                                    d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2" />
+                                                <path d="M12 3v3m0 12v3" />
+                                            </svg>
+                                        </span>
+                                    </div>
+                                    <div class="col">
+                                        <div class="font-weight-medium">10 Pending Orders</div>
+                                        <div class="text-secondary">Waiting confirmation</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ __("You're logged in!") }}
                 </div>
             </div>
+
         </div>
     </div>
-</x-app-layout>
+@endsection

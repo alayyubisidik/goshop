@@ -47,6 +47,41 @@
                         <span class="nav-link-title">Home</span>
                     </a>
                 </li>
+                <li class="nav-item dropdown {{ setActive(['admin.kyc.*']) }}">
+                    <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
+                        data-bs-auto-close="false" role="button" aria-expanded="false">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-user-check">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                                <path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
+                                <path d="M15 19l2 2l4 -4" />
+                            </svg>
+                        </span>
+                        <span class="nav-link-title"> KYC Requests </span>
+                    </a>
+                    <div class="dropdown-menu {{ setActive(['admin.kyc.*'], 'show') }}">
+                        <div class="dropdown-menu-columns">
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ setActive(['admin.kyc.index']) }}"
+                                    href="{{ route('admin.kyc.index') }}">
+                                    All Requests
+                                </a>
+                                <a class="dropdown-item {{ setActive(['admin.kyc.pending']) }}"
+                                    href="{{ route('admin.kyc.pending') }}">
+                                    Pending Requests
+                                </a>
+                                <a class="dropdown-item {{ setActive(['admin.kyc.rejected']) }}"
+                                    href="{{ route('admin.kyc.rejected') }}">
+                                    Rejected Requests
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
@@ -63,7 +98,8 @@
         <div class="navbar-nav flex-row order-md-last">
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link d-flex lh-1 p-0 px-2" data-bs-toggle="dropdown">
-                    <span class="avatar avatar-sm" style="background-image:url({{ asset(user('admin')->avatar) }})"></span>
+                    <span class="avatar avatar-sm"
+                        style="background-image:url({{ asset(user('admin')->avatar) }})"></span>
                     <div class="d-none d-xl-block ps-2">
                         <div>{{ user('admin')->name }}</div>
                         <div class="mt-1 small text-secondary">test</div>
@@ -75,7 +111,9 @@
                     <a href="#" class="dropdown-item">Feedback</a>
                     <div class="dropdown-divider"></div>
                     <a href="./settings.html" class="dropdown-item">Settings</a>
-                    <a href="#" onclick="event.preventDefault(); document.querySelector('.logout-form').submit();" class="dropdown-item">Logout</a>
+                    <a href="#"
+                        onclick="event.preventDefault(); document.querySelector('.logout-form').submit();"
+                        class="dropdown-item">Logout</a>
 
                     <form method="POST" action="{{ route('admin.logout') }}" class="logout-form">
                         @csrf

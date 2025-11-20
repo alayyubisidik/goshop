@@ -50,7 +50,7 @@ class RedirectIfAuthenticatedMiddleware
     protected function defaultRedirectUri(string|null $guard): string
     {
         if ($guard == "admin") {
-            return route("admin.dashboard");
+            return route("admin.dashboard.index");
         }
         if ($guard == "web" || $guard == null) {
             return route("dashboard.index");

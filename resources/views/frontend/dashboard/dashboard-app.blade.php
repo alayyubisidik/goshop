@@ -20,6 +20,10 @@
                                             <i class="fi-rs-settings-sliders mr-10"></i>Dashboard
                                         </a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link {{ setActive(['profile.index']) }}" href="{{ route("profile.index") }}"><i class="fi-rs-user mr-10"></i>Profile
+                                            details</a>
+                                    </li>
 {{--
                                     <li class="nav-item">
                                         <a class="nav-link {{ setActive(['orders.*']) }}" href="{{ route("orders.index") }}"><i
@@ -42,10 +46,7 @@
                                     <li class="nav-item">
                                         <a class="nav-link {{ setActive(['address.*']) }}" href="{{ route("address.index") }}"><i class="fi-rs-marker mr-10"></i>My Address</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link {{ setActive(['profile']) }}" href="{{ route("profile") }}"><i class="fi-rs-user mr-10"></i>Account
-                                            details</a>
-                                    </li> --}}
+                                     --}}
                                     <li class="nav-item">
                                         <a class="nav-link" onclick="event.preventDefault(); $('.form-logout').submit()" href="#"><i class="fi-rs-sign-out mr-10"></i>Logout</a>
                                     </li>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Admin\Auth\NewPasswordController;
 use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
+use App\Http\Controllers\Admin\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest:admin')
@@ -40,6 +41,10 @@ Route::middleware('auth:admin')
             return view('admin.dashboard.index');
         })->name('dashboard');
 
+        Route::get("/profile", [ProfileController::class, "index"])->name("profile.index");
+        Route::put("/profile", [ProfileController::class, "profileUpdate"])->name("profile.update");
+        Route::put("/profile/password", [ProfileController::class, "passwordUpdate"])->name("password.update");
+
         Route::get('verify-email', EmailVerificationPromptController::class)
             ->name('verification.notice');
 
@@ -53,5 +58,4 @@ Route::middleware('auth:admin')
 
         Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
             ->name('logout');
-
     });

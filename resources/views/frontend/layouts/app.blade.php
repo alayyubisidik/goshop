@@ -57,7 +57,7 @@
     <script src="{{ asset('assets/frontend/dist/js/plugins/leaflet.js') }}"></script>
     <script src="{{ asset('assets/frontend/dist/js/plugins/TweenMax.min.js') }}"></script>
 
-    <script src="{{ asset('assets/global/upload-preview/upload-preview.min.js') }}"></script>
+    {{-- <script src="{{ asset('assets/global/upload-preview/upload-preview.min.js') }}"></script> --}}
     <!-- Template  JS -->
     <script src="{{ asset('assets/frontend/dist/js/main.js') }}"></script>
     <script src="{{ asset('assets/frontend/dist/js/shop.js') }}"></script>
@@ -70,7 +70,7 @@
 
     @stack('scripts')
 
-    {{-- @include('frontend.layouts.script') --}}
+    @include('frontend.layouts.scripts')
 </body>
 
 </html>

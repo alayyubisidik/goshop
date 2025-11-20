@@ -22,7 +22,7 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     <a href="#" class="dropdown-item">Status</a>
-                    <a href="./profile.html" class="dropdown-item">Profile</a>
+                    <a href="{{ route('admin.profile.index') }}" class="dropdown-item">Profile</a>
                     <a href="#" class="dropdown-item">Feedback</a>
                     <div class="dropdown-divider"></div>
                     <a href="./settings.html" class="dropdown-item">Settings</a>
@@ -63,15 +63,15 @@
         <div class="navbar-nav flex-row order-md-last">
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link d-flex lh-1 p-0 px-2" data-bs-toggle="dropdown">
-                    <span class="avatar avatar-sm" style="background-image:url({{ asset(auth('admin')->user()->avatar) }})"></span>
+                    <span class="avatar avatar-sm" style="background-image:url({{ asset(user()->avatar) }})"></span>
                     <div class="d-none d-xl-block ps-2">
-                        <div>{{ auth('admin')->user()->name }}</div>
+                        <div>{{ user()->name }}</div>
                         <div class="mt-1 small text-secondary">test</div>
                     </div>
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <a href="" class="dropdown-item">Profile</a>
+                    <a href="{{ route('admin.profile.index') }}" class="dropdown-item">Profile</a>
                     <a href="#" class="dropdown-item">Feedback</a>
                     <div class="dropdown-divider"></div>
                     <a href="./settings.html" class="dropdown-item">Settings</a>

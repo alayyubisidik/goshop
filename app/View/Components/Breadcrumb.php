@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\Frontend;
+namespace App\View\Components;
 
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -22,6 +22,6 @@ class Breadcrumb extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.frontend.breadcrumb');
+        return view('components.breadcrumb');
     }
 }

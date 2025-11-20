@@ -89,6 +89,6 @@
 
     @stack('scripts')
 
-    @include('admin.layouts.script')
+    @include('admin.layouts.scripts')
 </body>
 </html>

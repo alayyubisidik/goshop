@@ -22,7 +22,7 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     <a href="#" class="dropdown-item">Status</a>
-                    <a href="{{ route('admin.profile.index') }}" class="dropdown-item">Profile</a>
+                    <a href="{{ route('vendor.profile.index') }}" class="dropdown-item">Profile</a>
                     <a href="#" class="dropdown-item">Feedback</a>
                     <div class="dropdown-divider"></div>
                     <a href="./settings.html" class="dropdown-item">Settings</a>
@@ -33,8 +33,8 @@
 
         <div class="collapse navbar-collapse" id="sidebar-menu">
             <ul class="navbar-nav pt-lg-3">
-                <li class="nav-item {{ setActive(['admin.dashboard'], 'active') }}">
-                    <a class="nav-link" href="{{ route('admin.dashboard') }}">
+                <li class="nav-item {{ setActive(['vendor.dashboard.index'], 'active') }}">
+                    <a class="nav-link" href="{{ route('vendor.dashboard.index') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -71,13 +71,13 @@
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <a href="{{ route('admin.profile.index') }}" class="dropdown-item">Profile</a>
+                    <a href="{{ route('vendor.profile.index') }}" class="dropdown-item">Profile</a>
                     <a href="#" class="dropdown-item">Feedback</a>
                     <div class="dropdown-divider"></div>
                     <a href="./settings.html" class="dropdown-item">Settings</a>
                     <a href="#" onclick="event.preventDefault(); document.querySelector('.logout-form').submit();" class="dropdown-item">Logout</a>
 
-                    <form method="POST" action="{{ route('admin.logout') }}" class="logout-form">
+                    <form method="POST" action="{{ route('logout') }}" class="logout-form">
                         @csrf
                     </form>
                 </div>

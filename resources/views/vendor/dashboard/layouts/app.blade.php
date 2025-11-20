@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta name="csrf_token" content="{{ csrf_token() }}">
-    <title class="d-print-none">Admin Dashboard </title>
+    <title class="d-print-none">Vendor Dashboard </title>
 
     <style>
         @import url("https://rsms.me/inter/inter.css");
@@ -42,7 +42,7 @@
     <script src="{{ asset('assets/backend/dist/js/tabler-theme.min.js') }}"></script>
 
     <div class="page">
-        @include('admin.layouts.sidebar')
+        @include('vendor.dashboard.layouts.sidebar')
 
         <div class="page-wrapper">
             <div class="page">
@@ -89,6 +89,6 @@
 
     @stack('scripts')
 
-    @include('admin.layouts.scripts')
+    @include('vendor.dashboard.layouts.scripts')
 </body>
 </html>

@@ -1,33 +1,31 @@
 <?php
 
-namespace App\Http\Controllers\Frontend;
+namespace App\Http\Controllers\Vendor;
 
 use App\Http\Controllers\Controller;
 use App\Services\AlertService;
 use App\Traits\FileUploadTrait;
 use Illuminate\Http\Request;
 
-use function Flasher\Notyf\Prime\notyf;
-
 class ProfileController extends Controller
 {
     use FileUploadTrait;
     public function index()
     {
-        return view("frontend.dashboard.profile.index");
+        return view("vendor.dashboard.profile.index");
     }
 
     public function update(Request $request)
     {
         $request->validate([
             "name" => ["required", "string", "max:100"],
-            "email" => ["required", "email", "unique:users,email," . auth("web")->user()->id],
+            "email" => ["required", "email", "unique:users,email," . user()->id],
             "avatar" => ["nullable", "image", "max:2048"]
         ]);
 
 
         /** @var \App\Models\User $user */
-        $user = auth("web")->user();
+        $user = user();
         if ($request->hasFile("avatar")) {
             $filepath = $this->uploadFile($request->file("avatar"), $user->avatar, "avatar");
             $filepath ? $user->avatar = $filepath : null;
@@ -49,7 +47,7 @@ class ProfileController extends Controller
         ]);
 
         /** @var \App\Models\User $user */
-        $user = auth("web")->user();
+        $user = user();
         $user->password = bcrypt($request->password);
         $user->save();
 

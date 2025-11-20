@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('vendor.dashboard.layouts.app')
 
 @section('contents')
     <div class="container-xl">
@@ -7,7 +7,7 @@
                 <h3 class="card-title">Update Profile</h3>
             </div>
             <div class="card-body">
-                <form action="{{ route('admin.profile.update') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('vendor.profile.update') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
@@ -55,9 +55,9 @@
                 <h3 class="card-title">Update Password</h3>
             </div>
             <div class="card-body">
-                <form method="post" action="{{ route('admin.password.update') }}" novalidate>
+                <form method="post" action="{{ route('vendor.password.update') }}" novalidate>
                     @csrf
-                    @method('PUT')
+                    @method('put')
                     <div class="row mt-30">
 
                         <div class="col-12">
@@ -95,17 +95,3 @@
     </div>
 @endsection
 
-@push('scripts')
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $.uploadPreview({
-                input_field: "#image-upload", // Default: .image-upload
-                preview_box: "#image-preview", // Default: .image-preview
-                label_field: "#image-label", // Default: .image-label
-                label_default: "Choose File", // Default: Choose File
-                label_selected: "Change File", // Default: Change File
-                no_label: false // Default: false
-            });
-        });
-    </script>
-@endpush

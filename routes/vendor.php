@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Vendor\ProfileController;
 use App\Http\Controllers\Vendor\DashboardController;
+use App\Http\Controllers\Vendor\StoreController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(["prefix" => "vendor", "as" => "vendor.", "middleware" => ["auth", "verified", "role:vendor"]], function () {

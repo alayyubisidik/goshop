@@ -1,4 +1,4 @@
-@extends('vendor-dashboard.layouts.app')
+@extends('vendor.dashboard.layouts.app')
 
 @section('contents')
     <div class="container-xl">

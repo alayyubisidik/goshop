@@ -18,7 +18,7 @@ class StoreController extends Controller
     {
         $store = user()?->store;
         // dd($store);
-        return view("vendor-dashboard.store-profile.index", compact("store"));
+        return view("vendor.dashboard.store-profile.index", compact("store"));
     }
 
     /**

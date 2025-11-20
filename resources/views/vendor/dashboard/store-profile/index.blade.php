@@ -4,7 +4,7 @@
     <div class="container-xl">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Update Profile</h3>
+                <h3 class="card-title">Update Store Profile</h3>
             </div>
             <div class="card-body">
                 <form action="{{ route('vendor.store-profile.update', 1) }}" method="post" enctype="multipart/form-data">
@@ -72,7 +72,7 @@
                         <div class="col-12">
                             <div class="mb-3">
                                 <label class="form-label required">Short Description</label>
-                                <textarea name="short_description" class="form-control">{{ $store?->short_description }}</textarea>
+                                <textarea name="short_description" id="short-editor" class="form-control">{{ $store?->short_description }}</textarea>
                                 <x-input-error :messages="$errors->get('short_description')" class="mt-2" />
                             </div>
                         </div>
@@ -83,48 +83,10 @@
                                 <x-input-error :messages="$errors->get('long_description')" class="mt-2" />
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Update Account</button>
                     </div>
+                    <button type="submit" class="btn btn-primary">Update Store</button>
                 </form>
             </div>
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Fungsi umum untuk preview image
-            function previewImage(inputId, previewId) {
-                const input = document.getElementById(inputId);
-                const preview = document.getElementById(previewId);
-
-                input.addEventListener("change", function() {
-                    const file = this.files[0];
-                    if (!file) {
-                        preview.style.display = "none";
-                        preview.src = "";
-                        return;
-                    }
-
-                    if (!file.type.startsWith("image/")) {
-                        alert("Please select an image file.");
-                        this.value = "";
-                        return;
-                    }
-
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        preview.src = e.target.result;
-                        preview.style.display = "block";
-                    };
-                    reader.readAsDataURL(file);
-                });
-            }
-
-            // Jalankan untuk kedua input
-            previewImage("logo-upload", "logo-preview");
-            previewImage("banner-upload", "banner-preview");
-        });
-    </script>
-@endpush

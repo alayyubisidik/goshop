@@ -69,6 +69,7 @@ class StoreController extends Controller
             "long_description" => ["nullable", "string", "max:2000"],
         ]);
 
+        // dd($request->all());
         $data = [
             "name" => $request->name,
             "phone" => $request->phone,
@@ -91,7 +92,7 @@ class StoreController extends Controller
             $data
         );
 
-        AlertService::updated();
+        AlertService::updated("Store Updated Successfully");
 
         return redirect()->back();
     }

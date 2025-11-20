@@ -18,7 +18,8 @@ trait FileUploadTrait {
         $ignorePath = [
             "/img/defaults/avatar.png",
             "/img/defaults/logo.png",
-            "/img/defaults/banner.png"
+            "/img/defaults/banner.png",
+            "/img/defaults/brand.png",
         ];
 
         // hapus file lama kecuali default

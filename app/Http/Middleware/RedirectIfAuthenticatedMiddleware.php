@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class RedirectIfAuthenticated
+class RedirectIfAuthenticatedMiddleware
 {
     /**
      * The callback that should be used to generate the authentication redirect path.

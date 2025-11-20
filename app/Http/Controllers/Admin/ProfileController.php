@@ -12,10 +12,10 @@ class ProfileController extends Controller
     use FileUploadTrait;
     public function index()
     {
-        return view("admin.profile.index");
+        return view("admin.dashboard.profile.index");
     }
 
-    public function profileUpdate(Request $request)
+    public function update(Request $request)
     {
         $request->validate([
             "name" => ["required", "string", "max:100"],
@@ -25,7 +25,7 @@ class ProfileController extends Controller
 
 
         /** @var \App\Models\Admin $user */
-        $user = auth('admin')->user();
+        $user = user('admin');
         if ($request->hasFile("avatar")) {
             $filepath = $this->uploadFile($request->file("avatar"), $user->avatar, "avatar");
             $filepath ? $user->avatar = $filepath : null;
@@ -47,7 +47,7 @@ class ProfileController extends Controller
         ]);
 
         /** @var \App\Models\Admin $user */
-        $user = user();
+        $user = user('admin');
         $user->password = bcrypt($request->password);
         $user->save();
 

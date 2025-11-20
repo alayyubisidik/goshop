@@ -30,6 +30,8 @@
         }
 
         previewImage("#avatar-upload", "#avatar-preview");
+        previewImage("#logo-upload", "#logo-preview");
+        previewImage("#banner-upload", "#banner-preview");
 
     });
 </script>

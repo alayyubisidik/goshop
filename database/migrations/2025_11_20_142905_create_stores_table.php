@@ -14,13 +14,14 @@ return new class extends Migration
         Schema::create('stores', function (Blueprint $table) {
             $table->id();
             $table->foreignId("seller_id")->constrained("users");
-            $table->string("logo")->default("/defaults/logo.png");
-            $table->string("banner")->default("/defaults/banner.png");
+            $table->string("logo")->default("/img/defaults/logo.png");
+            $table->string("banner")->default("/img/defaults/banner.png");
             $table->string("name");
             $table->string("phone")->nullable();
             $table->string("email")->nullable();
             $table->string("short_description")->nullable();
             $table->text("long_description")->nullable();
+            $table->text("address")->nullable();
             $table->timestamps();
         });
     }

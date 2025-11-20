@@ -19,5 +19,6 @@ class Store extends Model
         'email',
         'short_description',
         'long_description',
+        'address'
     ];
 }

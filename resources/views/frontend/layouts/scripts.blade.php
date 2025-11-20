@@ -3,6 +3,9 @@
         duration: 3000
     });
 
+    $('.datepicker').datepicker();
+
+
     $(document).ready(function() {
 
         function previewImage(inputSelector, previewSelector) {
@@ -32,4 +35,5 @@
         previewImage("#avatar-upload", "#avatar-preview");
 
     });
+
 </script>

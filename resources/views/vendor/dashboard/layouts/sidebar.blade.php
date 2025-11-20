@@ -66,7 +66,7 @@
                     <span class="avatar avatar-sm" style="background-image:url({{ asset(user()->avatar) }})"></span>
                     <div class="d-none d-xl-block ps-2">
                         <div>{{ user()->name }}</div>
-                        <div class="mt-1 small text-secondary">test</div>
+                        <div class="mt-1 small text-secondary">{{ user()->user_type }}</div>
                     </div>
                 </a>
 

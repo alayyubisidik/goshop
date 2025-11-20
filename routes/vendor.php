@@ -11,6 +11,9 @@ Route::group(["prefix" => "vendor", "as" => "vendor.", "middleware" => ["auth", 
     Route::put("/profile", [ProfileController::class, "update"])->name("profile.update");
     Route::put("/profile-password", [ProfileController::class, "passwordUpdate"])->name("password.update");
 
+    Route::resource("/store-profile", StoreController::class);
+
+
     // Route::resource("/store-profile", StoreController::class);
 
 });

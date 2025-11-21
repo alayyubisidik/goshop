@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Admin\Auth\NewPasswordController;
 use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\KycRequestController;
@@ -62,6 +63,13 @@ Route::middleware('auth:admin')
         Route::get("/settings", [SettingController::class, "index"])->name("settings.index");
         Route::put("/settings/general-settings", [SettingController::class, "generalSettings"])->name("settings.general");
 
+        Route::get("/categories", [CategoryController::class, "index"])->name("categories.index");
+        Route::post("/categories", [CategoryController::class, "store"])->name("categories.store");
+        Route::get("/categories/nested", [CategoryController::class, "getNestedCategories"])->name("categories.nested");
+        Route::post("/categories/update-order", [CategoryController::class, "updateOrder"])->name("categories.update-order");
+        Route::get("/categories/{id}", [CategoryController::class, "show"])->name("categories.show");
+        Route::put("/categories/{id}", [CategoryController::class, "update"])->name("categories.update");
+        Route::delete("/categories/{id}", [CategoryController::class, "destroy"])->name("categories.destroy");
 
         Route::get('verify-email', EmailVerificationPromptController::class)
             ->name('verification.notice');

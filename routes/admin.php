@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Admin\Auth\NewPasswordController;
 use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
+use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -62,6 +63,8 @@ Route::middleware('auth:admin')
         Route::resource('user-roles', UserRoleController::class);
 
         Route::resource('tags', TagController::class);
+
+        Route::resource('brands', BrandController::class);
 
         Route::get("/settings", [SettingController::class, "index"])->name("settings.index");
         Route::put("/settings/general-settings", [SettingController::class, "generalSettings"])->name("settings.general");

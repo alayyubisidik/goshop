@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-
+use Database\Seeders\Admin\CategorySeeder;
 use Database\Seeders\Admin\PermissionSeeder;
 use Database\Seeders\Admin\RoleSeeder;
 use Database\Seeders\Frontend\UserSeeder;
@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             PermissionSeeder::class,
-            RoleSeeder::class
+            RoleSeeder::class,
+            CategorySeeder::class,
         ]);
     }
 }

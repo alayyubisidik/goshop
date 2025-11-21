@@ -35,7 +35,7 @@
                     </select>
                     <x-input-error :messages="$errors->get('site_currency')" class="mt-2" />
                 </div>
-
+                
                 <div class="col-md-6">
                     <div class="form-label">Currency Icon</div>
                     <input type="text" class="form-control" value="{{ config("settings.site_currency_icon") }}" name="site_currency_icon">

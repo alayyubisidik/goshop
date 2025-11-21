@@ -48,6 +48,33 @@
                     </a>
                 </li>
 
+                <li class="nav-item dropdown {{ setActive(['admin.categories.*']) }}">
+                    <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
+                        data-bs-auto-close="false" role="button" aria-expanded="false">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-shield">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path
+                                    d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3" />
+                            </svg>
+                        </span>
+                        <span class="nav-link-title"> Manage Products </span>
+                    </a>
+                    <div class="dropdown-menu {{ setActive(['admin.categories.*'], 'show') }}">
+                        <div class="dropdown-menu-columns">
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item  {{ setActive(['admin.categories.*']) }}"
+                                    href="{{ route('admin.categories.index') }}">
+                                    Categories
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
                 @if (hasPermission(['Manage KYC', 'View KYC']))
                     <li class="nav-item dropdown {{ setActive(['admin.kyc.*']) }}">
                         <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
@@ -90,9 +117,9 @@
                     <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                         data-bs-auto-close="false" role="button" aria-expanded="false">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round"
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
                                 class="icon icon-tabler icons-tabler-outline icon-tabler-shield">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                 <path
@@ -121,7 +148,6 @@
                     </div>
                 </li>
 
-
                 <li class="nav-item {{ setActive(['admin.settings.*']) }}">
                     <a class="nav-link" href="{{ route('admin.settings.index') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -138,6 +164,7 @@
                         <span class="nav-link-title"> Setting </span>
                     </a>
                 </li>
+
             </ul>
         </div>
     </div>

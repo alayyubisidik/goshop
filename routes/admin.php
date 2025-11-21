@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\KycRequestController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\UserRoleController;
 use Illuminate\Support\Facades\Route;
 
@@ -57,6 +58,9 @@ Route::middleware('auth:admin')
         Route::resource('roles', RoleController::class);
 
         Route::resource('/user-roles', UserRoleController::class);
+
+        Route::get("/settings", [SettingController::class, "index"])->name("settings.index");
+        Route::put("/settings/general-settings", [SettingController::class, "generalSettings"])->name("settings.general");
 
 
         Route::get('verify-email', EmailVerificationPromptController::class)

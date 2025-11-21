@@ -48,14 +48,14 @@
                     </a>
                 </li>
 
-                @if (hasPermission(["Manage KYC", "View KYC"]))
+                @if (hasPermission(['Manage KYC', 'View KYC']))
                     <li class="nav-item dropdown {{ setActive(['admin.kyc.*']) }}">
                         <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                             data-bs-auto-close="false" role="button" aria-expanded="false">
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round"
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
                                     class="icon icon-tabler icons-tabler-outline icon-tabler-user-check">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                     <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
@@ -86,47 +86,58 @@
                     </li>
                 @endif
 
-                {{-- @if (hasPermission(['Role Management', 'Role User Management'])) --}}
-                    <li class="nav-item dropdown {{ setActive(['admin.roles.*', 'admin.user-roles.*']) }}">
-                        <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
-                            data-bs-auto-close="false" role="button" aria-expanded="false">
-                            <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="icon icon-tabler icons-tabler-outline icon-tabler-shield">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path
-                                        d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3" />
-                                </svg>
-                            </span>
-                            <span class="nav-link-title"> Access Management </span>
-                        </a>
-                        <div class="dropdown-menu {{ setActive(['admin.roles.*', 'admin.user-roles.*'], 'show') }}">
-                            {{-- @if (hasPermission(['Role Management'])) --}}
-                                <div class="dropdown-menu-columns">
-                                    <div class="dropdown-menu-column">
-                                        <a class="dropdown-item  {{ setActive(['admin.roles.*']) }}"
-                                            href="{{ route('admin.roles.index') }}">
-                                            Role
-                                        </a>
-                                    </div>
-                                </div>
-                            {{-- @endif --}}
-                            {{-- @if (hasPermission(['Role User Management'])) --}}
-                                <div class="dropdown-menu-columns">
-                                    <div class="dropdown-menu-column">
-                                        <a class="dropdown-item {{ setActive(['admin.user-roles.*']) }}"
-                                            href="{{ route('admin.user-roles.index') }}">
-                                            Role User
-                                        </a>
-                                    </div>
-                                </div>
-                            {{-- @endif --}}
+                <li class="nav-item dropdown {{ setActive(['admin.roles.*', 'admin.user-roles.*']) }}">
+                    <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
+                        data-bs-auto-close="false" role="button" aria-expanded="false">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-shield">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path
+                                    d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3" />
+                            </svg>
+                        </span>
+                        <span class="nav-link-title"> Access Management </span>
+                    </a>
+                    <div class="dropdown-menu {{ setActive(['admin.roles.*', 'admin.user-roles.*'], 'show') }}">
+                        <div class="dropdown-menu-columns">
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item  {{ setActive(['admin.roles.*']) }}"
+                                    href="{{ route('admin.roles.index') }}">
+                                    Role
+                                </a>
+                            </div>
                         </div>
-                    </li>
-                {{-- @endif --}}
+                        <div class="dropdown-menu-columns">
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ setActive(['admin.user-roles.*']) }}"
+                                    href="{{ route('admin.user-roles.index') }}">
+                                    Role User
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
 
+
+                <li class="nav-item {{ setActive(['admin.settings.*']) }}">
+                    <a class="nav-link" href="{{ route('admin.settings.index') }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-settings">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path
+                                    d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" />
+                                <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+                            </svg>
+                        </span>
+                        <span class="nav-link-title"> Setting </span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

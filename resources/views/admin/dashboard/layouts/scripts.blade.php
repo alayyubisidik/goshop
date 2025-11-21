@@ -32,6 +32,7 @@
         previewImage("#avatar-upload", "#avatar-preview");
         previewImage("#icon-upload", "#logo-preview");
         previewImage("#image-upload", "#image-preview");
+        previewImage("#brand-logo-upload", "#brand-logo-preview");
     });
 
 

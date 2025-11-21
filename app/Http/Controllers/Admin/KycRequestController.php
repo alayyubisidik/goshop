@@ -7,31 +7,40 @@ use App\Models\Kyc;
 use App\Services\AlertService;
 use App\Services\MailService;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Storage;
 
-class KycRequestController extends Controller
+class KycRequestController extends Controller implements HasMiddleware
 {
+    static function Middleware(): array
+    {
+        return [
+            new Middleware("permission:Manage KYC|View KYC")
+        ];
+    }
+
     public function index()
     {
         $kycRequests = Kyc::paginate(25);
-        return view("admin.kyc.index", compact("kycRequests"));
+        return view("admin.dashboard.kyc.index", compact("kycRequests"));
     }
 
     public function pending()
     {
         $kycRequests = Kyc::where("status", "pending")->paginate(25);
-        return view("admin.kyc.pending", compact("kycRequests"));
+        return view("admin.dashboard.kyc.pending", compact("kycRequests"));
     }
 
     public function rejected()
     {
         $kycRequests = Kyc::where("status", "rejected")->paginate(25);
-        return view("admin.kyc.rejected", compact("kycRequests"));
+        return view("admin.dashboard.kyc.rejected", compact("kycRequests"));
     }
 
     public function show(Kyc $kyc_request)
     {
-        return view("admin.kyc.show", compact('kyc_request'));
+        return view("admin.dashboard.kyc.show", compact('kyc_request'));
     }
 
     public function download(Kyc $kyc_request)
@@ -62,6 +71,6 @@ class KycRequestController extends Controller
 
         AlertService::updated();
 
-        return redirect()->route("admin.kyc.index");
+        return redirect()->route("admin.dashboard.kyc.index");
     }
 }

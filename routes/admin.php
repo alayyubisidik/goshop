@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\KycRequestController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\UserRoleController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest:admin')
@@ -51,6 +53,11 @@ Route::middleware('auth:admin')
         Route::get("/kyc-requests/{kyc_request}/show", [KycRequestController::class, "show"])->name("kyc.show");
         Route::get("/kyc-requests/download/{kyc_request}", [KycRequestController::class, "download"])->name("kyc.download");
         Route::put("/kyc-requests/{kyc_request}/update", [KycRequestController::class, "update"])->name("kyc.update");
+
+        Route::resource('roles', RoleController::class);
+
+        Route::resource('/user-roles', UserRoleController::class);
+
 
         Route::get('verify-email', EmailVerificationPromptController::class)
             ->name('verification.notice');

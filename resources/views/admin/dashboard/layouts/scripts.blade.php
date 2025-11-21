@@ -31,5 +31,28 @@
 
         previewImage("#avatar-upload", "#avatar-preview");
 
+
+        $('.delete-btn').on('click', function(e) {
+            e.preventDefault();
+
+            const form = $(this).closest('form'); // form terdekat
+            const data = $(this).data('name'); // ambil atribut data-name
+
+            Swal.fire({
+                title: 'Yakin ingin menghapus?',
+                text: `Data "${data}" akan dihapus secara permanen.`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit(); // submit form jika konfirmasi
+                }
+            });
+        });
+
     });
 </script>

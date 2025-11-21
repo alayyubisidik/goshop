@@ -5,7 +5,7 @@ use App\Http\Controllers\Vendor\DashboardController;
 use App\Http\Controllers\Vendor\StoreController;
 use Illuminate\Support\Facades\Route;
 
-Route::group(["prefix" => "vendor", "as" => "vendor.", "middleware" => ["auth", "verified", "role:vendor"]], function () {
+Route::group(["prefix" => "vendor", "as" => "vendor.", "middleware" => ["auth", "verified", "user_role:vendor"]], function () {
     Route::get("/dashboard", [DashboardController::class, "index"])->name("dashboard.index");
 
     Route::get("/profile", [ProfileController::class, "index"])->name("profile.index");

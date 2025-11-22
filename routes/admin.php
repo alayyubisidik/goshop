@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\KycRequestController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\TagController;
@@ -76,6 +77,13 @@ Route::middleware('auth:admin')
         Route::get("/categories/{id}", [CategoryController::class, "show"])->name("categories.show");
         Route::put("/categories/{id}", [CategoryController::class, "update"])->name("categories.update");
         Route::delete("/categories/{id}", [CategoryController::class, "destroy"])->name("categories.destroy");
+
+        Route::get("/products", [ProductController::class, "index"])->name("products.index");
+        Route::get("/products/create", [ProductController::class, "create"])->name("products.create");
+        Route::post("/products", [ProductController::class, "store"])->name("products.store");
+        Route::get("/products/physical/{product}/edit", [ProductController::class, "edit"])->name("products.edit");
+        Route::post("/products/physical/{product}/update", [ProductController::class, "update"])->name("products.update");
+
 
         Route::get('verify-email', EmailVerificationPromptController::class)
             ->name('verification.notice');

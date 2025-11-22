@@ -48,7 +48,7 @@
                     </a>
                 </li>
 
-                <li class="nav-item dropdown {{ setActive(['admin.categories.*', 'admin.tags.*', 'admin.brands.*']) }}">
+                <li class="nav-item dropdown {{ setActive(['admin.categories.*', 'admin.tags.*', 'admin.brands.*', 'admin.products.*']) }}">
                     <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                         data-bs-auto-close="false" role="button" aria-expanded="false">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -63,7 +63,15 @@
                         </span>
                         <span class="nav-link-title"> Manage Products </span>
                     </a>
-                    <div class="dropdown-menu {{ setActive(['admin.categories.*', 'admin.tags.*', 'admin.brands.*'], 'show') }}">
+                    <div class="dropdown-menu {{ setActive(['admin.categories.*', 'admin.tags.*', 'admin.brands.*', 'admin.products.*'], 'show') }}">
+                        <div class="dropdown-menu-columns">
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item  {{ setActive(['admin.products.*']) }}"
+                                    href="{{ route('admin.products.index') }}">
+                                    Products
+                                </a>
+                            </div>
+                        </div>
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
                                 <a class="dropdown-item  {{ setActive(['admin.categories.*']) }}"

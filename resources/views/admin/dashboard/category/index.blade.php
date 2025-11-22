@@ -361,18 +361,6 @@
                 clearForm();
             })
 
-            $('#name').on('input', function() {
-                $('#slug').val(slugify($(this).val()));
-            });
-
-            function slugify(text) {
-                return text.toString().toLowerCase()
-                    .replace(/\s+/g, '-') // Ganti spasi dengan tanda "-"
-                    .replace(/[^a-z0-9-]/g, '') // Hapus karakter selain huruf, angka, dan "-"
-                    .replace(/-+/g, '-') // Ganti banyak tanda "-" jadi satu "-"
-                    .replace(/^-+|-+$/g, ''); // Hapus tanda "-" di awal/akhir teks
-            }
-
             function fillForm(cat) {
                 $('#category-title').text('Edit Category');
                 $('#name').val(cat.name);

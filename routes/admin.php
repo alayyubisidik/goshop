@@ -84,6 +84,10 @@ Route::middleware('auth:admin')
         Route::get("/products/physical/{product}/edit", [ProductController::class, "edit"])->name("products.edit");
         Route::post("/products/physical/{product}/update", [ProductController::class, "update"])->name("products.update");
 
+        Route::post("/products/images/upload/{product?}", [ProductController::class, "uploadImages"])->name("products.images.upload");
+        Route::delete("/products/images/{image}", [ProductController::class, "destroyImage"])->name("products.images.destroy");
+        Route::post("/products/images/reorder", [ProductController::class, "imagesReorder"])->name("products.images.reorder");
+
 
         Route::get('verify-email', EmailVerificationPromptController::class)
             ->name('verification.notice');

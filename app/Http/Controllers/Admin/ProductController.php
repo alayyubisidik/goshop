@@ -6,17 +6,21 @@ use App\Models\Tag;
 use App\Models\Brand;
 use App\Models\Store;
 use App\Models\Category;
+use App\Traits\FileUploadTrait;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ProductStoreRequest;
 use App\Http\Requests\Admin\ProductUpdateRequest;
 use App\Models\Product;
+use App\Models\ProductImage;
 use App\Services\AlertService;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class ProductController extends Controller
 {
+    use FileUploadTrait;
+
     public function index()
     {
         $products = Product::latest()->paginate(20);
@@ -146,5 +150,46 @@ class ProductController extends Controller
             "message" => "Product updated successfully",
             "redirect_url" => route('admin.products.index')
         ]);
+    }
+
+    function uploadImages(Request $request, ?Product $product)
+    {
+        // dd($request->all());
+        $request->validate([
+            'image' => ['required', 'image', 'max:3048']
+        ]);
+
+        $filePath = $this->uploadFile($request->file('image'), null, "product-image");
+
+        $productImage = new ProductImage();
+        $productImage->product_id = $product->id;
+        $productImage->path = $filePath;
+        $productImage->order = ProductImage::where('product_id', $product->id)->max('order') + 1;
+        $productImage->save();
+
+        return response()->json([
+            'status'  => 'success',
+            'id'    => $productImage->id,
+            'path'    => asset($filePath),
+            'message' => 'Image uploaded successfully'
+        ]);
+    }
+
+    function destroyImage(int $id)
+    {
+        $image = ProductImage::findOrFail($id);
+
+        $this->deleteFile($image->path);
+
+        $image->delete();
+
+        return response()->json(['status' => 'success', 'message' => 'Image deleted successfully']);
+    }
+
+    function imagesReorder(Request $request)
+    {
+        foreach ($request->images as $image) {
+            ProductImage::where('id', $image['id'])->update(['order' => $image['order']]);
+        }
     }
 }

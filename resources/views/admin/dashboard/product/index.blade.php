@@ -42,9 +42,9 @@
                             @forelse ($products as $product)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    {{-- <td>
+                                    <td>
                                         <img src="{{ asset($product->primaryImage?->path) }}" alt="" width="50">
-                                    </td> --}}
+                                    </td>
                                     <td>
                                         <div>
                                             @if ($product->product_type == 'physical')

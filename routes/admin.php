@@ -41,7 +41,7 @@ Route::middleware('guest:admin')
             ->name('password.store');
     });
 
-Route::middleware('auth:admin')
+Route::middleware('user_role:admin')
     ->prefix("admin")
     ->as("admin.")
     ->group(function () {

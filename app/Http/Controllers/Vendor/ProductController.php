@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Vendor;
 
 use App\Models\Tag;
 use App\Models\Brand;
@@ -9,8 +9,8 @@ use App\Models\Category;
 use App\Traits\FileUploadTrait;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\ProductStoreRequest;
-use App\Http\Requests\Admin\ProductUpdateRequest;
+use App\Http\Requests\Vendor\ProductStoreRequest;
+use App\Http\Requests\Vendor\ProductUpdateRequest;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\Product;
@@ -31,7 +31,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::latest()->paginate(20);
-        return view("admin.dashboard.product.index", compact("products"));
+        return view("vendor.dashboard.product.index", compact("products"));
     }
 
     public function create()
@@ -40,7 +40,7 @@ class ProductController extends Controller
         $brands = Brand::select(['id', 'name'])->get();
         $tags = Tag::where("is_active", 1)->get();
         $categories = Category::getNested();
-        return view("admin.dashboard.product.create", compact("stores", "brands", "tags", "categories"));
+        return view("vendor.dashboard.product.create", compact("stores", "brands", "tags", "categories"));
     }
 
     function store(ProductStoreRequest $request, string $type)
@@ -58,7 +58,7 @@ class ProductController extends Controller
             $product->product_type = "physical";
         }
 
-        $product->store_id = $request->store_id;
+        $product->store_id = user()->store->id;
         $product->brand_id = $request->brand_id;
 
         $product->name = $request->name;
@@ -85,7 +85,7 @@ class ProductController extends Controller
         // $product->viewed = 0; (tidak perlu)
 
         $product->status = $request->status;
-        $product->approved_status = "approved";
+        $product->approved_status = "pending";
 
         // optional flags
         $product->is_featured = $request->has('is_featured') ? 1 : 0;
@@ -101,14 +101,14 @@ class ProductController extends Controller
         if ($type == "physical") {
             return response()->json([
                 "id" => $product->id,
-                "redirect_url" => route("admin.products.edit", $product->id) . '#product-images',
+                "redirect_url" => route("vendor.products.edit", $product->id) . '#product-images',
                 "status" => "success",
                 "message" => "Product created successfully"
             ]);
         } else {
             return response()->json([
                 "id" => $product->id,
-                "redirect_url" => route("admin.products.digital.edit", $product->id) . '#product-images',
+                "redirect_url" => route("vendor.products.digital.edit", $product->id) . '#product-images',
                 "status" => "success",
                 "message" => "Product created successfully"
             ]);
@@ -120,14 +120,13 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $productCategoryIds = $product->categories->pluck("id")->toArray();
         $productTagIds = $product->tags->pluck("id")->toArray();
-        $stores = Store::select(['id', 'name'])->get();
         $brands = Brand::select(['id', 'name'])->get();
         $tags = Tag::where("is_active", 1)->get();
         $categories = Category::getNested();
         $attributeWithValues = $product?->attributeWithValues ?? [];
         $variants = $product?->variants ?? [];
 
-        return view("admin.dashboard.product.edit", compact("stores", "brands", "tags", "categories", "product", "productCategoryIds", "productTagIds", "attributeWithValues", "variants"));
+        return view("vendor.dashboard.product.edit", compact( "brands", "tags", "categories", "product", "productCategoryIds", "productTagIds", "attributeWithValues", "variants"));
     }
 
     function update(ProductUpdateRequest $request, int $id)
@@ -159,8 +158,8 @@ class ProductController extends Controller
         $product->manage_stock = $request->has('manage_stock') ? 1 : 0;
         $product->in_stock = $request->in_stock == 1 ? 1 : 0;
         $product->status = $request->status;
-        $product->approved_status = $request->approved_status;
-        $product->store_id = $request->store_id;
+        $product->approved_status = $product->approved_status;
+        $product->store_id = user()->store->id;
         $product->brand_id = $request->brand_id;
         $product->is_featured = $request->has('is_featured') ? 1 : 0;
         $product->is_hot = $request->has('is_hot') ? 1 : 0;
@@ -176,7 +175,7 @@ class ProductController extends Controller
             "id" => $product->id,
             "status" => "success",
             "message" => "Product updated successfully",
-            "redirect_url" => route('admin.products.index')
+            "redirect_url" => route('vendor.products.index')
         ]);
     }
 
@@ -234,7 +233,7 @@ class ProductController extends Controller
         $attributeWithValues = $product?->attributeWithValues ?? [];
         $variants = $product?->variants ?? [];
 
-        return view("admin.dashboard.product.digital-edit", compact("stores", "brands", "tags", "categories", "product", "productCategoryIds", "productTagIds"));
+        return view("vendor.dashboard.product.digital-edit", compact("stores", "brands", "tags", "categories", "product", "productCategoryIds", "productTagIds"));
     }
 
     function uploadDigitalProductFile(Request $request)
@@ -483,11 +482,11 @@ class ProductController extends Controller
             $variantHtml = '';
 
             foreach ($attributes as $attribute) {
-                $html .= view('admin.product.partials.attribute', compact('attribute', 'product'))->render();
+                $html .= view('vendor.product.partials.attribute', compact('attribute', 'product'))->render();
             }
 
             foreach ($product->variants as $variant) {
-                $variantHtml .= view('admin.product.partials.variant', compact('variant'))->render();
+                $variantHtml .= view('vendor.product.partials.variant', compact('variant'))->render();
             }
 
             return response()->json([

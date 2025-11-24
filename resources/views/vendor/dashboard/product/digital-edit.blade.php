@@ -1,4 +1,5 @@
-@extends('admin.dashboard.layouts.app')
+@extends('vendor.dashboard.layouts.app')
+
 
 @push('styles')
     <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
@@ -74,6 +75,58 @@
             color: #666;
         }
 
+        .dz-preview {
+            position: relative;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            background: #f8f8f8;
+            border-radius: 6px;
+            text-align: left;
+            font-family: sans-serif;
+        }
+
+        .dz-filename {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .dz-progress {
+            height: 6px;
+            background: #e4e4e4;
+            margin-top: 6px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .dz-upload {
+            background: #28a745;
+            height: 100%;
+            width: 0;
+            transition: width 0.3s ease;
+        }
+
+        .dz-percentage {
+            font-size: 12px;
+            margin-top: 4px;
+            color: #555;
+        }
+
+        .dz-remove {
+            position: absolute;
+            top: 6px;
+            right: 10px;
+            font-size: 18px;
+            color: #dc3545;
+            cursor: pointer;
+        }
+
+        .dz-remove:hover {
+            color: #a71d2a;
+        }
+
+
+
         @keyframes pulse {
             0% {
                 opacity: 0.6;
@@ -112,7 +165,7 @@
                                 <div class="mb-3">
                                     <label class="form-label required" for="slug">Slug</label>
                                     <input type="text" class="form-control" name="slug" id="slug"
-                                        value="{{ old('slug ', $product->slug) }}">
+                                        value="{{ old('name', $product->name) }}">
                                     <x-input-error :messages="$errors->get('slug')" class="mt-2" />
                                 </div>
                             </div>
@@ -120,7 +173,7 @@
                             <div class="col-12">
                                 <div class="mb-3">
                                     <label class="form-label required" for="short_description">Short Description</label>
-                                    <textarea name="short_description" id="short-editor">{!! old('short_description', $product->short_description) !!}</textarea>
+                                    <textarea name="description" id="editor">{!! old('description', $product->short_description) !!}</textarea>
                                     <x-input-error :messages="$errors->get('short_description')" class="mt-2" />
                                 </div>
                             </div>
@@ -128,7 +181,7 @@
                             <div class="col-12">
                                 <div class="mb-3">
                                     <label class="form-label required" for="description">Content</label>
-                                    <textarea name="description" id="short-editor">{!! old('description', $product->description) !!}</textarea>
+                                    <textarea name="description" id="editor">{!! old('description', $product->description) !!}</textarea>
                                     <x-input-error :messages="$errors->get('description')" class="mt-2" />
                                 </div>
                             </div>
@@ -195,16 +248,14 @@
                                     <div class="col-md-12">
                                         <div class="mb-3">
                                             <label class="form-check">
-                                                <input class="form-check-input manage-stock-check" type="checkbox"
-                                                    name="manage_stock" value="1" @checked(old('manage_stock', $product->manage_stock) == 1) />
-
+                                                <input class="form-check-input manage-stock-check" value="1" name="manage_stock"
+                                                    type="checkbox" @checked(old('manage_stock', $product->manage_stock) == 1)>
                                                 <span class="form-check-label">Manage Stock</span>
                                             </label>
                                         </div>
                                     </div>
 
-                                    <div
-                                        class="col-md-12 manage-stock {{ $product->manage_stock == 1 ? '' : 'd-none' }}">
+                                    <div class="col-md-12 manage-stock {{ $product->manage_stock == 1 ? '' : 'd-none' }}">
                                         <div class="mb-3">
                                             <label class="form-label required" for="qty">Quantity</label>
                                             <input type="number" class="form-control" name="qty" id="qty"
@@ -225,16 +276,17 @@
                                             <div class="col-md-12">
                                                 <div class="mb-3">
                                                     <label class="form-check">
-                                                        <input class="form-check-input" type="radio" name="in_stock"
-                                                            @checked($product->in_stock == 1) value="1">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="stock_status" @checked(old('in_stock', $product->in_stock) == 1)
+                                                            value="1">
                                                         <span class="form-check-label">In Stock</span>
                                                     </label>
                                                     <label class="form-check">
-                                                        <input class="form-check-input" type="radio" name="in_stock"
-                                                            @checked($product->in_stock == 0) value="0">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="stock_status" @checked(old('in_stock', $product->in_stock) == 0)
+                                                            value="0">
                                                         <span class="form-check-label">Out of Stock</span>
                                                     </label>
-                                                    <x-input-error :messages="$errors->get('in_stock')" class="mt-2" />
                                                 </div>
                                             </div>
                                         </div>
@@ -268,41 +320,30 @@
                         </div>
                     </div>
 
-                    <div class="card mt-3">
-                        <div class="card-header">
-                            <div class="card-title">
-                                Product Attribute
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="col-md-12">
-                                <div class="accordion mb-3" id="accordion-default">
-                                    @foreach ($attributeWithValues as $attribute)
-                                        @include('admin.dashboard.product.partials.attribute', [
-                                            'attribute' => $attribute,
-                                            'product' => $product,
-                                        ])
-                                    @endforeach
-                                </div>
-
-                                <button class="btn btn-primary" type="button" id="add-attribute-btn">Add
-                                    Atribute</button>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="card mt-3" id="product-images">
                         <div class="card-header">
-                            <h3 class="card-title">Product Variants</h3>
+                            <h3 class="card-title">Product Files</h3>
                         </div>
                         <div class="card-body">
                             <div class="col-md-12">
-                                <div class="accordion" id="accordion-variant">
-                                    @foreach ($variants as $variant)
-                                        @include('admin.dashboard.product.partials.variant', [
-                                            'variant' => $variant,
-                                        ])
-                                    @endforeach
+                                <div class="mb-3">
+                                    <div id="fileUploader" class="dropzone"></div>
+                                    <div id="filePreviewContainer" class="file-preview-container">
+                                        @foreach ($product->files ?? [] as $file)
+                                            <div class="dz-preview dz-file-preview">
+                                                <div class="dz-filename"><span data-dz-name>{{ $file->filename }}</span>
+                                                </div>
+                                                <div class="dz-progress">
+                                                    <div class="dz-upload" data-dz-uploadprogress style="width: 100%;">
+                                                    </div>
+                                                </div>
+                                                <div class="dz-percentage"><span class="progress-text"></span>uploaded
+                                                </div>
+                                                <div class="dz-remove" data-file-id="{{ $file->id }}" data-dz-remove>
+                                                    &times;</div>
+                                            </div>
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -332,7 +373,6 @@
                                             Rejected
                                         </option>
                                     </select>
-
                                     <x-input-error :messages="$errors->get('approved_status')" class="mt-2" />
                                 </div>
                             </div>
@@ -396,8 +436,8 @@
                             <div class="col-12">
                                 <div class="mb-3">
                                     <label class="form-check form-switch form-switch-3">
-                                        <input class="form-check-input" value="1" type="checkbox" name="is_featured"
-                                            @checked(old('is_featured', $product->is_featured) == 1)>
+                                        <input class="form-check-input" value="1" type="checkbox"
+                                            name="is_featured" @checked(old('is_featured', $product->is_featured) == 1)>
                                         <span class="form-check-label">Enable</span>
                                     </label>
                                     <x-input-error :messages="$errors->get('is_featured')" class="mt-2" />
@@ -477,7 +517,7 @@
                             <div class="col-12">
                                 <div class="mb-3">
                                     <select name="brand_id" id="brand_id" class="form-select select2">
-                                        <option value="">Select a brand</option>
+                                        <option value="">Select a Brand</option>
 
                                         @foreach ($brands as $brand)
                                             <option value="{{ $brand->id }}" @selected(old('brand_id', $product->brand_id) == $brand->id)>
@@ -557,430 +597,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr"></script>
 
     <script>
-        $(function() {
-
-            const pickerInstances = {};
-
-            let uniqueCounter = 0;
-
-            function generateUniqueId(prefix = 'picker-') {
-                uniqueCounter++;
-                return prefix + uniqueCounter + '-' + Date.now();
-            }
-
-            function createPicker(pickerId, defaultColor, inputSelector) {
-                if (pickerInstances[pickerId]) {
-                    pickerInstances[pickerId].destroyAndRemove();
-                }
-
-                const picker = Pickr.create({
-                    el: `#${pickerId}`,
-                    theme: 'classic',
-                    default: defaultColor,
-                    components: {
-                        preview: true,
-                        opacity: true,
-                        hue: true,
-                        interaction: {
-                            hex: true,
-                            rgba: true,
-                            input: true,
-                            clear: true,
-                            save: true
-                        }
-                    }
-                });
-
-                picker.on('change', (color) => {
-                    const selectedColor = color.toHEXA().toString();
-                    $(`#${pickerId}`).css('background-color', selectedColor);
-                    $(inputSelector).val(selectedColor);
-                });
-
-                pickerInstances[pickerId] = picker;
-            }
-
-            function destroyPicker(pickerId) {
-                if (pickerInstances[pickerId]) {
-                    pickerInstances[pickerId].destroyAndRemove();
-                    delete pickerInstances[pickerId];
-                }
-            }
-
-            function initColorPickersInContainer($container) {
-                $container.find('.color-preview').each(function() {
-                    const $this = $(this);
-                    const pickerId = $this.attr('id');
-                    const currentColor = $this.css('background-color') || '#000000';
-                    createPicker(pickerId, currentColor, `input[data-picker-id="${pickerId}"]`);
-                });
-            }
-
-            let count = 0;
-            $('#add-attribute-btn').on('click', function() {
-                count++;
-                const collapseId = 'collapse' + count;
-                const headerId = 'header' + count;
-
-                const accordionItem = `
-                            <div class="accordion-item mb-3 cursor-pointer" data-index="${count}">
-                                            <div class="accordion-header" id="${headerId}">
-                                                <div class="accordion-button" data-bs-toggle="collapse"
-                                                    data-bs-target="#${collapseId}" aria-controls="${collapseId}" aria-expanded="false">
-                                                    New Attribute #${count}
-                                                    <div class="accordion-button-toggle ">
-                                                        <!-- Download SVG icon from http://tabler.io/icons/icon/chevron-down -->
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                            class="icon icon-1">
-                                                            <path d="M6 9l6 6l6 -6"></path>
-                                                        </svg>
-                                                    </div>
-                                                    <button type="button" class="btn btn-danger delete-btn" style="margin-left: 10px">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                            class="icon icon-tabler icon-tabler-trash m-0">
-                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                            <path d="M4 7h16" />
-                                                            <path d="M10 11v6" />
-                                                            <path d="M14 11v6" />
-                                                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                                                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                                                        </svg>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div id="${collapseId}" class="accordion-collapse collapse"
-                                                data-bs-parent="#accordion-default">
-                                                <form action="" method="post">
-                                                    @csrf
-                                                    <div class="accordion-body">
-                                                        <div class="row mb-2">
-                                                            <div class="col-md-6">
-                                                                <label for="" class="form-label">Name</label>
-                                                                <input type="text" class="form-control" value=""
-                                                                    name="attribute_name">
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <label for="" class="form-label">Type</label>
-                                                                <select name="attribute_type" class="form-control main-type" id="">
-                                                                    <option value="text">Text</option>
-                                                                    <option value="color">Color</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <table class="table table-bordered section-table mt-3" style="display: none;">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Label</th>
-                                                                    <th class="value-header">Value</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-
-                                                            </tbody>
-                                                        </table>
-                                                        <div>
-                                                            <button class="btn btn-sm btn-primary add-row-btn" type="button">Add Row</button>
-                                                            <button class="btn btn-sm btn-success save-btn" type="button">Save</button>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>`;
-
-                $('#accordion-default').append(accordionItem);
-            });
-
-            $(document).on('click', '.add-row-btn', function() {
-                const accordionBody = $(this).closest('.accordion-body');
-                const type = accordionBody.find('.main-type').val();
-                const table = accordionBody.find('.section-table');
-                const tbody = table.find('tbody');
-                table.show();
-
-                const pickerId = generateUniqueId();
-                let rowHtml = '';
-
-                if (type === 'color') {
-                    rowHtml = `
-                                <tr>
-                                    <td>
-                                        <input type="text" name="label[]" id="" class="form-control label-input">
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center gap-2">
-                                            <div id="${pickerId}" class="color-preview"></div>
-                                            <input type="hidden" class="color-value" data-picker-id="${pickerId}" name="color_value[]">
-                                            <span class="review-row-btn ms-2">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="icon icon-tabler icon-tabler-trash m-0">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path d="M4 7h16" />
-                                                    <path d="M10 11v6" />
-                                                    <path d="M14 11v6" />
-                                                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                                                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                                                </svg>
-                                            </span>
-                                        </div>
-                                    </td>
-                                </tr>`;
-                } else {
-                    rowHtml = `
-                        <tr>
-                            <td colspan="2">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <input type="text" class="form-control label-input" name="label[]" placeholder="Label">
-                                    <span class="review-row-btn ms-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                            class="icon icon-tabler icon-tabler-trash m-0">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                            <path d="M4 7h16" />
-                                            <path d="M10 11v6" />
-                                            <path d="M14 11v6" />
-                                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                                        </svg>
-                                    </span>
-                                </div>
-                            </td>
-                        </tr>
-                        `;
-                }
-
-                tbody.append(rowHtml);
-
-                if (type === 'color') {
-                    createPicker(pickerId, '#000000', `input[data-picker-id="${pickerId}"]`);
-                }
-            })
-
-            $(document).on('click', '.review-row-btn', function() {
-                const $row = $(this).closest('tr');
-                const $colorPreview = $row.find('.color-preview');
-                if ($colorPreview.length) {
-                    destroyPicker($colorPreview.attr('id'));
-                }
-
-                const $table = $(this).closest('.section-table');
-                $row.remove();
-                const tbody = $table.find('tbody');
-                if (tbody.children().length === 0) {
-                    $table.hide();
-                }
-            });
-
-            $(document).on('change', '.main-type', function() {
-                const accordionBody = $(this).closest('.accordion-body');
-                const type = $(this).val();
-                const table = accordionBody.find('.section-table');
-                const tbody = table.find('tbody');
-
-                // collect row values and destroy any existing pickers
-                const labels = [];
-
-                tbody.find('tr').each(function() {
-                    const $colorPreview = $(this).find('.color-preview');
-                    if ($colorPreview.length) {
-                        destroyPicker($colorPreview.attr('id'));
-                    }
-                    const labelVal = $(this).find('.label-input').val();
-                    labels.push(labelVal || '');
-                });
-
-                tbody.empty();
-
-                labels.forEach(label => {
-                    const pickerId = generateUniqueId();
-                    let rowHtml = '';
-
-                    if (type === 'color') {
-                        rowHtml = `
-                                <tr>
-                                    <td>
-                                        <input type="text" name="label[]" id="" class="form-control label-input label" value="${label}" >
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center gap-2">
-                                            <div id="${pickerId}" class="color-preview"></div>
-                                            <input type="hidden" class="color-value" data-picker-id="${pickerId}" name="color_value[]">
-                                            <span class="review-row-btn ms-2">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="icon icon-tabler icon-tabler-trash m-0">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path d="M4 7h16" />
-                                                    <path d="M10 11v6" />
-                                                    <path d="M14 11v6" />
-                                                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                                                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                                                </svg>
-                                            </span>
-                                        </div>
-                                    </td>
-                                </tr>`;
-                    } else {
-                        rowHtml = `
-                        <tr>
-                            <td colspan="2">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <input type="text" class="form-control label-input" name="label[]" placeholder="Label"  value="${label}" >
-                                    <span class="review-row-btn ms-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                            class="icon icon-tabler icon-tabler-trash m-0">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                            <path d="M4 7h16" />
-                                            <path d="M10 11v6" />
-                                            <path d="M14 11v6" />
-                                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                                        </svg>
-                                    </span>
-                                </div>
-                            </td>
-                        </tr>
-                        `;
-                    }
-
-                    tbody.append(rowHtml);
-
-                    if (type === 'color') {
-                        createPicker(pickerId, '#000000', `input[data-picker-id="${pickerId}"]`);
-                    }
-                });
-
-                if (labels.length > 0) {
-                    table.show();
-                } else {
-                    table.hide();
-                }
-            });
-
-
-            $(document).on('click', '.delete-btn', function(e) {
-                e.preventDefault()
-                const $accordionItem = $(this).closest('.accordion-item');
-                $accordionItem.find('.color-preview').each(function() {
-                    destroyPicker($(this).attr('id'));
-                });
-
-
-                const productId = $(this).data('product-id');
-                const attributeId = $(this).data('attribute-id');
-
-                if (!attributeId) {
-                    $accordionItem.remove();
-                    return
-                }
-
-                Swal.fire({
-                    title: "Are you sure?",
-                    text: "You won't be able to revert this!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Yes, delete it!"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            url: "{{ route('admin.products.attributes.destroy', [':id', ':attribute_id']) }}"
-                                .replace(':id', productId).replace(':attribute_id',
-                                    attributeId),
-                            method: 'DELETE',
-                            data: {
-                                _token: "{{ csrf_token() }}" // Laravel CSRF Token
-                            },
-                            success: function(response) {
-
-                                $('#accordion-variant').html(response.variantHtml);
-                                location.reload()
-                                response.html ? $('.disabled-placeholder').show() : $(
-                                    '.disabled-placeholder').hide();
-
-                                notyf.success(response.message);
-                            },
-                            error: function(xhr, status, error) {
-                                notyf.error(error);
-                            }
-                        });
-                    }
-                });
-            });
-
-
-            $(document).on('click', '.save-btn', function(e) {
-                e.preventDefault();
-                const $form = $(this).closest('form');
-                const data = $form.serialize();
-
-                $.ajax({
-                    url: "{{ route('admin.products.attributes.store', ':id') }}".replace(':id',
-                        '{{ $product->id }}'),
-                    method: 'POST',
-                    data: data,
-                    success: function(response) {
-
-                        $('#accordion-variant').html(response.variantHtml);
-                        location.reload();
-
-                        response.html ? $('.disabled-placeholder').show() : $(
-                            '.disabled-placeholder').hide();
-                        initColorPickersInContainer($('#accordion-default'));
-                        notyf.success(response.message);
-                    },
-                    error: function(xhr, status, error) {
-
-                    }
-                })
-            });
-
-            // Initialize color pickers on load
-            $(document).ready(function() {
-                initColorPickersInContainer($('#accordion-default'));
-            });
-
-            $(document).on('change', '.variant-manage-stock', function() {
-                const ischecked = $(this).is(':checked');
-                const element = $(this).closest('.col-md-12').find('.variant-quantity').toggle(ischecked);
-            });
-
-            $(document).on('click', '.variant-save-btn', function(e) {
-                e.preventDefault();
-                const form = $(this).closest('.variant-form');
-
-                const data = form.serializeArray();
-                // pastikan token selalu ikut
-
-                $.ajax({
-                    url: "{{ route('admin.products.variants.update', ':productId') }}"
-                        .replace(':productId', '{{ $product->id }}'),
-                    method: 'POST',
-                    data: data,
-                    success: function(response) {
-                        location.reload();
-                        notyf.success(response.message);
-                    },
-                    error: function(xhr) {
-                        console.error(xhr.responseText);
-                        notyf.error('Something went wrong');
-                    }
-                });
-            });
-
-
-        });
-
         $(document).on('change', '.category-check', function() {
             const isChecked = $(this).is(':checked');
 
@@ -1100,6 +716,93 @@
                     notyf.success(response.message);
                 })
             }
+        });
+
+        const fileUploader = new Dropzone("#fileUploader", {
+            url: "{{ route('admin.products.digital.file.upload') }}",
+            paramName: "file",
+            maxFileSize: 1000,
+            chunking: true,
+            forceChunking: true,
+            chunkSize: 1024 * 1024, // 1 MB per chunk,
+            parallelUploads: 1,
+            acceptedFiles: `
+                image/*,
+                application/pdf,
+                application/msword,
+                application/vnd.openxmlformats-officedocument.wordprocessingml.document,
+                application/vnd.ms-excel,
+                application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
+                application/vnd.ms-powerpoint,
+                application/vnd.openxmlformats-officedocument.presentationml.presentation,
+                text/plain,
+                text/csv,
+                application/rtf,
+                audio/*,
+                video/*,
+                application/zip,
+                application/x-zip-compressed,
+                application/x-rar-compressed,
+                application/x-7z-compressed,
+                application/x-tar,
+                application/gzip
+                `,
+            addRemoveLinks: false,
+            autoProcessQueue: true,
+            uploadMultiple: false,
+            previewsContainer: '#filePreviewContainer',
+            previewTemplate: `
+                <div class="dz-preview dz-file-preview">
+                    <div class="dz-filename"><span data-dz-name></span></div>
+                    <div class="dz-progress"><div class="dz-upload" data-dz-uploadprogress></div></div>
+                    <div class="dz-percentage"><span class="progress-text">0</span>% uploaded</div>
+                    <div class="dz-remove" data-dz-remove>&times;</div>
+                </div>
+            `,
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            },
+            init: function() {
+                this.on("uploadprogress", function(file, progress) {
+                        file.previewElement.querySelector(".progress-text").textContent = progress.toFixed(
+                            0);
+                    }),
+
+                    this.on("sending", function(file, xhr, formData) {
+                        formData.append("name", file.upload.filename);
+                        formData.append("product_id", "{{ $product->id }}");
+                    }),
+
+                    this.on("success", function(file, response) {
+                        location.reload();
+                    }),
+
+                    this.on("error", function(file, response) {
+                        console.error(response);
+                        if (response.status === 'error') {
+                            notyf.error(response.message);
+                        }
+                    })
+            }
+        });
+
+        $(document).on('click', '.dz-remove', function() {
+            const id = $(this).attr('data-file-id');
+            $.ajax({
+                method: 'DELETE',
+                url: "{{ route('admin.products.digital.file.destroy', ['product' => ':product', 'file' => ':file']) }}"
+                    .replace(':product', '{{ $product->id }}')
+                    .replace(':file', id),
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    window.location.reload();
+                },
+                error: function(xhr, status, error) {
+                    console.log(xhr);
+                }
+            });
         });
 
         function addUploadPlaceholder(placeholderId) {

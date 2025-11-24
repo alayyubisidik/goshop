@@ -58,4 +58,39 @@ class Product extends Model
     {
         return $this->hasOne(ProductImage::class)->orderBy("order");
     }
+
+    function attributes(): BelongsToMany
+    {
+        return $this->belongsToMany(Attribute::class, 'product_attribute_values')->withPivot('attribute_value_id');
+    }
+
+    function attributeValues(): BelongsToMany
+    {
+        return $this->belongsToMany(AttributeValue::class, 'product_attribute_values')->withPivot('attribute_id');
+    }
+
+    function attributeWithValues(): BelongsToMany
+    {
+        return $this->belongsToMany(Attribute::class, 'product_attribute_values')
+            ->distinct()
+            ->orderBy('id', 'asc')
+            ->with(['values' => function ($query) {
+                $query->whereIn('id', function ($subquery) {
+                    $subquery->select('attribute_value_id')
+                        ->from('product_attribute_values')
+                        ->where('product_id', $this->id)
+                        ->orderBy('id', 'asc');
+                });
+            }]);
+    }
+
+    public function variants(): HasMany
+    {
+        return $this->hasMany(ProductVariant::class);
+    }
+
+    public function primaryVariant(): HasOne
+    {
+        return $this->hasOne(ProductVariant::class)->where("is_default", 1);
+    }
 }

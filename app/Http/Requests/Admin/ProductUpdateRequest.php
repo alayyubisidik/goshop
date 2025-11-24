@@ -30,16 +30,17 @@ class ProductUpdateRequest extends FormRequest
 
             'name' => ['required', 'string', 'max:255'],
 
-            'price' => ['required', 'numeric', 'min:0'],
 
             'description' => ['required', 'string'],
             'short_description' => ['nullable', 'string'],
 
+            'sku' => ['nullable', 'string', 'max:255'],
+
+            'price' => ['required', 'numeric', 'min:0'],
+
             'special_price' => ['nullable', 'numeric', 'min:0'],
             'special_price_start' => ['nullable', 'date'],
             'special_price_end' => ['nullable', 'date', 'after_or_equal:special_price_start'],
-
-            'sku' => ['nullable', 'string', 'max:255'],
 
             'manage_stock' => ['boolean'],
             'qty' => ['integer', 'min:0'],
@@ -47,6 +48,8 @@ class ProductUpdateRequest extends FormRequest
             'viewed' => ['integer', 'min:0'],
 
             'status' => ['required', 'in:active,inactive,draft'],
+
+            'approved_status' => ['required', 'in:approved,pending,rejected'],
 
             'is_featured' => ['boolean'],
             'is_hot' => ['boolean'],

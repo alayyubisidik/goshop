@@ -83,10 +83,20 @@ Route::middleware('auth:admin')
         Route::post("/products", [ProductController::class, "store"])->name("products.store");
         Route::get("/products/physical/{product}/edit", [ProductController::class, "edit"])->name("products.edit");
         Route::post("/products/physical/{product}/update", [ProductController::class, "update"])->name("products.update");
+        Route::delete('products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
 
         Route::post("/products/images/upload/{product?}", [ProductController::class, "uploadImages"])->name("products.images.upload");
         Route::delete("/products/images/{image}", [ProductController::class, "destroyImage"])->name("products.images.destroy");
         Route::post("/products/images/reorder", [ProductController::class, "imagesReorder"])->name("products.images.reorder");
+
+        Route::post("/products/attributes/{product}/store", [ProductController::class, "storeAttributes"])->name("products.attributes.store");
+        Route::delete("/products/attributes/{product}/{attribute}", [ProductController::class, "destroyAttributes"])->name("products.attributes.destroy");
+
+        Route::post("/products/variants/{product}/update", [ProductController::class, "updateVariants"])->name("products.variants.update");
+
+
+
+
 
 
         Route::get('verify-email', EmailVerificationPromptController::class)

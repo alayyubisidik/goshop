@@ -61,7 +61,7 @@
                                         <small
                                             class="text-muted text-sm text-capitalize">{{ $product->product_type }}</small>
                                     </td>
-                                    {{-- <td>
+                                    <td>
                                         @if ($product->primaryVariant)
                                             @if ($product->primaryVariant->special_price > 0)
                                                 <div>
@@ -115,7 +115,7 @@
                                                 ∞
                                             @endif
                                         @endif
-                                    </td> --}}
+                                    </td>
                                     <td>
                                         {{ date('Y-m-d', strtotime($product->created_at)) }}
                                     </td>
@@ -150,9 +150,15 @@
                                                 Edit
                                             </a>
                                         @endif
-{{--
-                                        <a class="text-danger delete-item"
-                                            href="{{ route('admin.products.destroy', $product->id) }}">Delete</a> --}}
+
+                                        <form action="{{ route('admin.products.destroy', $product) }}" method="POST">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" class="btn btn-outline-danger delete-btn"
+                                                data-name="{{ $product->name }}">
+                                                Delete
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             @empty

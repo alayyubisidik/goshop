@@ -120,7 +120,7 @@
                             <div class="col-12">
                                 <div class="mb-3">
                                     <label class="form-label required" for="short_description">Short Description</label>
-                                    <textarea name="short_description" id="short-editor">{!! $product->short_description !!}</textarea>
+                                    <textarea name="short_description" id="short-editor">{!! old('short_description', $product->short_description) !!}</textarea>
                                     <x-input-error :messages="$errors->get('short_description')" class="mt-2" />
                                 </div>
                             </div>
@@ -128,7 +128,7 @@
                             <div class="col-12">
                                 <div class="mb-3">
                                     <label class="form-label required" for="description">Content</label>
-                                    <textarea name="description" id="editor">{!! $product->description !!}</textarea>
+                                    <textarea name="description" id="short-editor">{!! old('description', $product->description) !!}</textarea>
                                     <x-input-error :messages="$errors->get('description')" class="mt-2" />
                                 </div>
                             </div>
@@ -204,7 +204,7 @@
                                     </div>
 
                                     <div
-                                        class="col-md-12 manage-stock {{ $product->manage_stock == 'yes' ? '' : 'd-none' }}">
+                                        class="col-md-12 manage-stock {{ $product->manage_stock == 1 ? '' : 'd-none' }}">
                                         <div class="mb-3">
                                             <label class="form-label required" for="qty">Quantity</label>
                                             <input type="number" class="form-control" name="qty" id="qty"
@@ -333,7 +333,7 @@
                                         </option>
                                     </select>
 
-                                    <x-input-error :messages="$errors->get('status')" class="mt-2" />
+                                    <x-input-error :messages="$errors->get('approved_status')" class="mt-2" />
                                 </div>
                             </div>
                         </div>

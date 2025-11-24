@@ -172,7 +172,7 @@
                             <div class="col-12">
                                 <div class="mb-3">
                                     <label class="form-label required" for="short_description">Short Description</label>
-                                    <textarea name="short_description" id="short-editor">{!! $product->short_description !!}</textarea>
+                                    <textarea name="description" id="editor">{!! old('description', $product->short_description) !!}</textarea>
                                     <x-input-error :messages="$errors->get('short_description')" class="mt-2" />
                                 </div>
                             </div>
@@ -180,7 +180,7 @@
                             <div class="col-12">
                                 <div class="mb-3">
                                     <label class="form-label required" for="description">Content</label>
-                                    <textarea name="description" id="editor">{!! $product->description !!}</textarea>
+                                    <textarea name="description" id="editor">{!! old('description', $product->description) !!}</textarea>
                                     <x-input-error :messages="$errors->get('description')" class="mt-2" />
                                 </div>
                             </div>
@@ -226,19 +226,20 @@
 
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label class="form-label required" for="from_date">From Date</label>
-                                        <input type="text" class="form-control datepicker" name="from_date"
-                                            value="{{ $product->special_price_start }}">
-                                        <x-input-error :messages="$errors->get('from_date')" class="mt-2" />
+                                        <label class="form-label required" for="special_price_start">From Date</label>
+                                        <input type="text" class="form-control datepicker" name="special_price_start"
+                                            value="{{ old('special_price_start', $product->special_price_start) }}">
+                                        <x-input-error :messages="$errors->get('special_price_start')" class="mt-2" />
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label class="form-label required" for="to_date">To Date</label>
-                                        <input type="text" class="form-control datepicker" name="to_date" id="to_date"
-                                            value="{{ $product->special_price_end }}">
-                                        <x-input-error :messages="$errors->get('to_date')" class="mt-2" />
+                                        <label class="form-label required" for="special_price_end">To Date</label>
+                                        <input type="text" class="form-control datepicker" name="special_price_end"
+                                            id="special_price_end"
+                                            value="{{ old('special_price_end', $product->special_price_end) }}">
+                                        <x-input-error :messages="$errors->get('special_price_end')" class="mt-2" />
                                     </div>
                                 </div>
 
@@ -246,20 +247,19 @@
                                     <div class="col-md-12">
                                         <div class="mb-3">
                                             <label class="form-check">
-                                                <input class="form-check-input manage-stock-check" name="manage_stock"
-                                                    type="checkbox" @checked($product->manage_stock == 'yes')>
+                                                <input class="form-check-input manage-stock-check" value="1" name="manage_stock"
+                                                    type="checkbox" @checked(old('manage_stock', $product->manage_stock) == 1)>
                                                 <span class="form-check-label">Manage Stock</span>
                                             </label>
                                         </div>
                                     </div>
 
-                                    <div
-                                        class="col-md-12 manage-stock {{ $product->manage_stock == 'yes' ? '' : 'd-none' }}">
+                                    <div class="col-md-12 manage-stock {{ $product->manage_stock == 1 ? '' : 'd-none' }}">
                                         <div class="mb-3">
-                                            <label class="form-label required" for="quantity">Quantity</label>
-                                            <input type="number" class="form-control" name="quantity" id="quantity"
+                                            <label class="form-label required" for="qty">Quantity</label>
+                                            <input type="number" class="form-control" name="qty" id="qty"
                                                 value="{{ old('qty', $product->qty) }}">
-                                            <x-input-error :messages="$errors->get('quantity')" class="mt-2" />
+                                            <x-input-error :messages="$errors->get('qty')" class="mt-2" />
                                         </div>
                                     </div>
                                 </div>
@@ -276,14 +276,14 @@
                                                 <div class="mb-3">
                                                     <label class="form-check">
                                                         <input class="form-check-input" type="radio"
-                                                            name="stock_status" @checked($product->in_stock == 1)
-                                                            value="in_stock">
+                                                            name="stock_status" @checked(old('in_stock', $product->in_stock) == 1)
+                                                            value="1">
                                                         <span class="form-check-label">In Stock</span>
                                                     </label>
                                                     <label class="form-check">
                                                         <input class="form-check-input" type="radio"
-                                                            name="stock_status" @checked($product->in_stock == 0)
-                                                            value="out_of_stock">
+                                                            name="stock_status" @checked(old('in_stock', $product->in_stock) == 0)
+                                                            value="0">
                                                         <span class="form-check-label">Out of Stock</span>
                                                     </label>
                                                 </div>
@@ -354,17 +354,25 @@
 
                     <div class="card mb-3">
                         <div class="card-header">
-                            <h3 class="card-title">Approve Status</h3>
+                            <h3 class="card-title">Approved Status</h3>
                         </div>
                         <div class="card-body">
                             <div class="col-md-12">
                                 <div class="mb-3">
-                                    <select name="approved_status" class="form-control" id="">
-                                        <option @selected($product->approved_status == 'pending') value="pending">Pending</option>
-                                        <option @selected($product->approved_status == 'approved') value="approved">Approved</option>
-                                        <option @selected($product->approved_status == 'rejected') value="rejected">Rejected</option>
+                                    <select name="approved_status" class="form-control">
+                                        <option value="pending" @selected(old('approved_status', $product->approved_status) == 'pending')>
+                                            Pending
+                                        </option>
+
+                                        <option value="approved" @selected(old('approved_status', $product->approved_status) == 'approved')>
+                                            Approved
+                                        </option>
+
+                                        <option value="rejected" @selected(old('approved_status', $product->approved_status) == 'rejected')>
+                                            Rejected
+                                        </option>
                                     </select>
-                                    <x-input-error :messages="$errors->get('status')" class="mt-2" />
+                                    <x-input-error :messages="$errors->get('approved_status')" class="mt-2" />
                                 </div>
                             </div>
                         </div>
@@ -378,10 +386,19 @@
                             <div class="col-12">
                                 <div class="mb-3">
                                     <select name="status" id="status" class="form-select">
-                                        <option @selected($product->status == 'active') value="active">Active</option>
-                                        <option @selected($product->status == 'inactive') value="inactive">Inactive</option>
-                                        <option @selected($product->status == 'draft') value="draft">Draft</option>
+                                        <option value="active" @selected(old('status', $product->status) == 'active')>
+                                            Active
+                                        </option>
+
+                                        <option value="inactive" @selected(old('status', $product->status) == 'inactive')>
+                                            Inactive
+                                        </option>
+
+                                        <option value="draft" @selected(old('status', $product->status) == 'draft')>
+                                            Draft
+                                        </option>
                                     </select>
+
                                     <x-input-error :messages="$errors->get('status')" class="mt-2" />
                                 </div>
                             </div>
@@ -395,15 +412,16 @@
                         <div class="card-body">
                             <div class="col-12">
                                 <div class="mb-3">
-                                    <select name="store" id="store" class="form-select select2">
+                                    <select name="store_id" id="store_id" class="form-select select2">
                                         <option value="">Select a store</option>
+
                                         @foreach ($stores as $store)
-                                            <option @selected($product->store_id == $store->id) value="{{ $store->id }}">
+                                            <option value="{{ $store->id }}" @selected(old('store_id', $product->store_id) == $store->id)>
                                                 {{ $store->name }}
                                             </option>
                                         @endforeach
                                     </select>
-                                    <x-input-error :messages="$errors->get('store')" class="mt-2" />
+                                    <x-input-error :messages="$errors->get('store_id')" class="mt-2" />
                                 </div>
                             </div>
                         </div>
@@ -417,8 +435,8 @@
                             <div class="col-12">
                                 <div class="mb-3">
                                     <label class="form-check form-switch form-switch-3">
-                                        <input class="form-check-input" type="checkbox" name="is_featured"
-                                            @checked($product->is_featured == 1)>
+                                        <input class="form-check-input" value="1" type="checkbox"
+                                            name="is_featured" @checked(old('is_featured', $product->is_featured) == 1)>
                                         <span class="form-check-label">Enable</span>
                                     </label>
                                     <x-input-error :messages="$errors->get('is_featured')" class="mt-2" />
@@ -497,15 +515,16 @@
                         <div class="card-body">
                             <div class="col-12">
                                 <div class="mb-3">
-                                    <select name="brand" id="brand" class="form-select select2">
-                                        <option value="">Select a brand</option>
+                                    <select name="brand_id" id="brand_id" class="form-select select2">
+                                        <option value="">Select a Brand</option>
+
                                         @foreach ($brands as $brand)
-                                            <option @selected($product->brand_id == $brand->id) value="{{ $brand->id }}">
+                                            <option value="{{ $brand->id }}" @selected(old('brand_id', $product->brand_id) == $brand->id)>
                                                 {{ $brand->name }}
                                             </option>
                                         @endforeach
                                     </select>
-                                    <x-input-error :messages="$errors->get('brand')" class="mt-2" />
+                                    <x-input-error :messages="$errors->get('brand_id')" class="mt-2" />
                                 </div>
                             </div>
                         </div>
@@ -519,13 +538,13 @@
                             <div class="col-12">
                                 <div class="mb-3">
                                     <label class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="is_hot"
-                                            @checked($product->is_hot == 1)>
+                                        <input class="form-check-input" value="1" type="checkbox" name="is_hot"
+                                            @checked(old('is_hot', $product->is_hot) == 1)>
                                         <span class="form-check-label">Hot</span>
                                     </label>
                                     <label class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="is_new"
-                                            @checked($product->is_new == 1)>
+                                        <input class="form-check-input" value="1" type="checkbox" name="is_new"
+                                            @checked(old('is_new', $product->is_new) == 1)>
                                         <span class="form-check-label">New</span>
                                     </label>
                                     <x-input-error :messages="$errors->get('label')" class="mt-2" />
@@ -699,7 +718,7 @@
         });
 
         const fileUploader = new Dropzone("#fileUploader", {
-            url: "{{ route('admin.digital-products.file.upload') }}",
+            url: "{{ route('admin.products.digital.file.upload') }}",
             paramName: "file",
             maxFileSize: 1000,
             chunking: true,
@@ -770,7 +789,7 @@
             const id = $(this).attr('data-file-id');
             $.ajax({
                 method: 'DELETE',
-                url: '{{ route('admin.digital-products.file.destroy', ['product' => ':product', 'file' => ':file']) }}'
+                url: "{{ route('admin.products.digital.file.destroy', ['product' => ':product', 'file' => ':file']) }}"
                     .replace(':product', '{{ $product->id }}')
                     .replace(':file', id),
                 headers: {

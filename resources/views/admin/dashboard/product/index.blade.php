@@ -52,7 +52,7 @@
                                                     {{ $product->name }}
                                                 </a>
                                             @else
-                                                <a href="{{ route('admin.digital-products.edit', $product->id) }}">
+                                                <a href="{{ route('admin.products.digital.edit', $product->id) }}">
                                                     {{ $product->name }}
                                                 </a>
                                             @endif
@@ -146,7 +146,7 @@
                                                 Edit
                                             </a>
                                         @else
-                                            <a href="{{ route('admin.digital-products.edit', $product->id) }}">
+                                            <a href="{{ route('admin.products.digital.edit', $product->id) }}">
                                                 Edit
                                             </a>
                                         @endif

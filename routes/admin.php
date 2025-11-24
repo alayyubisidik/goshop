@@ -79,11 +79,15 @@ Route::middleware('auth:admin')
         Route::delete("/categories/{id}", [CategoryController::class, "destroy"])->name("categories.destroy");
 
         Route::get("/products", [ProductController::class, "index"])->name("products.index");
-        Route::get("/products/create", [ProductController::class, "create"])->name("products.create");
-        Route::post("/products", [ProductController::class, "store"])->name("products.store");
+        Route::get("/products/{type}/create", [ProductController::class, "create"])->name("products.create");
+        Route::post("/products/{type}/store", [ProductController::class, "store"])->name("products.store");
         Route::get("/products/physical/{product}/edit", [ProductController::class, "edit"])->name("products.edit");
         Route::post("/products/physical/{product}/update", [ProductController::class, "update"])->name("products.update");
         Route::delete('products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+
+        Route::get("/products/digital/{product}/edit", [ProductController::class, "editDigitalProduct"])->name("products.digital.edit");
+        Route::post("/products/digital/file-upload", [ProductController::class, "uploadDigitalProductFile"])->name("products.digital.file.upload");
+        Route::delete('products/digital/{product}/{file}', [ProductController::class, 'destroyDigitalProductFile'])->name('products.digital.file.destroy');
 
         Route::post("/products/images/upload/{product?}", [ProductController::class, "uploadImages"])->name("products.images.upload");
         Route::delete("/products/images/{image}", [ProductController::class, "destroyImage"])->name("products.images.destroy");

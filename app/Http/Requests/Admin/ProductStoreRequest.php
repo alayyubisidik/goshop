@@ -42,7 +42,7 @@ class ProductStoreRequest extends FormRequest
             'sku' => ['nullable', 'string', 'max:255'],
 
             'manage_stock' => ['boolean'],
-            'qty' => ['integer', 'min:0'],
+            'qty' => ['nullable', 'integer', 'min:0'],
             'in_stock' => ['boolean'],
             'viewed' => ['integer', 'min:0'],
 

@@ -14,11 +14,13 @@ use App\Http\Requests\Admin\ProductUpdateRequest;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\Product;
+use App\Models\ProductFile;
 use App\Models\ProductImage;
 use App\Models\ProductVariant;
 use App\Services\AlertService;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
@@ -41,11 +43,20 @@ class ProductController extends Controller
         return view("admin.dashboard.product.create", compact("stores", "brands", "tags", "categories"));
     }
 
-    function store(ProductStoreRequest $request)
+    function store(Request $request, string $type)
     {
+
+        if (!in_array($type, ["physical", "digital"])) {
+            abort(404); // atau bisa redirect / return error response
+        }
+
         $product = new Product();
 
-        $product->product_type = "physical";
+        if ($type == "digital") {
+            $product->product_type = "digital";
+        } else {
+            $product->product_type = "pyhsical";
+        }
 
         $product->store_id = $request->store_id;
         $product->brand_id = $request->brand_id;
@@ -74,7 +85,7 @@ class ProductController extends Controller
         // $product->viewed = 0; (tidak perlu)
 
         $product->status = $request->status;
-        $product->approved_status = "approved";
+        $product->approved_status = "pending";
 
         // optional flags
         $product->is_featured = $request->has('is_featured') ? 1 : 0;
@@ -87,12 +98,21 @@ class ProductController extends Controller
         $product->categories()->sync($request->categories);
         $product->tags()->sync($request->tags);
 
-        return response()->json([
-            "id" => $product->id,
-            "redirect_url" => route("admin.products.edit", $product) . '#product-images',
-            "status" => "success",
-            "message" => "Product created successfully"
-        ]);
+        if ($type == "physical") {
+            return response()->json([
+                "id" => $product->id,
+                "redirect_url" => route("admin.products.edit", $product->id) . '#product-images',
+                "status" => "success",
+                "message" => "Product created successfully"
+            ]);
+        } else {
+            return response()->json([
+                "id" => $product->id,
+                "redirect_url" => route("admin.products.digital.edit", $product->id) . '#product-images',
+                "status" => "success",
+                "message" => "Product created successfully"
+            ]);
+        }
     }
 
     function edit(int $id)
@@ -200,6 +220,165 @@ class ProductController extends Controller
             ProductImage::where('id', $image['id'])->update(['order' => $image['order']]);
         }
     }
+
+    function editDigitalProduct(int $id)
+    {
+        $product = Product::findOrFail($id);
+        if ($product->product_type !== "digital") abort(404);
+        $productCategoryIds = $product->categories->pluck("id")->toArray();
+        $productTagIds = $product->tags->pluck("id")->toArray();
+        $stores = Store::select(['id', 'name'])->get();
+        $brands = Brand::select(['id', 'name'])->get();
+        $tags = Tag::where("is_active", 1)->get();
+        $categories = Category::getNested();
+        $attributeWithValues = $product?->attributeWithValues ?? [];
+        $variants = $product?->variants ?? [];
+
+        return view("admin.dashboard.product.digital-edit", compact("stores", "brands", "tags", "categories", "product", "productCategoryIds", "productTagIds"));
+    }
+
+    function uploadDigitalProductFile(Request $request)
+    {
+        $file = $request->file('file');
+        $chunkIndex = $request->dzchunkindex;
+        $totalChunks = $request->dztotalchunkcount;
+        $fileName = $request->name;
+
+        $chunkFolder = storage_path('app/private/chunks/') . $fileName;
+        if (!file_exists($chunkFolder)) {
+            mkdir($chunkFolder, 0777, true);
+        }
+
+        $chunkPath = $chunkFolder . '/' . $chunkIndex;
+
+        file_put_contents($chunkPath, file_get_contents($file->getRealPath()));
+        if ($chunkIndex == $totalChunks - 1) {
+            $finalFileName = Str::uuid() . '.' . $file->getClientOriginalExtension();
+            $finalPath = storage_path('app/private/uploads/') . $finalFileName;
+            $uploadPath = storage_path('app/private/uploads/');
+            if (!file_exists($uploadPath)) {
+                mkdir($uploadPath, 0777, true);
+            }
+            $output = fopen($finalPath, 'ab');
+
+            for ($i = 0; $i < $totalChunks; $i++) {
+                $chunkFile = $chunkFolder . '/' . $i;
+                $input = fopen($chunkFile, 'rb');
+                stream_copy_to_stream($input, $output);
+                fclose($input);
+                unlink($chunkFile);
+            }
+
+            fclose($output);
+
+            rmdir($chunkFolder);
+
+            $validationResponse = $this->validateFinalFile($finalPath);
+
+            if ($validationResponse !== true) {
+                unlink($finalPath);
+                return $validationResponse;
+            }
+
+            $this->storeDigitalFile($file, $request->product_id, $fileName, $finalFileName);
+
+            return response()->json(['status' => 'success']);
+        }
+        return response()->json(['status' => 'chunk recieved']);
+    }
+
+    function storeDigitalFile($file, $product_id, $fileName, $finalFileName)
+    {
+        $productFile = new ProductFile();
+        $productFile->product_id = $product_id;
+        $productFile->filename = $fileName;
+        $productFile->path = "/uploads/" . $finalFileName;
+        $productFile->extension = $file->getClientOriginalExtension();
+        $productFile->size = $file->getSize();
+        $productFile->save();
+    }
+
+    function destroyDigitalProductFile(int $productId, int $id)
+    {
+        try {
+            $productFile = ProductFile::where('id', $id)->where('product_id', $productId)->firstOrFail();
+
+            // delete from storage
+            if (Storage::disk('local')->exists($productFile->path)) {
+                Storage::disk('local')->delete($productFile->path);
+            }
+
+            $productFile->delete();
+
+            return response()->json(['status' => 'success', 'message' => 'File deleted successfully']);
+        } catch (\Exception $e) {
+            logger('Failed to delete file: ' . $e);
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+    }
+
+    function validateFinalFile(string $finalPath)
+    {
+        $maxSizeMb = 1000;
+        $maxSizeBytes = $maxSizeMb * 1024 * 1024;
+        if (filesize($finalPath) > $maxSizeBytes) {
+            return response()->json(['status' => 'error', 'message' => 'File size limit exceeded'], 413);
+        }
+
+        // mime validation
+
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $mimeType = finfo_file($finfo, $finalPath);
+        finfo_close($finfo);
+
+        $allowedMimeTypes = [
+            // Images
+            'jpg' => 'image/jpeg',
+            'jpeg' => 'image/jpeg',
+            'png' => 'image/png',
+            'gif' => 'image/gif',
+            'webp' => 'image/webp',
+            'bmp' => 'image/bmp',
+            'svg' => 'image/svg+xml',
+            'ico' => 'image/vnd.microsoft.icon',
+
+            // Documents
+            'pdf' => 'application/pdf',
+            'doc' => 'application/msword',
+            'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'xls' => 'application/vnd.ms-excel',
+            'xlsx' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'ppt' => 'application/vnd.ms-powerpoint',
+            'pptx' => 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+            'txt' => 'text/plain',
+            'csv' => 'text/csv',
+            'rtf' => 'application/rtf',
+
+            // Audio
+            'mp3' => 'audio/mpeg',
+            'wav' => 'audio/wav',
+            'ogg' => 'audio/ogg',
+            'm4a' => 'audio/mp4',
+            'flac' => 'audio/flac',
+            // Video
+            'mp4' => 'video/mp4',
+            'webm' => 'video/webm',
+            'mov' => 'video/quicktime',
+
+            // Archives (still consider validating contents before extracting)
+            'zip' => 'application/zip',
+            '7z' => 'application/x-7z-compressed',
+            'tar' => 'application/x-tar',
+            'gz' => 'application/gzip',
+        ];
+
+        if (!in_array($mimeType, $allowedMimeTypes)) {
+            return response()->json(['status' => 'error', 'message' => 'Invalid file type'], 400);
+        }
+
+        return true;
+    }
+
 
     function storeAttributes(Request $request, Product $product)
     {
@@ -455,15 +634,10 @@ class ProductController extends Controller
 
     function destroy(Product $product)
     {
-        $user = user();
+        $product->delete();
 
-        if ($user->hasRole('Super Admin')) {
-            $product->delete();
-            notyf()->success('Product deleted successfully');
-            return response()->json(['status' => 'success']);
-        }
+        AlertService::deleted();
 
-        notyf()->error('You do not have permission to delete this product');
-        return response()->json(['status' => 'error', 'message' => 'You do not have permission to delete this product']);
+        return back();
     }
 }

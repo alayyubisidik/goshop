@@ -43,7 +43,7 @@ class ProductUpdateRequest extends FormRequest
             'special_price_end' => ['nullable', 'date', 'after_or_equal:special_price_start'],
 
             'manage_stock' => ['boolean'],
-            'qty' => ['integer', 'min:0'],
+            'qty' => ['nullable', 'integer', 'min:0'],
             'in_stock' => ['boolean'],
             'viewed' => ['integer', 'min:0'],
 

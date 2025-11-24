@@ -26,7 +26,7 @@ return new class extends Migration
             $table->date("special_price_end")->nullable();
             $table->string("sku")->nullable();
             $table->boolean("manage_stock")->default(true);
-            $table->integer("qty")->default(0);
+            $table->integer("qty")->nullable();
             $table->boolean("in_stock")->default(false);
             $table->integer("viewed")->default(0);
             $table->enum("status", ["active", "inactive", "draft"])->default("draft");

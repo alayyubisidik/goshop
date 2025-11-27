@@ -48,7 +48,8 @@
                     </a>
                 </li>
 
-                <li class="nav-item dropdown {{ setActive(['admin.categories.*', 'admin.tags.*', 'admin.brands.*', 'admin.products.*']) }}">
+                <li
+                    class="nav-item dropdown {{ setActive(['admin.categories.*', 'admin.tags.*', 'admin.brands.*', 'admin.products.*']) }}">
                     <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                         data-bs-auto-close="false" role="button" aria-expanded="false">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -63,7 +64,8 @@
                         </span>
                         <span class="nav-link-title"> Manage Products </span>
                     </a>
-                    <div class="dropdown-menu {{ setActive(['admin.categories.*', 'admin.tags.*', 'admin.brands.*', 'admin.products.*'], 'show') }}">
+                    <div
+                        class="dropdown-menu {{ setActive(['admin.categories.*', 'admin.tags.*', 'admin.brands.*', 'admin.products.*'], 'show') }}">
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
                                 <a class="dropdown-item  {{ setActive(['admin.products.*']) }}"
@@ -196,6 +198,26 @@
                         <span class="nav-link-title"> Shipping Rule </span>
                     </a>
                 </li>
+
+                <li class="nav-item {{ setActive(['admin.payment-settings.*']) }}">
+                    <a class="nav-link  " href="{{ route('admin.payment-settings.index') }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-receipt-dollar">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path
+                                    d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16l-3 -2l-2 2l-2 -2l-2 2l-2 -2l-3 2" />
+                                <path
+                                    d="M14.8 8a2 2 0 0 0 -1.8 -1h-2a2 2 0 1 0 0 4h2a2 2 0 1 1 0 4h-2a2 2 0 0 1 -1.8 -1" />
+                                <path d="M12 6v10" />
+                            </svg>
+                        </span>
+                        <span class="nav-link-title  ">Payment Setting </span>
+                    </a>
+                </li>
+
 
                 <li class="nav-item {{ setActive(['admin.settings.*']) }}">
                     <a class="nav-link" href="{{ route('admin.settings.index') }}">

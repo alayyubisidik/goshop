@@ -43,9 +43,8 @@ class ProductController extends Controller
         return view("admin.dashboard.product.create", compact("stores", "brands", "tags", "categories"));
     }
 
-    function store(ProductStoreRequest $request, string $type)
+    function store(Request $request, string $type)
     {
-
         if (!in_array($type, ["physical", "digital"])) {
             abort(404); // atau bisa redirect / return error response
         }

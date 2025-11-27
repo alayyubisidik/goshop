@@ -176,7 +176,7 @@
                                     <div class="mb-3">
                                         <label class="form-label required" for="special_price_start">From Date</label>
                                         <input type="text" class="form-control datepicker" name="special_price_start"
-                                            value="{{ old('special_price_start', $product->special_price_start) }}">
+                                            value="{{ old('special_price_start', $product->special_price_start) }}" autocomplete="off">
                                         <x-input-error :messages="$errors->get('special_price_start')" class="mt-2" />
                                     </div>
                                 </div>
@@ -186,7 +186,7 @@
                                         <label class="form-label required" for="special_price_end">To Date</label>
                                         <input type="text" class="form-control datepicker" name="special_price_end"
                                             id="special_price_end"
-                                            value="{{ old('special_price_end', $product->special_price_end) }}">
+                                            value="{{ old('special_price_end', $product->special_price_end) }}" autocomplete="off">
                                         <x-input-error :messages="$errors->get('special_price_end')" class="mt-2" />
                                     </div>
                                 </div>

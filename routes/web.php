@@ -1,10 +1,16 @@
 <?php
 
-use App\Http\Controllers\Frontend\DashboardController;
-use App\Http\Controllers\Frontend\HomeController;
-use App\Http\Controllers\Frontend\KycController;
-use App\Http\Controllers\Frontend\ProfileController;
+use App\Http\Controllers\Frontend\Dashboard\DashboardController;
+use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Frontend\Pages\HomeController;
+use App\Http\Controllers\Frontend\Pages\KycController;
+use App\Http\Controllers\Frontend\Pages\ProductController;
 use Illuminate\Support\Facades\Route;
+
+
+Route::get("/products", [ProductController::class, 'index'])->name("products.index");
+Route::get("/products/{slug}", [ProductController::class, 'show'])->name("products.show");
+
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
@@ -17,7 +23,6 @@ Route::group(["middleware" => ["auth", "verified"]], function () {
 
     Route::get("/kyc-verification", [KycController::class, "index"])->name("kyc.index");
     Route::post("/kyc-verification", [KycController::class, "store"])->name("kyc.store");
-
 });
 
 

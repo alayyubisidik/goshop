@@ -27,12 +27,12 @@
 
                     <div class="col-md-6 mb-3">
                         <label for="" class="form-label">Price</label>
-                        <input type="text" class="form-control" value="{{ $variant->price }}" name="variant_price">
+                        <input type="number" class="form-control" value="{{ $variant->price }}" name="variant_price">
                     </div>
 
                     <div class="col-md-6 mb-3">
                         <label for="" class="form-label">Special Price</label>
-                        <input type="text" class="form-control" value="{{ $variant->special_price }}"
+                        <input type="number" class="form-control" value="{{ $variant->special_price }}"
                             name="variant_special_price">
                     </div>
 

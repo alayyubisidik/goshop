@@ -34,6 +34,6 @@
 
         previewImage("#avatar-upload", "#avatar-preview");
 
-    });
 
+    });
 </script>

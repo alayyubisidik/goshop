@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\KycRequestController;
+use App\Http\Controllers\Admin\PaymentSettingController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SettingController;
@@ -103,6 +104,12 @@ Route::middleware(['auth:admin'])
         Route::resource("coupons", CouponController::class);
 
         Route::resource("shipping-rules", ShippingRuleController::class);
+
+        Route::get("/payment-settings", [PaymentSettingController::class, "index"])->name("payment-settings.index");
+        Route::post("/paypal-settings", [PaymentSettingController::class, "paypalSettings"])->name("paypal-settings.store");
+        Route::get("/stripe-settings", [PaymentSettingController::class, "stripe"])->name("stripe-settings.index");
+        Route::post("/stripe-settings", [PaymentSettingController::class, "stripeSettings"])->name("stripe-settings.store");
+
 
 
 

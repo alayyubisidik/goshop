@@ -2,6 +2,7 @@
 
 use App\Models\Admin;
 use App\Models\Cart;
+use App\Models\ShippingRule;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -69,6 +70,29 @@ if (!function_exists('cartDiscount')) {
             $discount = min($discount, $cartTotal);
 
             return $discount;
+        }
+
+        return 0;
+    }
+}
+
+function getPayableAmount(): float
+{
+    $cartTotal = cartTotal();
+    $cartDiscount = cartDiscount();
+    $shippingCharge = 0;
+    if (Session::has('billing_info')) {
+        $shippingCharge = ShippingRule::find(Session::get('billing_info')['shipping_method_id'])->charge;
+    }
+
+    return round(($cartTotal + $shippingCharge) - $cartDiscount, 2);
+}
+
+if (!function_exists('getShippingCharge')) {
+    function getShippingCharge(): float
+    {
+        if (Session::has('billing_info')) {
+            return $shippingCharge = ShippingRule::find(Session::get('billing_info')['shipping_method_id'])->charge;
         }
 
         return 0;

@@ -14,7 +14,8 @@
             <div class="col-lg-8 mb-40">
                 <h1 class="heading-2 mb-10">Your Cart</h1>
                 <div class="d-flex flex-wrap justify-content-between">
-                    <h6 class="text-body">There are <span class="text-brand">{{ cartCount() }}</span> products in your cart</h6>
+                    <h6 class="text-body">There are <span class="text-brand">{{ cartCount() }}</span> products in your cart
+                    </h6>
                 </div>
             </div>
         </div>
@@ -97,8 +98,7 @@
                                         <form action="{{ route('cart.destroy', $cartItem->id) }}" method="POST">
                                             @csrf
                                             @method('delete')
-                                            <a type="submit" class=" delete-btn"
-                                                data-name="{{ $cartItem->name }}">
+                                            <a type="submit" class=" delete-btn" data-name="{{ $cartItem->name }}">
                                                 <i class="fi-rs-trash"></i>
                                             </a>
                                         </form>
@@ -114,11 +114,12 @@
                 </div>
                 <div class="divider-2 mb-30"></div>
                 <div class="cart-action d-flex justify-content-between">
-                    <a href="{{ route("products.index") }}" class="btn "><i class="fi-rs-arrow-left mr-10"></i>Continue Shopping</a>
+                    <a href="{{ route('products.index') }}" class="btn "><i class="fi-rs-arrow-left mr-10"></i>Continue
+                        Shopping</a>
                 </div>
             </div>
             <div class="col-lg-4">
-                {{-- @if (cartCount() > 0)
+                @if (cartCount() > 0)
                     <div class="p-40">
                         <h4 class="mb-10">Apply Coupon</h4>
                         <p class="mb-30"><span class="font-lg text-muted">Using A Promo Code?</span></p>
@@ -137,7 +138,7 @@
                             </div>
                         </form>
                     </div>
-                @endif --}}
+                @endif
                 <div class="border p-md-4 cart-totals ml-30">
                     <div class="table-responsive">
                         <table class="table no-border">
@@ -196,7 +197,8 @@
                                             <h6 class="text-muted">Total</h6>
                                         </td>
                                         <td class="cart_total_amount">
-                                            <h4 class="text-brand text-end "><span class="total">Rp. {{ $cartSubTotal }}</span></h4>
+                                            <h4 class="text-brand text-end "><span class="total">Rp.
+                                                    {{ $cartSubTotal }}</span></h4>
                                         </td>
                                     </tr>
                                 @endif
@@ -239,8 +241,57 @@
                 })
             })
 
+            $('.coupon-form').on('submit', function(e) {
+                e.preventDefault();
+                data = $(this).serialize();
+
+                $.ajax({
+                    url: "{{ route('cart.coupon') }}",
+                    method: 'POST',
+                    data: data,
+                    beforeSend: function() {
+                        $('.coupon-btn').html(
+                            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>'
+                        );
+                    },
+                    success: function(response) {
+                        location.reload();
+                    },
+                    error: function(xhr, status, error) {
+                        const res = xhr.responseJSON;
+                        const message = res?.message || "Something went wrong";
+                        notyf.error(message);
+                    },
+                    complete: function() {
+                        $('.coupon-btn').html('<i class="fi-rs-label mr-10"></i>Apply');
+                    }
+                });
+            });
+
+            $('.remove-coupon').on('click', function() {
+                $.ajax({
+                    url: "{{ route('cart.coupon.destroy') }}",
+                    method: 'DELETE',
+                    data: {
+                        _token: "{{ csrf_token() }}"
+                    },
+                    beforeSend: function() {
+                        $('.remove-coupon').html(
+                            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>'
+                        );
+                    },
+                    success: function(response) {
+                        location.reload()
+                    },
+                    error: function(xhr, status, error) {
+                        let errors = xhr.responseJSON;
+                        Object.values(errors).forEach((err) => notyf.error(err));
+                    },
+                    complete: function() {
+                        $('.coupon-btn').html('<i class="fi-rs-label mr-10"></i>Apply');
+                    }
+                });
+            });
         })
-
-
     </script>
 @endpush

@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\KycRequestController;
@@ -24,7 +25,7 @@ Route::middleware('guest:admin')
     ->group(function () {
         Route::get('login', [AuthenticatedSessionController::class, 'create'])
             ->name('login');
- 
+
 
         Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
@@ -97,6 +98,8 @@ Route::middleware(['auth:admin'])
         Route::delete("/products/attributes/{product}/{attribute}", [ProductController::class, "destroyAttributes"])->name("products.attributes.destroy");
 
         Route::post("/products/variants/{product}/update", [ProductController::class, "updateVariants"])->name("products.variants.update");
+
+        Route::resource("coupons", CouponController::class);
 
 
 

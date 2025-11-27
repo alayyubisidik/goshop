@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Frontend;
+namespace App\Http\Controllers\Frontend\Pages;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\Coupon;
 use App\Models\Product;
 use App\Services\AlertService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Session;
 
 use function Flasher\Notyf\Prime\notyf;
@@ -18,14 +20,14 @@ class CartController extends Controller
 
         $cartItems = Cart::with('product')->where('user_id', user()->id)->paginate(30);
 
-        // if (Session::has('coupon')) {
-        //     $coupon = Coupon::find(Session::get('coupon')['id']);
-        //     $validateCoupon = $this->validateCoupon($coupon, $this->cartSubTotal());
+        if (Session::has('coupon')) {
+            $coupon = Coupon::find(Session::get('coupon')['id']);
+            $validateCoupon = $this->validateCoupon($coupon, $this->cartSubTotal());
 
-        //     if (isset($validateCoupon['error'])) {
-        //         Session::forget('coupon');
-        //     }
-        // }
+            if (isset($validateCoupon['error'])) {
+                Session::forget('coupon');
+            }
+        }
 
         return view('frontend.pages.cart', compact('cartItems'));
     }
@@ -147,5 +149,69 @@ class CartController extends Controller
         AlertService::deleted('Cart item deleted successfully');
 
         return back();
+    }
+
+     function applyCoupon(Request $request)
+    {
+        // dd($request->all());
+        $coupon = Coupon::where('code', $request->coupon_code)->first();
+        $cartSubTotal = $this->cartSubtotal();
+
+        $validation = $this->validateCoupon($coupon, $cartSubTotal);
+        if (isset($validation['error'])) {
+            return response()->json([
+                'message' => $validation['error'],
+            ], 422);
+        }
+        $discount = $coupon->is_percent ? $cartSubTotal * ($coupon->value / 100) : $coupon->value;
+        // cap discount so it doesnt exceed cart total
+        $discount = min($discount, $cartSubTotal);
+
+        $total = round($cartSubTotal - $discount, 2);
+
+        Session::put('coupon', [
+            'id' => $coupon->id,
+            'code' => $coupon->code,
+            'coupon_type' => $coupon->is_percent ? '%' : 'fixed',
+            'coupon_value' => $coupon->value,
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'discount' => $discount,
+            'coupon_type' => $coupon->is_percent ? '%' : 'fixed',
+            'coupon_value' => $coupon->value,
+            "total" => $total,
+            'message' => 'Coupon code applied successfully',
+        ], 200);
+    }
+
+    function validateCoupon($coupon, $cartTotal)
+    {
+        if (!$coupon) return ['error' => 'Invalid coupon code'];
+
+        if (!$coupon->is_active) return ['error' => 'Coupon code is not active'];
+
+        if (Carbon::now()->lt($coupon->start_date) || Carbon::now()->gt($coupon->end_date)) return ['error' => 'Coupon is expired or not yet valid.'];
+
+        if ($cartTotal < $coupon->minimum_spend) return ['error' => 'Minimum spend not reached.'];
+
+        if ($cartTotal > $coupon->maximum_spend) return ['error' => 'Maximum spend exceeded.'];
+
+        if ($coupon->used >= $coupon->usage_limit_per_coupon) return ['error' => 'Coupon usage limit exceeded.'];
+
+        // check can user user the coupon
+
+        return [];
+    }
+
+    function destroyCoupon()
+    {
+        // dd('working'); // Baris ini dikomentari karena dd() akan menghentikan eksekusi
+        Session::forget('coupon');
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Coupon code removed successfully',
+        ], 200);
     }
 }

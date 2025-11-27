@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Frontend\Dashboard\DashboardController;
 use App\Http\Controllers\Admin\ProfileController;
-use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Frontend\Pages\CartController;
 use App\Http\Controllers\Frontend\Pages\HomeController;
 use App\Http\Controllers\Frontend\Pages\KycController;
 use App\Http\Controllers\Frontend\Pages\ProductController;
@@ -21,6 +21,9 @@ Route::group(["middleware" => ["auth", "verified"]], function () {
     Route::post("/add-to-cart", [CartController::class, "add"])->name('cart.add');
     Route::put("/update-cart", [CartController::class, "update"])->name('cart.update');
     Route::delete("/cart/{id}", [CartController::class, "destroy"])->name('cart.destroy');
+
+    Route::post("/cart/coupon", [CartController::class, "applyCoupon"])->name('cart.coupon');
+    Route::delete("/cart/coupon/remove", [CartController::class, "destroyCoupon"])->name('cart.coupon.destroy');
 
     Route::get("/profile", [ProfileController::class, "index"])->name("profile.index");
     Route::put("/profile", [ProfileController::class, "update"])->name("profile.update");

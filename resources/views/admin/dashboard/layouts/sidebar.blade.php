@@ -96,6 +96,14 @@
                                 </a>
                             </div>
                         </div>
+                        <div class="dropdown-menu-columns">
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item  {{ setActive(['admin.coupons.*']) }}"
+                                    href="{{ route('admin.coupons.index') }}">
+                                    Coupons
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </li>
 

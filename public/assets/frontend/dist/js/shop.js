@@ -68,23 +68,23 @@
             });
         });
 
-        //Qty Up-Down
-        $('.detail-qty').each(function () {
-            var qtyval = parseInt($(this).find(".qty-val").val(), 10);
-            var $qtyInput = $(this).find(".qty-val");
+        // //Qty Up-Down
+        // $('.detail-qty').each(function () {
+        //     var qtyval = parseInt($(this).find(".qty-val").val(), 10);
+        //     var $qtyInput = $(this).find(".qty-val");
 
-            $(this).find('.qty-up').on('click', function (event) {
-                event.preventDefault();
-                qtyval = qtyval + 1;
-                $qtyInput.val(qtyval);
-            });
+        //     $(this).find('.qty-up').on('click', function (event) {
+        //         event.preventDefault();
+        //         qtyval = qtyval + 1;
+        //         $qtyInput.val(qtyval);
+        //     });
 
-            $(this).find(".qty-down").on("click", function (event) {
-                event.preventDefault();/*  */
-                qtyval = Math.max(1, qtyval - 1);
-                $qtyInput.val(qtyval);
-            });
-        });
+        //     $(this).find(".qty-down").on("click", function (event) {
+        //         event.preventDefault();/*  */
+        //         qtyval = Math.max(1, qtyval - 1);
+        //         $qtyInput.val(qtyval);
+        //     });
+        // });
 
         $('.dropdown-menu .cart_list').on('click', function (event) {
             event.stopPropagation();

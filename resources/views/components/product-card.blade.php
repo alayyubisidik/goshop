@@ -64,7 +64,7 @@
                             data-id="{{ $product->id }}" href="#"><i class="fi-rs-shopping-cart mr-5"></i>Add
                         </a>
                     </div>
-                @endif
+                @endif 
             </div>
         </div>
     </div>

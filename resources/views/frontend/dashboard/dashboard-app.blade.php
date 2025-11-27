@@ -24,6 +24,12 @@
                                             details</a>
                                     </li>
 
+                                    <li class="nav-item">
+                                        <a class="nav-link {{ setActive(['address.*']) }}"
+                                            href="{{ route('address.index') }}"><i class="fi-rs-marker mr-10"></i>My
+                                            Address</a>
+                                    </li>
+
                                     @if (!user('web')->kyc || user('web')->kyc->status === 'rejected')
                                         <li class="nav-item">
                                             <a class="nav-link {{ setActive(['kyc.index']) }}"
@@ -43,7 +49,7 @@
                                         </li>
                                     @endif
 
-                                    @if (user('web')->user_type == "vendor")
+                                    @if (user('web')->user_type == 'vendor')
                                         <li class="nav-item">
                                             <a class="nav-link {{ setActive(['vendor.dashboard.index']) }}"
                                                 href="{{ route('vendor.dashboard.index') }}">

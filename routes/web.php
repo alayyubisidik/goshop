@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Frontend\Dashboard\DashboardController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Frontend\Dashboard\AddressController;
 use App\Http\Controllers\Frontend\Pages\CartController;
+use App\Http\Controllers\Frontend\Pages\CheckoutController;
 use App\Http\Controllers\Frontend\Pages\HomeController;
 use App\Http\Controllers\Frontend\Pages\KycController;
 use App\Http\Controllers\Frontend\Pages\ProductController;
@@ -28,6 +30,12 @@ Route::group(["middleware" => ["auth", "verified"]], function () {
     Route::get("/profile", [ProfileController::class, "index"])->name("profile.index");
     Route::put("/profile", [ProfileController::class, "update"])->name("profile.update");
     Route::put("/profile/password", [ProfileController::class, "passwordUpdate"])->name("password.update");
+
+    Route::resource("address", AddressController::class);
+
+    Route::get("/checkout", [CheckoutController::class, "index"])->name("checkout.index");
+    Route::get("/shipping-method/{id}", [CheckoutController::class, "shippingMethod"])->name("checkout.shipping");
+    Route::post("/billing-info", [CheckoutController::class, "billingInfo"])->name("checkout.billing-info.store");
 
     Route::get("/kyc-verification", [KycController::class, "index"])->name("kyc.index");
     Route::post("/kyc-verification", [KycController::class, "store"])->name("kyc.store");

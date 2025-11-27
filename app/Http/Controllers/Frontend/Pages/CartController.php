@@ -151,7 +151,7 @@ class CartController extends Controller
         return back();
     }
 
-     function applyCoupon(Request $request)
+    function applyCoupon(Request $request)
     {
         // dd($request->all());
         $coupon = Coupon::where('code', $request->coupon_code)->first();

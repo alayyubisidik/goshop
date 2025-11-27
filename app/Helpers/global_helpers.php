@@ -4,7 +4,7 @@ use App\Models\Admin;
 use App\Models\Cart;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Session;
 
 if (!function_exists('user')) {
     function user(string $guard = 'web'): User | null | Admin
@@ -41,3 +41,36 @@ if (!function_exists('cartCount')) {
     }
 }
 
+if (!function_exists('cartTotal')) {
+    function cartTotal(): float
+    {
+        $cartTotal = 0;
+        $cartItems = Cart::with('product')->where('user_id', user()->id)->get();
+
+        foreach ($cartItems as $cartItem) {
+            $cartTotal += $cartItem->product->getVariantOrProductPriceAndStock($cartItem->variant_id)['price'] * $cartItem->quantity;
+        }
+
+        return $cartTotal;
+    }
+}
+
+if (!function_exists('cartDiscount')) {
+    function cartDiscount(): float
+    {
+        if (Session::has('coupon')) {
+            $coupon = Session::get('coupon');
+            $cartTotal = cartTotal(); // Memanggil fungsi dari kode sebelumnya
+
+            $discount = ($coupon['coupon_type'] == 'fixed')
+                ? $coupon['coupon_value']
+                : $cartTotal * ($coupon['coupon_value'] / 100);
+
+            $discount = min($discount, $cartTotal);
+
+            return $discount;
+        }
+
+        return 0;
+    }
+}

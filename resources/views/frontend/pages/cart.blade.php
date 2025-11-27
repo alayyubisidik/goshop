@@ -207,7 +207,7 @@
                         </table>
                     </div>
                     @if (cartCount() > 0)
-                        <a href="" class="btn w-100">Proceed To CheckOut<i class="fi-rs-sign-out ml-15"></i></a>
+                        <a href="{{ route('checkout.index') }}" class="btn w-100">Proceed To CheckOut<i class="fi-rs-sign-out ml-15"></i></a>
                     @endif
                 </div>
             </div>

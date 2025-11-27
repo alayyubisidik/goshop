@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\KycRequestController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\ShippingRuleController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\UserRoleController;
 use Illuminate\Support\Facades\Route;
@@ -100,6 +101,8 @@ Route::middleware(['auth:admin'])
         Route::post("/products/variants/{product}/update", [ProductController::class, "updateVariants"])->name("products.variants.update");
 
         Route::resource("coupons", CouponController::class);
+
+        Route::resource("shipping-rules", ShippingRuleController::class);
 
 
 

@@ -10,6 +10,7 @@ use Database\Seeders\Admin\StoreSeeder;
 use Database\Seeders\Frontend\UserSeeder;
 use Database\Seeders\Admin\CategorySeeder;
 use Database\Seeders\Admin\PermissionSeeder;
+use Database\Seeders\Admin\ProductSeeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DatabaseSeeder extends Seeder
@@ -26,6 +27,7 @@ class DatabaseSeeder extends Seeder
             StoreSeeder::class,
             BrandSeeder::class,
             RoleSeeder::class,
+            ProductSeeder::class
         ]);
     }
 }

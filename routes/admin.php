@@ -22,9 +22,9 @@ Route::middleware('guest:admin')
     ->prefix("admin")
     ->as("admin.")
     ->group(function () {
-
         Route::get('login', [AuthenticatedSessionController::class, 'create'])
             ->name('login');
+ 
 
         Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
@@ -41,7 +41,7 @@ Route::middleware('guest:admin')
             ->name('password.store');
     });
 
-Route::middleware('user_role:admin')
+Route::middleware(['auth:admin'])
     ->prefix("admin")
     ->as("admin.")
     ->group(function () {

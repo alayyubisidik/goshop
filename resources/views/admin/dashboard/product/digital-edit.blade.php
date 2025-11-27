@@ -164,7 +164,7 @@
                                 <div class="mb-3">
                                     <label class="form-label required" for="slug">Slug</label>
                                     <input type="text" class="form-control" name="slug" id="slug"
-                                        value="{{ old('name', $product->name) }}">
+                                        value="{{ old('name', $product->slug) }}">
                                     <x-input-error :messages="$errors->get('slug')" class="mt-2" />
                                 </div>
                             </div>
@@ -172,7 +172,7 @@
                             <div class="col-12">
                                 <div class="mb-3">
                                     <label class="form-label required" for="short_description">Short Description</label>
-                                    <textarea name="description" id="editor">{!! old('description', $product->short_description) !!}</textarea>
+                                    <textarea name="short_description" id="editor">{!! old('short_description', $product->short_description) !!}</textarea>
                                     <x-input-error :messages="$errors->get('short_description')" class="mt-2" />
                                 </div>
                             </div>
@@ -228,7 +228,7 @@
                                     <div class="mb-3">
                                         <label class="form-label required" for="special_price_start">From Date</label>
                                         <input type="text" class="form-control datepicker" name="special_price_start"
-                                            value="{{ old('special_price_start', $product->special_price_start) }}">
+                                            value="{{ old('special_price_start', $product->special_price_start) }}" autocomplete="off">
                                         <x-input-error :messages="$errors->get('special_price_start')" class="mt-2" />
                                     </div>
                                 </div>
@@ -238,7 +238,7 @@
                                         <label class="form-label required" for="special_price_end">To Date</label>
                                         <input type="text" class="form-control datepicker" name="special_price_end"
                                             id="special_price_end"
-                                            value="{{ old('special_price_end', $product->special_price_end) }}">
+                                            value="{{ old('special_price_end', $product->special_price_end) }}" autocomplete="off">
                                         <x-input-error :messages="$errors->get('special_price_end')" class="mt-2" />
                                     </div>
                                 </div>
@@ -276,13 +276,13 @@
                                                 <div class="mb-3">
                                                     <label class="form-check">
                                                         <input class="form-check-input" type="radio"
-                                                            name="stock_status" @checked(old('in_stock', $product->in_stock) == 1)
+                                                            name="in_stock" @checked(old('in_stock', $product->in_stock) == 1)
                                                             value="1">
                                                         <span class="form-check-label">In Stock</span>
                                                     </label>
                                                     <label class="form-check">
                                                         <input class="form-check-input" type="radio"
-                                                            name="stock_status" @checked(old('in_stock', $product->in_stock) == 0)
+                                                            name="in_stock" @checked(old('in_stock', $product->in_stock) == 0)
                                                             value="0">
                                                         <span class="form-check-label">Out of Stock</span>
                                                     </label>
@@ -294,7 +294,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="card mt-3" id="product-images">
                         <div class="card-header">
                             <div class="card-title">
@@ -404,7 +403,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="card mb-3">
                         <div class="card-header">
                             <h3 class="card-title">Store</h3>

@@ -26,7 +26,7 @@ if (!function_exists("hasPermission")) {
         /** @var \App\Models\Admin $admin */
         $admin = auth('admin')->user();
 
-        if ($admin->hasRole("Super Admin")) return true;
+        // if ($admin->hasRole("Super Admin")) return true;
 
         return $admin && $admin->hasAnyPermission($permission);
     }

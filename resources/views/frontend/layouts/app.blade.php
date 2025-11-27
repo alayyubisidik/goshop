@@ -28,6 +28,10 @@
 
 <body>
 
+    <div class="modal fade custom-modal" id="quickViewModal" tabindex="-1" aria-labelledby="quickViewModalLabel"
+        aria-hidden="true">
+    </div>
+
     @include('frontend.layouts.header')
 
     <main class="main">

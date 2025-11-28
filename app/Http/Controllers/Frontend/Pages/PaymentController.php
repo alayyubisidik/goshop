@@ -124,7 +124,6 @@ class PaymentController extends Controller
                 paidAmount: $order['amount']['value'],
                 paymentMethod: 'Paypal',
                 currency: $order['amount']['currency_code'],
-                currencyRate: config('settings.paypal_rate'),
                 paymentStatus: 'paid'
             );
             return to_route("payment.success");
@@ -136,7 +135,7 @@ class PaymentController extends Controller
 
     function stripePayment()
     {
-        $payableAmount = (getPayableAmount() * config('settings.stripe_rate')) * 100;
+        $payableAmount = getPayableAmount() * 100;
 
         Stripe::setApiKey(config('settings.stripe_secret_key'));
 
@@ -175,7 +174,6 @@ class PaymentController extends Controller
                 paidAmount: $response->amount_total / 100,
                 paymentMethod: 'Stripe',
                 currency: $response->currency,
-                currencyRate: config('settings.stripe_rate'),
                 paymentStatus: 'paid'
             );
 

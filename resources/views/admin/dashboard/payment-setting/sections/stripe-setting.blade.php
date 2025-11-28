@@ -38,13 +38,6 @@
                     <x-input-error :messages="$errors->get('stripe_currency')" class="mt-2" />
                 </div>
 
-
-                <div class="col-md-6">
-                    <div class="form-label">Stripe Rate</div>
-                    <input type="text" class="form-control" name="stripe_rate"
-                        value="{{ config('settings.stripe_rate') }}">
-                    <x-input-error :messages="$errors->get('stripe_rate')" class="mt-2" />
-                </div>
                 <div class="col-md-6">
                     <div class="form-label">Stripe Client ID</div>
                     <input type="text" class="form-control" name="stripe_client_id"

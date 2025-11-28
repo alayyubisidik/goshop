@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Session;
 
 class OrderService
 {
-    static function storeOrder(string $paymentId, float $paidAmount, string $paymentMethod, string $currency, float $currencyRate, string $paymentStatus)
+    static function storeOrder(string $paymentId, float $paidAmount, string $paymentMethod, string $currency, string $paymentStatus)
     {
         $cartItems = Cart::with('product.store')
             ->where('user_id', user()->id)
@@ -83,17 +83,17 @@ class OrderService
             $order->total = $paidAmount;
             $order->payment_method = $paymentMethod;
             $order->currency = $currency;
-            $order->currency_rate = $currencyRate;
+            $order->currency_rate = 1;
             $order->order_status = 'pending';
             $order->payment_status = $paymentStatus;
             $order->save();
 
-            // // store admin commission
-            // $adminCommission = new AdminCommission();
-            // $adminCommission->order_id = $order->id;
-            // $adminCommission->commission_rate = config('settings.admin_commission');
-            // $adminCommission->commission_amount = round($order->total * ($adminCommission->commission_rate / 100), 2);
-            // $adminCommission->save();
+            // store admin commission
+            $adminCommission = new AdminCommission();
+            $adminCommission->order_id = $order->id;
+            $adminCommission->commission_rate = config('settings.admin_commission');
+            $adminCommission->commission_amount = round($order->total * ($adminCommission->commission_rate / 100), 2);
+            $adminCommission->save();
 
             // if (StoreWallet::where('store_id', $store['store']->id)->exists()) {
             //     $storeWallet = StoreWallet::where('store_id', $store['store']->id)->first();

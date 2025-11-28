@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\KycRequestController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PaymentSettingController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RoleController;
@@ -113,7 +114,9 @@ Route::middleware(['auth:admin'])
         Route::get("/settings/commission-settings", [SettingController::class, "commissionSettingsIndex"])->name("settings.commission.index");
         Route::put("/settings/commission-settings", [SettingController::class, "commissionSettingsStore"])->name("settings.commission.store");
 
-
+        Route::get("/orders", [OrderController::class, "index"])->name("orders.index");
+        Route::get("/orders/{order}", [OrderController::class, "show"])->name("orders.show");
+        Route::post("/orders/{order}/update", [OrderController::class, "update"])->name("orders.update");
 
 
 

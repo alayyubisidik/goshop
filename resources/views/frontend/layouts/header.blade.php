@@ -1,4 +1,4 @@
-<header class="header-area header-style-1 header-style-5 header-height-2">
+<header class="header-area header-style-1 header-style-5 header-height-2 d-print-none">
     <div class="mobile-promotion">
         <span>Grand opening, <strong>up to 15%</strong> off all items. Only <strong>3 days</strong> left</span>
     </div>

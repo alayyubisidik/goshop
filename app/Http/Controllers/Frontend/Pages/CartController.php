@@ -17,7 +17,6 @@ class CartController extends Controller
 {
     function index()
     {
-
         $cartItems = Cart::with('product')->where('user_id', user()->id)->paginate(30);
 
         if (Session::has('coupon')) {

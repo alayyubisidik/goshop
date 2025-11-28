@@ -40,4 +40,30 @@ class SettingController extends Controller
 
         return to_route("admin.settings.index");
     }
+
+    function commissionSettingsIndex()
+    {
+        return view("admin.dashboard.setting.sections.commission-settings");
+    }
+
+    function commissionSettingsStore(Request $request)
+    {
+        $validatedData = $request->validate([
+            "admin_commission" => ["required", "numeric", "max:100"],
+        ]);
+
+        foreach ($validatedData as $key => $value) {
+            Setting::updateOrCreate(
+                ["key" => $key],
+                ["value" => $value],
+            );
+        }
+
+        $settings = app()->make(SettingService::class);
+        $settings->clearCashedSettings();
+
+        AlertService::updated();
+
+        return to_route("admin.settings.commission.index");
+    }
 }

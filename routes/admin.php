@@ -110,6 +110,9 @@ Route::middleware(['auth:admin'])
         Route::get("/stripe-settings", [PaymentSettingController::class, "stripe"])->name("stripe-settings.index");
         Route::post("/stripe-settings", [PaymentSettingController::class, "stripeSettings"])->name("stripe-settings.store");
 
+        Route::get("/settings/commission-settings", [SettingController::class, "commissionSettingsIndex"])->name("settings.commission.index");
+        Route::put("/settings/commission-settings", [SettingController::class, "commissionSettingsStore"])->name("settings.commission.store");
+
 
 
 

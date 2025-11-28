@@ -11,10 +11,10 @@
                             <a href="{{ route("admin.settings.index") }}"
                                 class="list-group-item list-group-item-action d-flex align-items-center  {{ Route::is("admin.settings.index") ? 'active' : '' }}">
                                 General Settings</a>
-                            {{-- <a href="{{ route("admin.settings.commission.index") }}"
+                            <a href="{{ route("admin.settings.commission.index") }}"
                                 class="list-group-item list-group-item-action d-flex align-items-center  {{ Route::is("admin.settings.commission.index") ? 'active' : '' }}">
                                 Commission Settings</a>
-                            <a href="{{ route("admin.settings.site.index") }}"
+                            {{-- <a href="{{ route("admin.settings.site.index") }}"
                                 class="list-group-item list-group-item-action d-flex align-items-center  {{ Route::is("admin.settings.site.index") ? 'active' : '' }}">
                                 Site Settings</a>
                             <a href="{{ route("admin.settings.logo.index") }}"

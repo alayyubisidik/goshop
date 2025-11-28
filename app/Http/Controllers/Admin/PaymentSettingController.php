@@ -52,7 +52,6 @@ class PaymentSettingController extends Controller
             'stripe_status' => ['required', 'string', 'max:255'],
             'stripe_mode' => ['required', 'string', 'max:255'],
             'stripe_currency' => ['required', 'string', 'max:255'],
-            'stripe_rate' => ['required', 'numeric'],
             'stripe_client_id' => ['required', 'string', 'max:255'],
             'stripe_secret_key' => ['required', 'string', 'max:255'],
         ]);

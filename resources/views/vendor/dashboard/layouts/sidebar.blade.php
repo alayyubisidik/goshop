@@ -114,6 +114,7 @@
                         </div>
                     </div>
                 </li>
+
                 <li class="nav-item {{ setActive(['vendor.store-profile.index'], 'active') }}">
                     <a class="nav-link" href="{{ route('vendor.store-profile.index') }}">
                         <span
@@ -133,6 +134,34 @@
                         </span>
                         <span class="nav-link-title"> Store Profile </span>
                     </a>
+                </li>
+
+                <li
+                    class="nav-item dropdown {{ setActive(['vendor.withdraw-methods.*', 'vendor.withdraw-requests.*'], 'active') }}">
+                    <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
+                        data-bs-auto-close="false" role="button" aria-expanded="false">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <i class="ti ti-basket-dollar"></i>
+                        </span>
+                        <span class="nav-link-title">Withdraws</span>
+                    </a>
+                    <div
+                        class="dropdown-menu {{ setActive(['vendor.withdraw-methods.*', 'vendor.withdraw-requests.*'], 'show') }}">
+                        <div class="dropdown-menu-columns">
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ setActive(['vendor.withdraw-methods.*'], 'active') }}"
+                                    href="{{ route('vendor.withdraw-methods.index') }}">
+                                    Withdraw Methods
+                                </a>
+                            </div>
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ setActive(['vendor.withdraw-requests.*'], 'active') }}"
+                                    href="{{ route('vendor.withdraw-requests.index') }}">
+                                    Withdraw Requests
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </li>
             </ul>
         </div>

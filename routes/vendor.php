@@ -5,6 +5,8 @@ use App\Http\Controllers\Vendor\ProfileController;
 use App\Http\Controllers\Vendor\DashboardController;
 use App\Http\Controllers\Vendor\OrderController;
 use App\Http\Controllers\Vendor\StoreController;
+use App\Http\Controllers\Vendor\StoreWithdrawMethodController;
+use App\Http\Controllers\Vendor\StoreWithdrawRequestController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(["prefix" => "vendor", "as" => "vendor.", "middleware" => ["auth", "verified", "user_role:vendor"]], function () {
@@ -40,9 +42,12 @@ Route::group(["prefix" => "vendor", "as" => "vendor.", "middleware" => ["auth", 
     Route::get("/orders/{order}", [OrderController::class, "show"])->name("orders.show");
     Route::post("/orders/{order}/update", [OrderController::class, "update"])->name("orders.update");
 
+    Route::resource("withdraw-methods", StoreWithdrawMethodController::class);
 
-    // Route::resource("/store-profile", StoreController::class);
-
+    Route::get("/withdraw-requests", [StoreWithdrawRequestController::class, "index"])->name("withdraw-requests.index");
+    Route::get("/withdraw-requests/create", [StoreWithdrawRequestController::class, "create"])->name("withdraw-requests.create");
+    Route::post("/withdraw-requests/store", [StoreWithdrawRequestController::class, "store"])->name("withdraw-requests.store");
+    Route::delete("/withdraw-requests/{withdraw_request}", [StoreWithdrawRequestController::class, "destroy"])->name("withdraw-requests.destroy");
 });
 
 

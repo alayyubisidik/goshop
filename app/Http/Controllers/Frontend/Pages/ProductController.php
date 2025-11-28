@@ -134,9 +134,6 @@ class ProductController extends Controller
             ->take(6)
             ->get();
 
-
-
-
         return view('frontend.pages.product-show', compact('product', 'relatedProducts'));
     }
 }

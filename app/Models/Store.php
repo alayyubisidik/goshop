@@ -21,4 +21,9 @@ class Store extends Model
         'long_description',
         'address'
     ];
+
+    public function wallet(): HasOne
+    {
+        return $this->hasOne(StoreWallet::class, "store_id");
+    }
 }

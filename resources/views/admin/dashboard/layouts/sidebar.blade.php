@@ -189,6 +189,34 @@
                     </div>
                 </li>
 
+                <li
+                    class="nav-item dropdown {{ setActive(['admin.withdraw-methods.*', 'admin.withdraw-requests.*'], 'active') }}">
+                    <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
+                        data-bs-auto-close="false" role="button" aria-expanded="false">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <i class="ti ti-basket-dollar"></i>
+                        </span>
+                        <span class="nav-link-title">Withdraws</span>
+                    </a>
+                    <div
+                        class="dropdown-menu {{ setActive(['admin.withdraw-methods.*', 'admin.withdraw-requests.*'], 'show') }}">
+                        <div class="dropdown-menu-columns">
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ setActive(['admin.withdraw-methods.*'], 'active') }}"
+                                    href="{{ route('admin.withdraw-methods.index') }}">
+                                    Withdraw Methods
+                                </a>
+                            </div>
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ setActive(['admin.withdraw-requests.*'], 'active') }}"
+                                    href="{{ route('admin.withdraw-requests.index') }}">
+                                    Withdraw Requests
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
                 @if (hasPermission(['Manage KYC', 'View KYC']))
                     <li class="nav-item dropdown {{ setActive(['admin.kyc.*']) }}">
                         <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"

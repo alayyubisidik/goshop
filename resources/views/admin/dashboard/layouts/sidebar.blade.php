@@ -49,7 +49,7 @@
                 </li>
 
                 <li
-                    class="nav-item dropdown {{ setActive(['admin.categories.*', 'admin.tags.*', 'admin.brands.*', 'admin.products.*']) }}">
+                    class="nav-item dropdown {{ setActive(['admin.categories.*', 'admin.tags.*', 'admin.brands.*', 'admin.products.*', 'admin.flash-sales.*']) }}">
                     <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                         data-bs-auto-close="false" role="button" aria-expanded="false">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -65,12 +65,20 @@
                         <span class="nav-link-title"> Manage Products </span>
                     </a>
                     <div
-                        class="dropdown-menu {{ setActive(['admin.categories.*', 'admin.tags.*', 'admin.brands.*', 'admin.products.*'], 'show') }}">
+                        class="dropdown-menu {{ setActive(['admin.categories.*', 'admin.tags.*', 'admin.brands.*', 'admin.products.*', 'admin.flash-sales.*'], 'show') }}">
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
                                 <a class="dropdown-item  {{ setActive(['admin.products.*']) }}"
                                     href="{{ route('admin.products.index') }}">
                                     Products
+                                </a>
+                            </div>
+                        </div>
+                        <div class="dropdown-menu-columns">
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ setActive(['admin.flash-sales.*']) }}"
+                                    href="{{ route('admin.flash-sales.index') }}">
+                                    Flash Sales
                                 </a>
                             </div>
                         </div>
@@ -186,6 +194,97 @@
                                 </a>
                             </div>
                         </div>
+                    </div>
+                </li>
+
+                <li
+                    class="nav-item dropdown {{ setActive(['admin.offer-sliders.*', 'admin.sliders.*', 'admin.hero-banners.*', 'admin.popular-categories.*', 'admin.product-sections.*', 'admin.our-features.*', 'admin.social-links.*']) }}">
+
+                    <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
+                        data-bs-auto-close="false" role="button" aria-expanded="false">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-layout-dashboard">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M5 4h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1" />
+                                <path d="M5 16h4a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1" />
+                                <path
+                                    d="M15 12h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1" />
+                                <path d="M15 4h4a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1" />
+                            </svg>
+                        </span>
+                        <span class="nav-link-title">Manage Sections </span>
+                    </a>
+                    <div
+                        class="dropdown-menu {{ setActive(['admin.offer-sliders.*', 'admin.sliders.*', 'admin.hero-banners.*', 'admin.popular-categories.*', 'admin.product-sections.*', 'admin.our-features.*', 'admin.social-links.*'], 'show') }}">
+
+                        <div class="dropdown-menu-columns">
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ setActive(['admin.sliders.*']) }}"
+                                    href="{{ route('admin.sliders.index') }}">
+                                    Sliders
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="dropdown-menu-columns">
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ setActive(['admin.hero-banners.*']) }}"
+                                    href="{{ route('admin.hero-banners.index') }}">
+                                    Hero Banners
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="dropdown-menu-columns">
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ setActive(['admin.popular-categories.*']) }}"
+                                    href="{{ route('admin.popular-categories.index') }}">
+                                    Popular Category Products
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="dropdown-menu-columns">
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ setActive(['admin.category-you-may-like.*']) }}"
+                                    href="{{ route('admin.category-you-may-like.index') }}">
+                                    Category You May Like
+                                </a>
+                            </div>
+                        </div>
+
+                        {{-- <div class="dropdown-menu-columns ">
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ setActive(['admin.offer-sliders.*']) }}"
+                                    href="{{ route('admin.offer-sliders.index') }}">
+                                    Offer Sliders
+                                </a>
+                            </div>
+                        </div> --}}
+
+                        {{--
+
+                        {{--
+                        <div class="dropdown-menu-columns">
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ setActive(['admin.our-features.*']) }}"
+                                    href="{{ route('admin.our-features.index') }}">
+                                    Our Features
+                                </a>
+                            </div>
+                        </div> --}}
+
+                        {{-- <div class="dropdown-menu-columns">
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ setActive(['admin.social-links.*']) }}"
+                                    href="{{ route('admin.social-links.index') }}">
+                                    Social Links
+                                </a>
+                            </div>
+                        </div> --}}
                     </div>
                 </li>
 

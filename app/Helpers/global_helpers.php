@@ -2,6 +2,7 @@
 
 use App\Models\Admin;
 use App\Models\Cart;
+use App\Models\Category;
 use App\Models\ShippingRule;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -96,5 +97,14 @@ if (!function_exists('getShippingCharge')) {
         }
 
         return 0;
+    }
+}
+
+/** get nested categories */
+if (!function_exists('getNestedCategories')) {
+    function getNestedCategories()
+    {
+        $categories = Category::getNested();
+        return $categories;
     }
 }

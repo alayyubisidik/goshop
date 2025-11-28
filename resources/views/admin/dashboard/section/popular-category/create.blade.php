@@ -1,5 +1,6 @@
 @extends('admin.dashboard.layouts.app')
 
+
 @section('contents')
     <div class="container-xl">
         <div class="card">
@@ -13,20 +14,13 @@
                 <form action="{{ route('admin.brands.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
-
-                        <div class="col-md-12 mb-2">
+                        <div class="col-md-3 mb-2" style="margin-right: 20px">
                             <div class="mb-3">
                                 <label class="form-label">Brand Logo</label>
-                                <div class="image-preview-box">
-                                    <input type="file" name="image" id="brand-logo-upload" accept="image/*"
-                                        class="form-control" />
-                                    <img id="brand-logo-preview" class="img-preview" alt="Logo Preview" src=""
-                                        style="width: 200px; border-radius: 5px; margin-top: 20px; display: none" />
-                                </div>
-                                <x-input-error :messages="$errors->get('image')" class="mt-2" />
+                                <x-input-image name="brand_logo" />
+                                <x-input-error :messages="$errors->get('brand_logo')" class="mt-2" />
                             </div>
                         </div>
-
                         <div class="col-12">
                             <div class="mb-3">
                                 <label class="form-label required" for="name">Name</label>
@@ -54,3 +48,18 @@
     </div>
 @endsection
 
+
+@push('scripts')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $.uploadPreview({
+                input_field: "#image-upload", // Default: .image-upload
+                preview_box: "#image-preview", // Default: .image-preview
+                label_field: "#image-label", // Default: .image-label
+                label_default: "Choose File", // Default: Choose File
+                label_selected: "Change File", // Default: Change File
+                no_label: false // Default: false
+            });
+        });
+    </script>
+@endpush

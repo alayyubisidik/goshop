@@ -8,16 +8,21 @@ use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CategoryYouMayLikeController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\FlashSaleController;
+use App\Http\Controllers\Admin\HeroBannerController;
 use App\Http\Controllers\Admin\KycRequestController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PaymentSettingController;
+use App\Http\Controllers\Admin\PopularCategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\ShippingRuleController;
+use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\UserRoleController;
 use App\Http\Controllers\Admin\WithdrawMethodController;
@@ -123,6 +128,21 @@ Route::middleware(['auth:admin'])
         Route::resource("withdraw-methods", WithdrawMethodController::class);
 
         Route::resource("withdraw-requests", WithdrawRequestController::class);
+
+        Route::resource("sliders", SliderController::class);
+
+        Route::get("/hero-banners", [HeroBannerController::class, "index"])->name("hero-banners.index");
+        Route::post("/hero-banners", [HeroBannerController::class, "store"])->name("hero-banners.store");
+
+        Route::resource("popular-categories", PopularCategoryController::class);
+
+        Route::get("/get-products", [FlashSaleController::class, "getProducts"])->name("flash-sales.get-products");
+        Route::resource("flash-sales", FlashSaleController::class);
+
+        Route::resource("category-you-may-like", CategoryYouMayLikeController::class);
+
+
+
 
 
 

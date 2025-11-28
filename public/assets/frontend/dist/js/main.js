@@ -40,36 +40,7 @@
         $(".sticky-sidebar").theiaStickySidebar();
     }
 
-    // Slider Range JS
-    if ($("#slider-range").length) {
-        $(".noUi-handle").on("click", function () {
-            $(this).width(50);
-        });
-        var rangeSlider = document.getElementById("slider-range");
-        var moneyFormat = wNumb({
-            decimals: 0,
-            thousand: ",",
-            prefix: "$"
-        });
-        noUiSlider.create(rangeSlider, {
-            start: [500, 1000],
-            step: 1,
-            range: {
-                min: [0],
-                max: [2000]
-            },
-            format: moneyFormat,
-            connect: true
-        });
 
-        // Set visual min and max values and also update value hidden form inputs
-        rangeSlider.noUiSlider.on("update", function (values, handle) {
-            document.getElementById("slider-range-value1").innerHTML = values[0];
-            document.getElementById("slider-range-value2").innerHTML = values[1];
-            document.getElementsByName("min-value").value = moneyFormat.from(values[0]);
-            document.getElementsByName("max-value").value = moneyFormat.from(values[1]);
-        });
-    }
 
     /*------ Hero slider 1 ----*/
     $(".hero-slider-1").slick({
@@ -757,6 +728,14 @@
         showItems: 1
     });
 
+    $("#news-flash-mobile").vTicker({
+        speed: 500,
+        pause: 3000,
+        animation: "fade",
+        mousePause: false,
+        showItems: 1
+    });
+
     // product filter
     $(".sidebar_filter").on("click", function () {
         $(".sidebar_filter").toggleClass("show");
@@ -765,6 +744,49 @@
         $(".sidebar_wraper").toggleClass("show");
     });
 
+
+
+    $(document).ready(function () {
+        // Hide all submenus initially
+        $(".sub_category, .child_category").hide();
+
+        // Append + icon dynamically for menu items with children
+        $(".main_category li > a").each(function () {
+            if ($(this).siblings("ul").length) {
+                $(this).append(' <span class="icon">+</span>');
+            }
+        });
+
+        // Collapse/expand only on clicking the + icon
+        $(".main_category").on("click", "span.icon", function (e) {
+            e.preventDefault(); // stop default link click
+
+            const parentA = $(this).closest("a");
+            const submenu = parentA.siblings("ul");
+            const parentLi = parentA.parent();
+
+            submenu.slideToggle(200);
+            parentLi.toggleClass("active");
+
+            // Toggle +/− icon
+            const isExpanded = parentLi.hasClass("active");
+            $(this).text(isExpanded ? "−" : "+");
+        });
+
+        $(".child_category").on("click", "li > a", function () {
+            $(".child_category li").removeClass("active");
+            $(this).parent("li").addClass("active");
+
+        });
+
+        $('.main_category li.active').each(function () {
+            console.log($(this));
+            $(this).parents('ul').each(function () {
+                $(this).show();
+                $(this).closest('li').addClass('active');
+            })
+        })
+    });
 
 
 

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Vendor\ProductController;
 use App\Http\Controllers\Vendor\ProfileController;
 use App\Http\Controllers\Vendor\DashboardController;
+use App\Http\Controllers\Vendor\OrderController;
 use App\Http\Controllers\Vendor\StoreController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +35,10 @@ Route::group(["prefix" => "vendor", "as" => "vendor.", "middleware" => ["auth", 
     Route::delete("/products/attributes/{product}/{attribute}", [ProductController::class, "destroyAttributes"])->name("products.attributes.destroy");
 
     Route::post("/products/variants/{product}/update", [ProductController::class, "updateVariants"])->name("products.variants.update");
+
+    Route::get("/orders", [OrderController::class, "index"])->name("orders.index");
+    Route::get("/orders/{order}", [OrderController::class, "show"])->name("orders.show");
+    Route::post("/orders/{order}/update", [OrderController::class, "update"])->name("orders.update");
 
 
     // Route::resource("/store-profile", StoreController::class);

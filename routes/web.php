@@ -3,6 +3,7 @@
 use App\Http\Controllers\Frontend\Dashboard\DashboardController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Frontend\Dashboard\AddressController;
+use App\Http\Controllers\Frontend\Dashboard\UserOrderController;
 use App\Http\Controllers\Frontend\Pages\CartController;
 use App\Http\Controllers\Frontend\Pages\CheckoutController;
 use App\Http\Controllers\Frontend\Pages\HomeController;
@@ -49,6 +50,9 @@ Route::group(["middleware" => ["auth", "verified"]], function () {
     Route::get("/stripe/payment", [PaymentController::class, "stripePayment"])->name("stripe.payment");
     Route::get("/stripe/success", [PaymentController::class, "stripeSuccess"])->name("stripe.success");
     Route::get("/stripe/cancel", [PaymentController::class, "stripeCancel"])->name("stripe.cancel");
+
+    Route::get("/orders", [UserOrderController::class, "index"])->name("orders.index");
+    Route::get("/orders/{order}", [UserOrderController::class, "show"])->name("orders.show");
 
 
     Route::get("/kyc-verification", [KycController::class, "index"])->name("kyc.index");

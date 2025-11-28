@@ -25,6 +25,12 @@
                                     </li>
 
                                     <li class="nav-item">
+                                        <a class="nav-link {{ setActive(['orders.*']) }}"
+                                            href="{{ route('orders.index') }}"><i
+                                                class="fi-rs-shopping-bag mr-10"></i>Orders</a>
+                                    </li>
+
+                                    <li class="nav-item">
                                         <a class="nav-link {{ setActive(['address.*']) }}"
                                             href="{{ route('address.index') }}"><i class="fi-rs-marker mr-10"></i>My
                                             Address</a>

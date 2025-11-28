@@ -1,4 +1,4 @@
-  <footer class="main pt-10">
+  <footer class="main pt-10 d-print-none">
         <section class="newsletter mb-15 wow animate__animated animate__fadeIn">
             <div class=" container">
                 <div class="row">

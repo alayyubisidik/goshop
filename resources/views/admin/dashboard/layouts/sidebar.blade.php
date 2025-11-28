@@ -1,4 +1,4 @@
-<aside class="navbar navbar-vertical navbar-expand-lg" data-bs-theme="dark">
+<aside class="navbar navbar-vertical navbar-expand-lg d-print-none" data-bs-theme="dark">
     <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar-menu"
             aria-controls="sidebar-menu" aria-expanded="false" aria-label="Toggle navigation">
@@ -103,6 +103,86 @@
                                 <a class="dropdown-item  {{ setActive(['admin.coupons.*']) }}"
                                     href="{{ route('admin.coupons.index') }}">
                                     Coupons
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="nav-item dropdown {{ setActive(['admin.orders.*']) }}">
+                    <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
+                        data-bs-auto-close="false" role="button" aria-expanded="false">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-bag-plus">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path
+                                    d="M12.5 21h-3.926a3 3 0 0 1 -2.965 -2.544l-1.255 -8.152a2 2 0 0 1 1.977 -2.304h11.339a2 2 0 0 1 1.977 2.304l-.263 1.708" />
+                                <path d="M16 19h6" />
+                                <path d="M19 16v6" />
+                                <path d="M9 11v-5a3 3 0 0 1 6 0v5" />
+                            </svg>
+                        </span>
+                        <span class="nav-link-title"> Orders </span>
+                    </a>
+                    <div class="dropdown-menu {{ setActive(['admin.orders.*'], 'show') }}">
+                        <div class="dropdown-menu-columns">
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item" href="{{ route('admin.orders.index') }}">
+                                    All Orders
+                                </a>
+                            </div>
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item"
+                                    href="{{ route('admin.orders.index', ['status' => 'pending']) }}">
+                                    Pending Orders
+                                </a>
+                            </div>
+
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item"
+                                    href="{{ route('admin.orders.index', ['status' => 'processing']) }}">
+                                    Proccessing Orders
+                                </a>
+                            </div>
+
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item"
+                                    href="{{ route('admin.orders.index', ['status' => 'packed']) }}">
+                                    Packed Orders
+                                </a>
+                            </div>
+
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item"
+                                    href="{{ route('admin.orders.index', ['status' => 'shipped']) }}">
+                                    Shipped Orders
+                                </a>
+                            </div>
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item"
+                                    href="{{ route('admin.orders.index', ['status' => 'in_transit']) }}">
+                                    In Transit
+                                </a>
+                            </div>
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item"
+                                    href="{{ route('admin.orders.index', ['status' => 'out_for_delivery']) }}">
+                                    Out For Delivery
+                                </a>
+                            </div>
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item"
+                                    href="{{ route('admin.orders.index', ['status' => 'delivered']) }}">
+                                    Delivered
+                                </a>
+                            </div>
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item"
+                                    href="{{ route('admin.orders.index', ['status' => 'canceled']) }}">
+                                    Canceled
                                 </a>
                             </div>
                         </div>

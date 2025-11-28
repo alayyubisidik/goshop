@@ -95,15 +95,15 @@ class OrderService
             $adminCommission->commission_amount = round($order->total * ($adminCommission->commission_rate / 100), 2);
             $adminCommission->save();
 
-            // if (StoreWallet::where('store_id', $store['store']->id)->exists()) {
-            //     $storeWallet = StoreWallet::where('store_id', $store['store']->id)->first();
-            // } else {
-            //     $storeWallet = new StoreWallet();
-            // }
+            if (StoreWallet::where('store_id', $store['store']->id)->exists()) {
+                $storeWallet = StoreWallet::where('store_id', $store['store']->id)->first();
+            } else {
+                $storeWallet = new StoreWallet();
+            }
 
-            // $storeWallet->store_id = $store['store']->id;
-            // $storeWallet->balance = $storeWallet->balance + ($order->total - $adminCommission->commission_amount);
-            // $storeWallet->save();
+            $storeWallet->store_id = $store['store']->id;
+            $storeWallet->balance = $storeWallet->balance + ($order->total - $adminCommission->commission_amount);
+            $storeWallet->save();
 
             foreach ($store['items'] as $item) {
                 $orderProduct = new OrderProduct();

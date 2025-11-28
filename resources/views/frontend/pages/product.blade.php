@@ -6,7 +6,7 @@
 
     <div class="container mt-70 mb-60">
         <div class="row">
-            {{-- @include('frontend.pages.partials.product-page-sidebar') --}}
+            @include('frontend.pages.partials.product-page-sidebar')
             <div class="col-lg-9 col-xxl-10">
                 <div class="shop-product-fillter">
                     <div class="totall-product">

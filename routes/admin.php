@@ -20,6 +20,8 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\ShippingRuleController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\UserRoleController;
+use App\Http\Controllers\Admin\WithdrawMethodController;
+use App\Http\Controllers\Admin\WithdrawRequestController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest:admin')
@@ -117,6 +119,11 @@ Route::middleware(['auth:admin'])
         Route::get("/orders", [OrderController::class, "index"])->name("orders.index");
         Route::get("/orders/{order}", [OrderController::class, "show"])->name("orders.show");
         Route::post("/orders/{order}/update", [OrderController::class, "update"])->name("orders.update");
+
+        Route::resource("withdraw-methods", WithdrawMethodController::class);
+
+        Route::resource("withdraw-requests", WithdrawRequestController::class);
+
 
 
 

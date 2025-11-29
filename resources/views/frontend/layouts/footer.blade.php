@@ -3,7 +3,7 @@
             <div class=" container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="newsletter_bg" style="background:url(assets/imgs/banner/banner-9.png);">
+                        <div class="newsletter_bg" style="background:url({{ asset('assets/frontend/dist/imgs/banner/banner-9.png') }});">
                             <div class="position-relative newsletter-inner">
                                 <div class=" newsletter-content">
                                     <h2 class="mb-20">Stay Stylish at Home Shop <br> the Latest Looks Online</h2>
@@ -11,9 +11,10 @@
                                             class="text-brand">ShopX</span>
                                     </p>
                                     <form class="form-subcriber d-flex">
-                                        <input type="email" placeholder="Your emaill address" />
-                                        <button class="btn" type="submit">Subscribe</button>
-                                    </form>
+                                        @csrf
+                                        <input type="email" placeholder="Your email address" name="email" />
+                                    <button class="btn" type="submit">Subscribe</button>
+                                </form>
                                 </div>
                             </div>
                         </div>

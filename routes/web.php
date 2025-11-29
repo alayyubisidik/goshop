@@ -9,6 +9,7 @@ use App\Http\Controllers\Frontend\Pages\CartController;
 use App\Http\Controllers\Frontend\Pages\CheckoutController;
 use App\Http\Controllers\Frontend\Pages\HomeController;
 use App\Http\Controllers\Frontend\Pages\KycController;
+use App\Http\Controllers\Frontend\Pages\NewsletterController;
 use App\Http\Controllers\Frontend\Pages\PaymentController;
 use App\Http\Controllers\Frontend\Pages\ProductController;
 use App\Http\Controllers\Frontend\Pages\WishlistController;
@@ -63,6 +64,9 @@ Route::group(["middleware" => ["auth", "verified"]], function () {
     Route::get("/reviews", [UserReviewController::class, "index"])->name("reviews.index");
 
     Route::resource('wishlist', WishlistController::class);
+
+    Route::post("/newsletter", [NewsletterController::class, "store"])->name("newsletter.store");
+
 
 
 

@@ -260,6 +260,35 @@
             });
         });
 
+        $('.form-subcriber').on('submit', function(e) {
+            e.preventDefault();
+            let data = $(this).serialize();
+
+            $.ajax({
+                url: "{{ route('newsletter.store') }}",
+                method: "POST",
+                data: data,
+                beforeSend: function() {
+                    // Optionally, show a loading indicator
+                },
+                success: function(response) {
+                    notyf.success(response.message);
+                    $('.form-subcriber')[0].reset();
+                },
+                error: function(xhr, status, error) {
+                    let errors = xhr.responseJSON.errors;
+                    if (errors) {
+                        Object.values(errors).forEach(function(message) {
+                            notyf.error(message[0]);
+                        });
+                    } else {
+                        notyf.error("An error occurred. Please try again.");
+                    }
+                }
+            })
+        });
+
+
 
     })
 </script>

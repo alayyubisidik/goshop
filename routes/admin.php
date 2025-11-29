@@ -28,6 +28,7 @@ use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\UserRoleController;
 use App\Http\Controllers\Admin\WithdrawMethodController;
 use App\Http\Controllers\Admin\WithdrawRequestController;
+use App\Http\Controllers\Admin\NewsletterController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest:admin')
@@ -144,6 +145,10 @@ Route::middleware(['auth:admin'])
 
         Route::get("/reviews", [ReviewController::class, "index"])->name("reviews.index");
         Route::delete("/reviews/{review}", [ReviewController::class, "destroy"])->name("reviews.destroy");
+
+        Route::get("/newsletters", [NewsletterController::class, "index"])->name("newsletters.index");
+        Route::post("/newsletters", [NewsletterController::class, "store"])->name("newsletters.store");
+        Route::get("/newsletters/{newsletterId}", [NewsletterController::class, "changeVerified"])->name("newsletters.change.verified");
 
 
 

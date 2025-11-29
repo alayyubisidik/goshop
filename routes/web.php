@@ -4,6 +4,7 @@ use App\Http\Controllers\Frontend\Dashboard\DashboardController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Frontend\Dashboard\AddressController;
 use App\Http\Controllers\Frontend\Dashboard\UserOrderController;
+use App\Http\Controllers\Frontend\Dashboard\UserReviewController;
 use App\Http\Controllers\Frontend\Pages\CartController;
 use App\Http\Controllers\Frontend\Pages\CheckoutController;
 use App\Http\Controllers\Frontend\Pages\HomeController;
@@ -20,6 +21,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
 Route::group(["middleware" => ["auth", "verified"]], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+
+    Route::get("/kyc-verification", [KycController::class, "index"])->name("kyc.index");
+    Route::post("/kyc-verification", [KycController::class, "store"])->name("kyc.store");
 
     Route::get("/cart", [CartController::class, "index"])->name('cart.index');
     Route::post("/add-to-cart", [CartController::class, "add"])->name('cart.add');
@@ -54,9 +58,12 @@ Route::group(["middleware" => ["auth", "verified"]], function () {
     Route::get("/orders", [UserOrderController::class, "index"])->name("orders.index");
     Route::get("/orders/{order}", [UserOrderController::class, "show"])->name("orders.show");
 
+    Route::post("/products/reviews/{product}", [ProductController::class, "storeReview"])->name("products.review");
+    Route::get("/reviews", [UserReviewController::class, "index"])->name("reviews.index");
 
-    Route::get("/kyc-verification", [KycController::class, "index"])->name("kyc.index");
-    Route::post("/kyc-verification", [KycController::class, "store"])->name("kyc.store");
+
+
+
 });
 
 

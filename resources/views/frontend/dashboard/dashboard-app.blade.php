@@ -31,10 +31,18 @@
                                     </li>
 
                                     <li class="nav-item">
+                                        <a class="nav-link {{ setActive(['reviews.*']) }}"
+                                            href="{{ route('reviews.index') }}"><i
+                                                class="fi-rs-shopping-cart-check mr-10"></i>Reviews</a>
+                                    </li>
+
+                                    <li class="nav-item">
                                         <a class="nav-link {{ setActive(['address.*']) }}"
                                             href="{{ route('address.index') }}"><i class="fi-rs-marker mr-10"></i>My
                                             Address</a>
                                     </li>
+
+
 
                                     @if (!user('web')->kyc || user('web')->kyc->status === 'rejected')
                                         <li class="nav-item">

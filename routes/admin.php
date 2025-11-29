@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PaymentSettingController;
 use App\Http\Controllers\Admin\PopularCategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\ShippingRuleController;
@@ -141,11 +142,8 @@ Route::middleware(['auth:admin'])
 
         Route::resource("category-you-may-like", CategoryYouMayLikeController::class);
 
-
-
-
-
-
+        Route::get("/reviews", [ReviewController::class, "index"])->name("reviews.index");
+        Route::delete("/reviews/{review}", [ReviewController::class, "destroy"])->name("reviews.destroy");
 
 
 

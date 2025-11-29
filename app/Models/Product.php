@@ -214,4 +214,16 @@ class Product extends Model
 
         return $getPriceData(null, $this->price, $this->special_price, $inStock, $qty);
     }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(ProductReview::class);
+    }
+
+    function rating(): float
+    {
+        if (!$this->reviews()->exists()) return 0;
+
+        return round($this->reviews()->avg('rating'), 1);
+    }
 }

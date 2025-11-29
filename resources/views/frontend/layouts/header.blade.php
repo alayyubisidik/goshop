@@ -63,11 +63,11 @@
                     <div class="header-action-right">
                         <div class="header-action-2">
                             <div class="header-action-icon-2">
-                                <a href="#">
+                                <a href="{{ route('wishlist.index') }}">
                                     <img class="svgInject" alt="ShopX" src="{{ asset('assets/frontend/dist/imgs/theme/icons/icon-heart.svg') }}" />
                                     <span class="pro-count blue">6</span>
                                 </a>
-                                <a href="#"><span class="lable">Wishlist</span></a>
+                                <a href="{{ route('wishlist.index') }}"><span class="lable">Wishlist</span></a>
                             </div>
                             <div class="header-action-icon-2">
                                 <a class="mini-cart-icon" href="{{ route('cart.index') }}">
@@ -377,7 +377,7 @@
                 <div class="header-action-right d-block d-lg-none">
                     <div class="header-action-2">
                         <div class="header-action-icon-2">
-                            <a href="shop-wishlist.html">
+                            <a href="{{ route('wishlist.index') }}">
                                 <img alt="ShopX" src="assets/imgs/theme/icons/icon-heart.svg" />
                                 <span class="pro-count white">4</span>
                             </a>

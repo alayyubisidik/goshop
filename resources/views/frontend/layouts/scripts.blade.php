@@ -222,6 +222,44 @@
             selectDefaultVariant();
         }
 
+        $('.wishlist-btn').on('click', function(e) {
+            e.preventDefault();
+            let productId = $(this).data('id');
+            let element = $(this);
+
+            $.ajax({
+                url: "{{ route('wishlist.store') }}",
+                method: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    product_id: productId
+                },
+                beforeSend: function() {
+                    // Optionally, show a loading indicator
+                    element.html(
+                        '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>'
+                    );
+                },
+                success: function(response) {
+                    notyf.success(response.message);
+                },
+                error: function(xhr, status, error) {
+                    let errors = xhr.responseJSON.errors;
+                    if (errors) {
+                        Object.values(errors).forEach(function(message) {
+                            notyf.error(message[0]);
+                        });
+                    } else {
+                        notyf.error("An error occurred. Please try again.");
+                    }
+                },
+                complete: function() {
+                    // Optionally, hide the loading indicator
+                    element.html('<i class="fi fi-rs-heart"></i>');
+                }
+            });
+        });
+
 
     })
 </script>

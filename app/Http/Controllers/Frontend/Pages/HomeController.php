@@ -7,10 +7,14 @@ use App\Models\Category;
 use App\Models\CategoryYouMayLike;
 use App\Models\FlashSale;
 use App\Models\HeroBanner;
+use App\Models\Order;
 use App\Models\PopularCategory;
 use App\Models\Product;
+use App\Models\ProductReview;
 use App\Models\Slider;
+use App\Services\AlertService;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class HomeController extends Controller
 {
@@ -77,4 +81,6 @@ class HomeController extends Controller
         }
         return $results;
     }
+
+  
 }

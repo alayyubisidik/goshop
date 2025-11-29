@@ -219,7 +219,7 @@
                                         <div class="row">
                                             <div class="col-lg-8">
                                                 <h4 class="mb-30">Customer questions & answers</h4>
-                                                {{-- <div class="comment-list">
+                                                <div class="comment-list">
                                                     @foreach ($reviews as $review)
                                                         <div class="single-comment justify-content-between d-flex mb-30">
                                                             <div class="user justify-content-between d-flex">
@@ -247,7 +247,7 @@
                                                         </div>
                                                     @endforeach
                                                 </div>
-                                                {{ $reviews->links() }} --}}
+                                                {{ $reviews->links() }}
                                             </div>
                                             <div class="col-lg-4">
                                                 <h4 class="mb-30">Customer reviews</h4>
@@ -255,9 +255,9 @@
                                                     <div class="product-rate d-inline-block mr-15">
                                                         <div class="product-rating" style="width: 90%"></div>
                                                     </div>
-                                                    {{-- <h6>{{ round($avgRating, 1) }} out of 5</h6> --}}
+                                                    <h6>{{ round($avgRating, 1) }} out of 5</h6>
                                                 </div>
-{{--
+
                                                 @foreach (range(5, 1) as $star)
                                                     @php
                                                         $count = $reviewGroup[$star] ?? 0;
@@ -271,7 +271,7 @@
                                                             aria-valuenow="{{ $percent }}" aria-valuemin="0"
                                                             aria-valuemax="100">{{ $percent }}</div>
                                                     </div>
-                                                @endforeach --}}
+                                                @endforeach
                                             </div>
                                         </div>
                                     </div>
@@ -281,7 +281,7 @@
                                         <div class="product-rate d-inline-block mb-30"></div>
                                         <div class="row">
                                             <div class="col-lg-8 col-md-12">
-                                                <form action="#" method="post" class="form-contact comment_form"
+                                                <form action="#" method="post" class="form-contact review_form"
                                                     id="commentForm">
                                                     @csrf
                                                     <div class="row">
@@ -301,7 +301,7 @@
                                                         <div class="col-12">
                                                             <div class="form-group">
                                                                 <textarea class="form-control w-100" name="review" id="comment" cols="30" rows="9"
-                                                                    placeholder="Write Comment"></textarea>
+                                                                    placeholder="Write your review about this product..."></textarea>
                                                                 <x-input-error :messages="$errors->get('review')" class="mt-2" />
 
                                                             </div>
@@ -433,11 +433,11 @@
             selectDefaultVariant();
 
 
-            $('.comment_form').on('submit', function(e) {
+            $('.review_form').on('submit', function(e) {
                 e.preventDefault();
 
                 $.ajax({
-                    url: "",
+                    url: "{{ route('products.review', $product) }}",
                     method: "POST",
                     data: $(this).serialize(),
                     beforeSend: function() {
@@ -445,8 +445,8 @@
                     },
                     success: function(response) {
                         if (response.status == 'success') {
-                            notyf.success(response.message);
-                            $('.comment_form')[0].reset();
+                            $('.review_form')[0].reset();
+                            location.reload()
                         }
                     },
                     error: function(xhr, status, error) {

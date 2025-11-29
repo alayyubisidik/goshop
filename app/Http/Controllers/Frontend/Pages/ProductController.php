@@ -5,11 +5,14 @@ namespace App\Http\Controllers\Frontend\Pages;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductReview;
 use App\Models\Tag;
+use App\Services\AlertService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class ProductController extends Controller
 {
@@ -129,6 +132,52 @@ class ProductController extends Controller
             ->take(6)
             ->get();
 
-        return view('frontend.pages.product-show', compact('product', 'relatedProducts'));
+        $reviews = ProductReview::where("product_id", $product->id)->paginate(10);
+        $reviewGroup = ProductReview::select('rating', DB::raw('count(*) as count'))
+            ->where('product_id', $product->id)
+            ->groupBy('rating')
+            ->pluck('count', 'rating');
+        $totalReviews = $reviewGroup->sum();
+
+        $avgRating = ProductReview::where('product_id', $product->id)->avg('rating');
+
+        return view('frontend.pages.product-show', compact('product', 'relatedProducts', 'reviews', 'reviewGroup', 'totalReviews', 'avgRating'));
+    }
+
+    function storeReview(Request $request, Product $product)
+    {
+
+        $request->validate([
+            'rating' => ['required', 'numeric', 'min:1', 'max:5'],
+            'review' => ['required', 'string', 'max:500'],
+        ]);
+
+        $productPurchasedByUser = Order::where('user_id', user()->id)
+            ->whereHas('orderProducts', function ($query) use ($product) {
+                $query->where('product_id', $product->id);
+            })->exists();
+
+        if (!$productPurchasedByUser) {
+            throw ValidationException::withMessages([
+                'review' => 'You have not purchased this product'
+            ]);
+        }
+
+        if (ProductReview::where('product_id', $product->id)->where('user_id', user()->id)->exists()) {
+            throw ValidationException::withMessages([
+                'review' => 'You have already reviewed this product'
+            ]);
+        }
+
+        $review = new ProductReview();
+        $review->product_id = $product->id;
+        $review->user_id = user()->id;
+        $review->rating = $request->rating;
+        $review->review = $request->review;
+        $review->save();
+
+        AlertService::created('Product Review Added Successfully');
+
+        return response()->json(['status' => 'success', 'message' => 'Product Review Added Successfully']);
     }
 }

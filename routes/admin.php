@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\CategoryYouMayLikeController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\ContactSettingController;
 use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\CustomPageController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FlashSaleController;
@@ -156,6 +157,9 @@ Route::middleware(['auth:admin'])
         Route::delete("/contact-messages/{message}", [ContactMessageController::class, "destroy"])->name("contact-messages.destroy");
         Route::get("/contact-settings", [ContactSettingController::class, "index"])->name("contact-settings.index");
         Route::post("/contact-settings", [ContactSettingController::class, "store"])->name("contact-settings.store");
+
+        Route::resource("custom-pages", CustomPageController::class);
+
 
 
         Route::get('verify-email', EmailVerificationPromptController::class)

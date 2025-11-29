@@ -25,6 +25,8 @@ Route::get("/products/{slug}", [ProductController::class, 'show'])->name("produc
 Route::get("/contact", [ContactController::class, "index"])->name("contact.index");
 Route::post("/contact", [ContactController::class, "store"])->name("contact.store");
 
+Route::get("/page/{slug}", [HomeController::class, "customPage"])->name("custom-page.index");
+
 
 Route::group(["middleware" => ["auth", "verified"]], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');

@@ -424,6 +424,29 @@
                     </div>
                 </li>
 
+                <li class="nav-item {{ setActive(['admin.custom-pages.*']) }}">
+                    <a class="nav-link" href="{{ route('admin.custom-pages.index') }}">
+                        <span
+                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler.io/icons/icon/home -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-ruler">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path
+                                    d="M5 4h14a1 1 0 0 1 1 1v5a1 1 0 0 1 -1 1h-7a1 1 0 0 0 -1 1v7a1 1 0 0 1 -1 1h-5a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1" />
+                                <path d="M4 8l2 0" />
+                                <path d="M4 12l3 0" />
+                                <path d="M4 16l2 0" />
+                                <path d="M8 4l0 2" />
+                                <path d="M12 4l0 3" />
+                                <path d="M16 4l0 2" />
+                            </svg>
+                        </span>
+                        <span class="nav-link-title"> Page Builder </span>
+                    </a>
+                </li>
+
                 <li class="nav-item dropdown {{ setActive(['admin.roles.*', 'admin.user-roles.*']) }}">
                     <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                         data-bs-auto-close="false" role="button" aria-expanded="false">

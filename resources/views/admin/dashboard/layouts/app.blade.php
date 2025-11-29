@@ -50,6 +50,17 @@
             toolbar: 'undo redo | bold italic | bullist numlist'
             // -------------------------------------
         });
+
+        tinymce.init({
+            selector: 'textarea#big-editor',
+            height: 1000,
+            license_key: 'gpl',
+
+            // --- Bagian yang ditambahkan/diubah: ---
+            plugins: 'lists advlist autolink link image charmap wordcount',
+            toolbar: 'undo redo | bold italic | bullist numlist'
+            // -------------------------------------
+        });
     </script>
 </head>
 

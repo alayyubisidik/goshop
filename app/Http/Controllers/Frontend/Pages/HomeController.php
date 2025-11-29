@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend\Pages;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\CategoryYouMayLike;
+use App\Models\CustomPage;
 use App\Models\FlashSale;
 use App\Models\HeroBanner;
 use App\Models\Order;
@@ -82,5 +83,9 @@ class HomeController extends Controller
         return $results;
     }
 
-  
+    function customPage(string $slug)
+    {
+        $page = CustomPage::where('slug', $slug)->where('is_active', true)->firstOrFail();
+        return view('frontend.pages.custom-page', compact('page'));
+    }
 }

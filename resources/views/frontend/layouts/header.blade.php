@@ -337,8 +337,6 @@
                                         <li><a href="cart.html">Cart</a></li>
                                         <li><a href="checkout.html">Checkout</a></li>
                                         <li><a href="compare.html">Compare</a></li>
-                                        <li><a href="contact.html">Contact</a></li>
-                                        <li><a href="dashboard.html">Dashboard</a></li>
                                         <li><a href="error.html">error/404</a></li>
                                         <li><a href="login.html">Login</a></li>
                                         <li><a href="register.html">Register</a></li>
@@ -353,7 +351,7 @@
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="contact.html">Contact</a>
+                                    <a href="{{ route('contact.index') }}">Contact</a>
                                 </li>
                                 <li class="hot-deals">
                                     <!-- <img src="assets/imgs/theme/icons/icon-hot-white.svg" alt="hot deals"> -->

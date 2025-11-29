@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CategoryYouMayLikeController;
+use App\Http\Controllers\Admin\ContactMessageController;
+use App\Http\Controllers\Admin\ContactSettingController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -150,6 +152,10 @@ Route::middleware(['auth:admin'])
         Route::post("/newsletters", [NewsletterController::class, "store"])->name("newsletters.store");
         Route::get("/newsletters/{newsletterId}", [NewsletterController::class, "changeVerified"])->name("newsletters.change.verified");
 
+        Route::get("/contact-messages", [ContactMessageController::class, "index"])->name("contact-messages.index");
+        Route::delete("/contact-messages/{message}", [ContactMessageController::class, "destroy"])->name("contact-messages.destroy");
+        Route::get("/contact-settings", [ContactSettingController::class, "index"])->name("contact-settings.index");
+        Route::post("/contact-settings", [ContactSettingController::class, "store"])->name("contact-settings.store");
 
 
         Route::get('verify-email', EmailVerificationPromptController::class)

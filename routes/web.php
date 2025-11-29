@@ -7,6 +7,7 @@ use App\Http\Controllers\Frontend\Dashboard\UserOrderController;
 use App\Http\Controllers\Frontend\Dashboard\UserReviewController;
 use App\Http\Controllers\Frontend\Pages\CartController;
 use App\Http\Controllers\Frontend\Pages\CheckoutController;
+use App\Http\Controllers\Frontend\Pages\ContactController;
 use App\Http\Controllers\Frontend\Pages\HomeController;
 use App\Http\Controllers\Frontend\Pages\KycController;
 use App\Http\Controllers\Frontend\Pages\NewsletterController;
@@ -16,10 +17,14 @@ use App\Http\Controllers\Frontend\Pages\WishlistController;
 use Illuminate\Support\Facades\Route;
 
 
+Route::get('/', [HomeController::class, 'index'])->name('home.index');
+
 Route::get("/products", [ProductController::class, 'index'])->name("products.index");
 Route::get("/products/{slug}", [ProductController::class, 'show'])->name("products.show");
 
-Route::get('/', [HomeController::class, 'index'])->name('home.index');
+Route::get("/contact", [ContactController::class, "index"])->name("contact.index");
+Route::post("/contact", [ContactController::class, "store"])->name("contact.store");
+
 
 Route::group(["middleware" => ["auth", "verified"]], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');

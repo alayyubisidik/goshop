@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -24,16 +25,30 @@
     <script src="{{ asset('assets/backend/dist/js/tinymce/tinymce.min.js') }}"></script>
 
     <script>
+        // Konfigurasi untuk textarea#editor (Tinggi 500)
         tinymce.init({
             selector: 'textarea#editor',
             height: 500,
-            license_key: 'gpl'
+            license_key: 'gpl',
+
+            // --- Bagian yang ditambahkan/diubah: ---
+            plugins: 'lists advlist autolink link image charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media table help wordcount',
+            toolbar: 'undo redo | formatselect | bold italic backcolor | \
+                      alignleft aligncenter alignright alignjustify | \
+                      bullist numlist | removeformat | help'
+            // -------------------------------------
         });
 
+        // Konfigurasi untuk textarea#short-editor (Tinggi 300)
         tinymce.init({
             selector: 'textarea#short-editor',
             height: 300,
-            license_key: 'gpl'
+            license_key: 'gpl',
+
+            // --- Bagian yang ditambahkan/diubah: ---
+            plugins: 'lists advlist autolink link image charmap wordcount',
+            toolbar: 'undo redo | bold italic | bullist numlist'
+            // -------------------------------------
         });
     </script>
 </head>
@@ -78,8 +93,7 @@
     <script src="{{ asset('assets/global/upload-preview/upload-preview.min.js') }}"></script>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-            crossorigin="anonymous"></script>
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/nestable2/1.6.0/jquery.nestable.min.js"></script>
@@ -92,4 +106,5 @@
 
     @include('admin.dashboard.layouts.scripts')
 </body>
+
 </html>

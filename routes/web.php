@@ -11,6 +11,7 @@ use App\Http\Controllers\Frontend\Pages\HomeController;
 use App\Http\Controllers\Frontend\Pages\KycController;
 use App\Http\Controllers\Frontend\Pages\PaymentController;
 use App\Http\Controllers\Frontend\Pages\ProductController;
+use App\Http\Controllers\Frontend\Pages\WishlistController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -60,6 +61,9 @@ Route::group(["middleware" => ["auth", "verified"]], function () {
 
     Route::post("/products/reviews/{product}", [ProductController::class, "storeReview"])->name("products.review");
     Route::get("/reviews", [UserReviewController::class, "index"])->name("reviews.index");
+
+    Route::resource('wishlist', WishlistController::class);
+
 
 
 

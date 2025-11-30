@@ -70,7 +70,8 @@ class HomeController extends Controller
                 $ids = [$category->id];
                 $ids = array_merge($ids, $category->allChildrenIds());
 
-                $products = Product::whereHas('categories', function ($query) use ($ids) {
+                $products = Product::withAvg('reviews', 'rating')
+                    ->whereHas('categories', function ($query) use ($ids) {
                     $query->whereIn('categories.id', $ids);
                 })
                     ->whereIsFeatured(true)
@@ -87,5 +88,16 @@ class HomeController extends Controller
     {
         $page = CustomPage::where('slug', $slug)->where('is_active', true)->firstOrFail();
         return view('frontend.pages.custom-page', compact('page'));
+    }
+
+    function flashSale()
+    {
+        $flashSale = FlashSale::first();
+
+        $flashSaleProducts = Product::withAvg('reviews', 'rating')
+            ->whereIn('id', $flashSale?->products ?? [])
+            ->paginate(20);
+
+        return view('frontend.pages.flash-sale', compact('flashSale', 'flashSaleProducts'));
     }
 }

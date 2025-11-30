@@ -264,14 +264,14 @@
                             </div>
                         </div>
 
-                        {{-- <div class="dropdown-menu-columns ">
+                        <div class="dropdown-menu-columns ">
                             <div class="dropdown-menu-column">
                                 <a class="dropdown-item {{ setActive(['admin.offer-sliders.*']) }}"
                                     href="{{ route('admin.offer-sliders.index') }}">
                                     Offer Sliders
                                 </a>
                             </div>
-                        </div> --}}
+                        </div>
 
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">

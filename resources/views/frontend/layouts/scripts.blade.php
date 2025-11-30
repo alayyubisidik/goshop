@@ -241,6 +241,7 @@
                     );
                 },
                 success: function(response) {
+                    $('.wishlist-count').html(response.wishlist_count)
                     notyf.success(response.message);
                 },
                 error: function(xhr, status, error) {

@@ -13,6 +13,7 @@ use App\Http\Controllers\Frontend\Pages\KycController;
 use App\Http\Controllers\Frontend\Pages\NewsletterController;
 use App\Http\Controllers\Frontend\Pages\PaymentController;
 use App\Http\Controllers\Frontend\Pages\ProductController;
+use App\Http\Controllers\Frontend\Pages\VendorPageController;
 use App\Http\Controllers\Frontend\Pages\WishlistController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,13 @@ Route::get("/contact", [ContactController::class, "index"])->name("contact.index
 Route::post("/contact", [ContactController::class, "store"])->name("contact.store");
 
 Route::get("/page/{slug}", [HomeController::class, "customPage"])->name("custom-page.index");
+
+Route::get("/vendors", [VendorPageController::class, "index"])->name("vendors.index");
+Route::get("/vendors/{vendor}", [VendorPageController::class, "show"])->name("vendors.show");
+
+Route::get("/flash-sale", [HomeController::class, "flashSale"])->name("flash-sale.index");
+
+
 
 
 Route::group(["middleware" => ["auth", "verified"]], function () {
@@ -73,11 +81,6 @@ Route::group(["middleware" => ["auth", "verified"]], function () {
     Route::resource('wishlist', WishlistController::class);
 
     Route::post("/newsletter", [NewsletterController::class, "store"])->name("newsletter.store");
-
-
-
-
-
 
 });
 

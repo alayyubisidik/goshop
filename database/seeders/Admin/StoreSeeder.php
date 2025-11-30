@@ -19,8 +19,8 @@ class StoreSeeder extends Seeder
         $stores = [
             [
                 'seller_id' => 2,
-                'logo' => '/defaults/logo.png',
-                'banner' => '/defaults/banner.png',
+                'logo' => '/img/defaults/logo.png',
+                'banner' => '/img/defaults/banner.png',
                 'name' => 'Tech Haven',
                 'phone' => '081234567890',
                 'email' => 'contact@techhaven.com',
@@ -31,8 +31,8 @@ class StoreSeeder extends Seeder
             ],
             [
                 'seller_id' => 3,
-                'logo' => '/defaults/logo.png',
-                'banner' => '/defaults/banner.png',
+                'logo' => '/img/defaults/logo.png',
+                'banner' => '/img/defaults/banner.png',
                 'name' => 'Gadget World',
                 'phone' => '089876543210',
                 'email' => 'info@gadgetworld.com',
@@ -43,8 +43,8 @@ class StoreSeeder extends Seeder
             ],
             [
                 'seller_id' => 4,
-                'logo' => '/defaults/logo.png',
-                'banner' => '/defaults/banner.png',
+                'logo' => '/img/defaults/logo.png',
+                'banner' => '/img/defaults/banner.png',
                 'name' => 'Smart Living Hub',
                 'phone' => '082233445566',
                 'email' => 'hello@smartlivinghub.com',
@@ -55,8 +55,8 @@ class StoreSeeder extends Seeder
             ],
             [
                 'seller_id' => 5,
-                'logo' => '/defaults/logo.png',
-                'banner' => '/defaults/banner.png',
+                'logo' => '/img/defaults/logo.png',
+                'banner' => '/img/defaults/banner.png',
                 'name' => 'Elite Electronics',
                 'phone' => '085112233445',
                 'email' => 'support@eliteelectronics.com',
@@ -67,8 +67,8 @@ class StoreSeeder extends Seeder
             ],
             [
                 'seller_id' => 6,
-                'logo' => '/defaults/logo.png',
-                'banner' => '/defaults/banner.png',
+                'logo' => '/img/defaults/logo.png',
+                'banner' => '/img/defaults/banner.png',
                 'name' => 'NextGen Tech Store',
                 'phone' => '087755533311',
                 'email' => 'sales@nextgentech.com',

@@ -26,4 +26,14 @@ class Store extends Model
     {
         return $this->hasOne(StoreWallet::class, "store_id");
     }
+
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
+    }
+
+    function reviews(): HasManyThrough
+    {
+        return $this->hasManyThrough(ProductReview::class, Product::class, 'store_id', 'product_id', 'id', 'id');
+    }
 }

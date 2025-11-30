@@ -1,20 +1,11 @@
 @php
     $customPages = \App\Models\CustomPage::where('is_active', true)->get();
-    // $offerSliders = \App\Models\OfferSlider::where('is_active', true)->get();
+    $offerSliders = \App\Models\OfferSlider::where('is_active', true)->get();
     $sociallinks = App\Models\SocialLink::where('is_active', 1)->get();
 @endphp
 
 
 <header class="header-area header-style-1 header-style-5 header-height-2 d-print-none">
-    <div class="mobile-promotion">
-        <div id="news-flash" class="d-inline-block">
-            {{-- <ul>
-                @foreach ($offerSliders as $offerSlider)
-                    <li><a href="{{ $offerSlider->url }}">{{ $offerSlider->title }}</a></li>
-                @endforeach
-            </ul> --}}
-        </div>
-    </div>
     <div class="header-top header-top-ptb-1 d-none d-lg-block">
         <div class="container">
             <div class="row align-items-center">
@@ -30,11 +21,11 @@
                 <div class="col-xxl-6 col-xl-5 col-lg-4 d-none d-xl-block">
                     <div class="text-center">
                         <div id="news-flash" class="d-inline-block">
-                            {{-- <ul>
+                            <ul>
                                 @foreach ($offerSliders as $offerSlider)
                                     <li><a href="{{ $offerSlider->url }}">{{ $offerSlider->title }}</a></li>
                                 @endforeach
-                            </ul> --}}
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -71,7 +62,6 @@
                             <input type="text" name="search" placeholder="Search for items..."
                                 value="{{ request('search') }}" />
                         </form>
-
                     </div>
                     <div class="header-action-right">
                         <div class="header-action-2">
@@ -79,7 +69,7 @@
                                 <a href="{{ route('wishlist.index') }}">
                                     <img class="svgInject" alt="ShopX"
                                         src="{{ asset('assets/frontend/dist/imgs/theme/icons/icon-heart.svg') }}" />
-                                    <span class="pro-count blue">{{ wishlistCount() }}</span>
+                                    <span class="pro-count blue wishlist-count">{{ wishlistCount() }}</span>
                                 </a>
                                 <a href="{{ route('wishlist.index') }}"><span class="lable">Wishlist</span></a>
                             </div>
@@ -105,7 +95,8 @@
                                                         class="fi fi-rs-user mr-10"></i>Dashboard</a>
                                             </li>
                                             <li>
-                                                <a href="{{ route('profile') }}"><i class="fi fi-rs-user mr-10"></i>My
+                                                <a href="{{ route('profile.index') }}"><i
+                                                        class="fi fi-rs-user mr-10"></i>My
                                                     Account</a>
                                             </li>
                                             <li>
@@ -214,15 +205,15 @@
                                 <li>
                                     <a class="" href="{{ route('products.index') }}">Products</a>
                                 </li>
-                                {{-- <li>
-                                    <a class="" href="{{ route('vendors.index') }}">Vendors</a>
-                                </li> --}}
-                                {{-- <li class="hot-deals">
-                                    <a href="{{ route('flash-sale.index') }}">Flash Sell</a>
-                                </li> --}}
                                 <li>
-                                    <a href="about.html">About</a>
+                                    <a class="" href="{{ route('vendors.index') }}">Vendors</a>
                                 </li>
+                                <li class="hot-deals">
+                                    <a href="{{ route('flash-sale.index') }}">Flash Sell</a>
+                                </li>
+                                {{-- <li>
+                                    <a href="about.html">About</a>
+                                </li> --}}
                                 <li>
                                     <a href="{{ route('contact.index') }}">Contact</a>
                                 </li>
@@ -237,7 +228,7 @@
                     </div>
                 </div>
                 <div class="hotline d-none d-lg-flex">
-                    <img  src="{{ asset('assets/frontend/dist/imgs/theme/icons/icon-headphone-white.svg') }}"
+                    <img src="{{ asset('assets/frontend/dist/imgs/theme/icons/icon-headphone-white.svg') }}"
                         alt="hotline" />
                     <p>{{ config('settings.site_phone') }} <span>24/7 Support Center</span></p>
                 </div>
@@ -254,7 +245,7 @@
                             <a href="{{ route('wishlist.index') }}">
                                 <img alt="ShopX"
                                     src="{{ asset('assets/frontend/dist/imgs/theme/icons/icon-heart.svg') }}" />
-                                <span class="pro-count white">{{ wishlistCount() }}</span>
+                                <span class="pro-count white wishlist-count">{{ wishlistCount() }}</span>
                             </a>
                         </div>
                         <div class="header-action-icon-2">
@@ -306,12 +297,12 @@
                         <li class="menu-item-has-children">
                             <a href="{{ route('products.index') }}">Products</a>
                         </li>
-                        {{-- <li class="menu-item-has-children">
+                        <li class="menu-item-has-children">
                             <a href="{{ route('vendors.index') }}">Vendors</a>
-                        </li> --}}
-                        {{-- <li class="menu-item-has-children">
+                        </li>
+                        <li class="menu-item-has-children">
                             <a href="{{ route('flash-sale.index') }}">Flash Sale</a>
-                        </li> --}}
+                        </li>
                         <li class="menu-item-has-children">
                             <a href="{{ route('contact.index') }}">Contact</a>
                         </li>

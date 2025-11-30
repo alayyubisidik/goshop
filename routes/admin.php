@@ -34,6 +34,7 @@ use App\Http\Controllers\Admin\UserRoleController;
 use App\Http\Controllers\Admin\WithdrawMethodController;
 use App\Http\Controllers\Admin\WithdrawRequestController;
 use App\Http\Controllers\Admin\NewsletterController;
+use App\Http\Controllers\Admin\OfferSliderController;
 use App\Http\Controllers\Admin\SocialLinkController;
 use App\Models\AdvertisementBanner;
 use Illuminate\Support\Facades\Route;
@@ -177,6 +178,9 @@ Route::middleware(['auth:admin'])
         Route::resource("our-features", OurFeatureController::class);
 
         Route::resource("social-links", SocialLinkController::class);
+
+        Route::resource("offer-sliders", OfferSliderController::class);
+
 
 
 

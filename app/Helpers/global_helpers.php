@@ -123,3 +123,9 @@ if (!function_exists('wishlistCount')) {
         return Wishlist::where('user_id', user()?->id)->count();
     }
 }
+
+if (!function_exists('ratingPercent')) {
+    function ratingPercent($rating) {
+        return $rating / 5 * 100;
+    }
+}

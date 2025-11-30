@@ -28,7 +28,7 @@ class ProductController extends Controller
             'primaryVariant'
         ]);
 
-        // $productQuery->withAvg('reviews', 'rating');
+        $productQuery->withAvg('reviews', 'rating');
 
         $productQuery->when($request->filled('category'), function ($query) use ($request) {
             $category = Category::where('slug', $request->category)->first();

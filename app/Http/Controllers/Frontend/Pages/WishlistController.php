@@ -38,7 +38,11 @@ class WishlistController extends Controller
         $wishlist->product_id = $request->product_id;
         $wishlist->save();
 
-        return response()->json(['status' => 'success', 'message' => 'Product added to your wishlist']);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Product added to your wishlist',
+            'wishlist_count' => wishlistCount(),
+        ]);
     }
 
     public function destroy(Wishlist $wishlist)

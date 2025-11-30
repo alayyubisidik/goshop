@@ -32,9 +32,9 @@
             </div>
             <h2><a href="{{ route('products.show', $product->slug) }}">{{ $product->name }}</h2>
             <div class="product-rate-cover">
-                {{-- <div class="product-rate d-inline-block">
+                <div class="product-rate d-inline-block">
                     <div class="product-rating" style="width: {{ ratingPercent($product->reviews_avg_rating) }}%"></div>
-                </div> --}}
+                </div>
                 <span class="font-small ml-5 text-muted"> ({{ round($product->reviews_avg_rating, 2) ?? 0 }})</span>
             </div>
             <div>
@@ -64,7 +64,7 @@
                             data-id="{{ $product->id }}" href="#"><i class="fi-rs-shopping-cart mr-5"></i>Add
                         </a>
                     </div>
-                @endif 
+                @endif
             </div>
         </div>
     </div>

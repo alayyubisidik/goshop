@@ -282,14 +282,14 @@
                             </div>
                         </div>
 
-                        {{-- <div class="dropdown-menu-columns">
+                        <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
                                 <a class="dropdown-item {{ setActive(['admin.social-links.*']) }}"
                                     href="{{ route('admin.social-links.index') }}">
                                     Social Links
                                 </a>
                             </div>
-                        </div> --}}
+                        </div>
                     </div>
                 </li>
 

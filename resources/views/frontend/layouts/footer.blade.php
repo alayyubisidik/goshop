@@ -1,15 +1,25 @@
 @php
     $features = App\Models\OurFeature::where('is_active', true)->get();
 
+    $socialLinks = App\Models\Sociallink::where('is_active', true)->get();
+
+    // $pages = App\Models\CustomPage::where('is_active', true)->latest()->take(5)->get();
+
+    // $featuredCategories = App\Models\Category::withCount('products')
+    //     ->where('is_featured', true)
+    //     ->latest()
+    //     ->take(5)
+    //     ->get();
+
 @endphp
 
-<footer class="main pt-10 d-print-none">
+<footer class="main pt-10">
     <section class="newsletter mb-15 wow animate__animated animate__fadeIn">
         <div class=" container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="newsletter_bg"
-                        style="background:url({{ asset('assets/frontend/dist/imgs/banner/banner-9.png') }});">
+                        style="background-image: url({{ asset('assets/frontend/dist/imgs/banner/banner-9.png') }})">
                         <div class="position-relative newsletter-inner">
                             <div class=" newsletter-content">
                                 <h2 class="mb-20">Stay Stylish at Home Shop <br> the Latest Looks Online</h2>
@@ -22,6 +32,7 @@
                                 </form>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -51,22 +62,30 @@
         <div class="container">
             <div class="row justify-content-between">
                 <div class="col-xl-3">
-                    <div class="widget-about font-md mb-md-3 mb-lg-3 mb-xl-0 wow animate__animated animate__fadeInUp"
+                    <div class="widget-about font-md mb-md-3 mb-lg-3 mb-xl-0 WOW animate_animated animate_fadeInUp"
                         data-wow-delay="0">
                         <div class="logo mb-30">
-                            <a href="index.html" class="mb-15"><img src="assets/imgs/theme/logo.svg" alt="logo" /></a>
-                            <p class="font-lg text-heading">Awesome eCommerce store website template</p>
+                            <a href="{{ url('/') }}" class="mb-15"><img
+                                    src="{{ asset(config('settings.site_logo')) }}" alt="logo" /></a>
+                            <p class="font-lg text-heading">{{ config('settings.site_short_description') }}</p>
                         </div>
                         <ul class="contact-infor">
-                            <li><img src="assets/imgs/theme/icons/icon-location.svg" alt="" /><strong>Address:
-                                </strong> <span>233 North Michigan Avenue, Suite 1800, Chicago, IL 60601</span>
+                            <li><img src="{{ asset('assets/frontend/dist/imgs/theme/icons/icon-location.svg') }}"
+                                    alt="" />
+                                <strong>Address:</strong><span>{{ config('settings.site_address') }}</span>
                             </li>
-                            <li><img src="assets/imgs/theme/icons/icon-contact.svg" alt="" /><strong>Call
-                                    Us:</strong><span>+9625415 546666464</span></li>
-                            <li><img src="assets/imgs/theme/icons/icon-email-2.svg"
-                                    alt="" /><strong>Email:</strong><span>sale@shopx.com</span></li>
-                            <li><img src="assets/imgs/theme/icons/icon-clock.svg"
-                                    alt="" /><strong>Hours:</strong><span>10:00 - 18:00, Mon - Sat</span></li>
+                            <li><img src="{{ asset('assets/frontend/dist/imgs/theme/icons/icon-contact.svg') }}"
+                                    alt="" />
+                                <strong>Call Us:</strong><span>{{ config('settings.site_phone') }}</span>
+                            </li>
+                            <li><img src="{{ asset('assets/frontend/dist/imgs/theme/icons/icon-email-2.svg') }}"
+                                    alt="" />
+                                <strong>Email:</strong><span>{{ config('settings.site_email') }}</span>
+                            </li>
+                            <li><img src="{{ asset('assets/frontend/dist/imgs/theme/icons/icon-clock.svg') }}"
+                                    alt="" />
+                                <strong>Hours:</strong><span>{{ config('settings.site_hours') }}</span>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -74,55 +93,35 @@
                     <div class="footer-link-widget wow animate__animated animate__fadeInUp" data-wow-delay=".1s">
                         <h4 class="widget-title">Company</h4>
                         <ul class="footer-list mb-sm-5 mb-md-0">
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Delivery Information</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Terms &amp; Conditions</a></li>
-                            <li><a href="#">Contact Us</a></li>
-                            <li><a href="#">Support Center</a></li>
-                            <li><a href="#">Careers</a></li>
+                            <li><a href="{{ route('login') }}">Login</a></li>
+                            <li><a href="{{ route('register') }}">Register</a></li>
+                            <li><a href="{{ route('register') }}">Become a Seller</a></li>
+                            <li><a href="{{ route('contact.index') }}">Contact Us</a></li>
+                            {{-- <li><a href="{{ route('flash-sale.index') }}">Flash Sales</a></li> --}}
                         </ul>
                     </div>
                 </div>
                 <div class="col-xl-2 col-sm-6 col-lg-3">
                     <div class="footer-link-widget wow animate__animated animate__fadeInUp" data-wow-delay=".2s">
-                        <h4 class="widget-title">Account</h4>
+                        <h4 class="widget-title">More links</h4>
                         <ul class="footer-list mb-sm-5 mb-md-0">
-                            <li><a href="#">Sign In</a></li>
-                            <li><a href="#">View Cart</a></li>
-                            <li><a href="#">My Wishlist</a></li>
-                            <li><a href="#">Track My Order</a></li>
-                            <li><a href="#">Help Ticket</a></li>
-                            <li><a href="#">Shipping Details</a></li>
-                            <li><a href="#">Compare products</a></li>
+                            {{-- @foreach ($pages as $page)
+                                <li><a
+                                        href="{{ route('custom-page.index', $page->slug ?? '') }}">{{ $page->title }}</a>
+                                </li>
+                            @endforeach --}}
                         </ul>
                     </div>
                 </div>
                 <div class="col-xl-2 col-sm-6 col-lg-3">
                     <div class="footer-link-widget  wow animate__animated animate__fadeInUp" data-wow-delay=".3s">
-                        <h4 class="widget-title">Corporate</h4>
+                        <h4 class="widget-title">Popular Categories</h4>
                         <ul class="footer-list mb-sm-5 mb-md-0">
-                            <li><a href="#">Become a Vendor</a></li>
-                            <li><a href="#">Affiliate Program</a></li>
-                            <li><a href="#">Farm Business</a></li>
-                            <li><a href="#">Farm Careers</a></li>
-                            <li><a href="#">Our Suppliers</a></li>
-                            <li><a href="#">Accessibility</a></li>
-                            <li><a href="#">Promotions</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-xl-2 col-sm-6 col-lg-3">
-                    <div class="footer-link-widget wow animate__animated animate__fadeInUp" data-wow-delay=".4s">
-                        <h4 class="widget-title">Popular</h4>
-                        <ul class="footer-list mb-sm-5 mb-md-0">
-                            <li><a href="#">Milk & Flavoured Milk</a></li>
-                            <li><a href="#">Butter and Margarine</a></li>
-                            <li><a href="#">Eggs Substitutes</a></li>
-                            <li><a href="#">Marmalades</a></li>
-                            <li><a href="#">Sour Accossorice and Dips</a></li>
-                            <li><a href="#">Tea & Kombucha</a></li>
-                            <li><a href="#">Cheese</a></li>
+                            {{-- @foreach ($featuredCategories as $category)
+                                <li><a
+                                        href="{{ route('products.index', $category->slug ?? '') }}">{{ $category->name }}</a>
+                                </li>
+                            @endforeach --}}
                         </ul>
                     </div>
                 </div>
@@ -134,23 +133,22 @@
                 <div class="footer-bottom"></div>
             </div>
             <div class="col-xl-4 col-lg-6 col-md-6">
-                <p class="font-sm mb-0">&copy; 2025, <strong class="text-brand">ShopX</strong> - HTML Ecommerce
-                    Template <br />All rights reserved</p>
+                <p class="font-sm mb-0">&copy; {{ config('settings.site_copyright') }}</p>
             </div>
+
             <div class="col-xl-4 col-lg-6 text-center d-none d-xl-block">
                 <div class="hotline d-lg-inline-flex">
-                    <img src="assets/imgs/theme/icons/phone-call.svg" alt="hotline" />
-                    <p>0000-000<span>24/7 Support Center</span></p>
+                    <img width="50" src="{{ asset('assets/frontend/dist/imgs/theme/icons/phone-call.svg') }}"
+                        alt="hotline" />
+                    <p>{{ config('settings.site_phone') }}<span>24/7 Support Center</span></p>
                 </div>
             </div>
             <div class="col-xl-4 col-lg-6 col-md-6 text-end d-none d-md-block">
                 <div class="mobile-social-icon">
                     <h6>Follow Us</h6>
-                    <a href="#"><img src="assets/imgs/theme/icons/icon-facebook-white.svg" alt="" /></a>
-                    <a href="#"><img src="assets/imgs/theme/icons/icon-twitter-white.svg" alt="" /></a>
-                    <a href="#"><img src="assets/imgs/theme/icons/icon-instagram-white.svg" alt="" /></a>
-                    <a href="#"><img src="assets/imgs/theme/icons/icon-pinterest-white.svg" alt="" /></a>
-                    <a href="#"><img src="assets/imgs/theme/icons/icon-youtube-white.svg" alt="" /></a>
+                    @foreach ($socialLinks as $item)
+                        <a href="{{ $item->url }}"><img src="{{ asset($item->icon) }}" alt="" /></a>
+                    @endforeach
                 </div>
                 <p class="font-sm">Up to 15% discount on your first subscribe</p>
             </div>

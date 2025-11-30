@@ -39,6 +39,7 @@
         previewImage("#brand-logo-upload", "#brand-logo-preview");
         previewImage("#hero-slider-upload", "#hero-slider-preview");
         previewImage("#feature-icon-upload", "#feature-icon-preview");
+        previewImage("#social-icon-upload", "#social-icon-preview");
 
         $('.delete-btn').on('click', function(e) {
             e.preventDefault();

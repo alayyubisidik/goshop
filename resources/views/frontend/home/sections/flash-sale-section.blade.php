@@ -14,13 +14,13 @@
             </div>
             <div class="row">
                 <div class="col-lg-3 d-none d-lg-flex wow animate__animated animate__fadeIn">
-                    {{-- <div class="banner-img style-2">
-                        <img src="{{ asset(data_get($ads, 'flash_sale.0.image', '')) }}" alt="">
-                        <div class="banner-text">
-                            <a href="{{ data_get($ads, 'banner_two.0.url', '') }}" class="btn btn-xs">Shop Now <i
+                    <div class="banner-img style-2" style="height: 90%">
+                        <img  src="{{ asset(data_get($ads, 'flash_sale.0.image', '')) }}" alt="">
+                        <div class="banner-text" style=" height: 35%; display: flex; align-items: end;">
+                            <a href="{{ data_get($ads, 'flash_sale.0.url', '') }}" class="btn btn-xs">Shop Now <i
                                     class="fi-rs-arrow-small-right"></i></a>
                         </div>
-                    </div> --}}
+                    </div>
                 </div>
                 <div class="col-lg-9 col-md-12 wow animate__animated animate__fadeIn" data-wow-delay=".4s">
                     <div class="tab-content" id="myTabContent-1">

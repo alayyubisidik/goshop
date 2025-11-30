@@ -19,3 +19,4 @@
 
     @include('frontend.home.sections.product-highlights-section')
 @endsection
+ 

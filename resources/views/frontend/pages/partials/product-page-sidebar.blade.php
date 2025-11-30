@@ -93,8 +93,8 @@
             </form>
         </div>
         <!-- Product sidebar Widget -->
-        <a href="#" class="banner-img wow fadeIn d-block">
-            {{-- <img src="{{ asset(data_get($ads, 'product_sidebar.0.image', '')) }}" alt="" /> --}}
+        <a href="{{ data_get($ads, 'product_sidebar.0.url', '') }}" class="banner-img wow fadeIn d-block">
+            <img src="{{ asset(data_get($ads, 'product_sidebar.0.image', '')) }}" alt="" />
         </a>
     </div>
 

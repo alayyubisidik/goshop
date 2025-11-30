@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdvertisementController;
 use App\Http\Controllers\Admin\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Admin\Auth\EmailVerificationPromptController;
@@ -32,6 +33,7 @@ use App\Http\Controllers\Admin\UserRoleController;
 use App\Http\Controllers\Admin\WithdrawMethodController;
 use App\Http\Controllers\Admin\WithdrawRequestController;
 use App\Http\Controllers\Admin\NewsletterController;
+use App\Models\AdvertisementBanner;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest:admin')
@@ -159,6 +161,13 @@ Route::middleware(['auth:admin'])
         Route::post("/contact-settings", [ContactSettingController::class, "store"])->name("contact-settings.store");
 
         Route::resource("custom-pages", CustomPageController::class);
+
+        Route::get("/advertisement-banner/banner-one", [AdvertisementController::class, "bannerOne"])->name("advertisement-banner.one.index");
+        Route::get("/advertisement-banner/banner-two", [AdvertisementController::class, "bannerTwo"])->name("advertisement-banner.two.index");
+        Route::get("/advertisement-banner/cta-banner", [AdvertisementController::class, "ctaBanner"])->name("advertisement-banner.cta.index");
+        Route::get("/advertisement-banner/flash-sale", [AdvertisementController::class, "flashSaleBanner"])->name("advertisement-banner.flash-sale.index");
+        Route::get("/advertisement-banner/product-sidebar", [AdvertisementController::class, "productSidebarBanner"])->name("advertisement-banner.product-sidebar.index");
+        Route::post("/advertisement-banner", [AdvertisementController::class, "store"])->name("advertisement-banner.store");
 
 
 

@@ -314,7 +314,7 @@
                         <nav>
                             <ul>
                                 <li>
-                                    <a class="active" href="index.html">Home</a>
+                                    <a class="active" href="/">Home</a>
                                 </li>
                                 <li>
                                     <a href="{{ route('products.index') }}">Product</a>

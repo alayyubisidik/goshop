@@ -273,9 +273,6 @@
                             </div>
                         </div> --}}
 
-                        {{--
-
-                        {{--
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
                                 <a class="dropdown-item {{ setActive(['admin.our-features.*']) }}"
@@ -283,7 +280,7 @@
                                     Our Features
                                 </a>
                             </div>
-                        </div> --}}
+                        </div>
 
                         {{-- <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">

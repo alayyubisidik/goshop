@@ -33,6 +33,7 @@ use App\Http\Controllers\Admin\UserRoleController;
 use App\Http\Controllers\Admin\WithdrawMethodController;
 use App\Http\Controllers\Admin\WithdrawRequestController;
 use App\Http\Controllers\Admin\NewsletterController;
+use App\Http\Controllers\Admin\OurFeatureController;
 use App\Models\AdvertisementBanner;
 use Illuminate\Support\Facades\Route;
 
@@ -168,6 +169,9 @@ Route::middleware(['auth:admin'])
         Route::get("/advertisement-banner/flash-sale", [AdvertisementController::class, "flashSaleBanner"])->name("advertisement-banner.flash-sale.index");
         Route::get("/advertisement-banner/product-sidebar", [AdvertisementController::class, "productSidebarBanner"])->name("advertisement-banner.product-sidebar.index");
         Route::post("/advertisement-banner", [AdvertisementController::class, "store"])->name("advertisement-banner.store");
+
+        Route::resource("our-features", OurFeatureController::class);
+
 
 
 

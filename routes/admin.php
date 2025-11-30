@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\ContactSettingController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\CustomPageController;
+use App\Http\Controllers\Admin\OurFeatureController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FlashSaleController;
@@ -33,7 +34,7 @@ use App\Http\Controllers\Admin\UserRoleController;
 use App\Http\Controllers\Admin\WithdrawMethodController;
 use App\Http\Controllers\Admin\WithdrawRequestController;
 use App\Http\Controllers\Admin\NewsletterController;
-use App\Http\Controllers\Admin\OurFeatureController;
+use App\Http\Controllers\Admin\SocialLinkController;
 use App\Models\AdvertisementBanner;
 use Illuminate\Support\Facades\Route;
 
@@ -88,6 +89,12 @@ Route::middleware(['auth:admin'])
 
         Route::get("/settings", [SettingController::class, "index"])->name("settings.index");
         Route::put("/settings/general-settings", [SettingController::class, "generalSettings"])->name("settings.general");
+        Route::get("/settings/commission-settings", [SettingController::class, "commissionSettingsIndex"])->name("settings.commission.index");
+        Route::put("/settings/commission-settings", [SettingController::class, "commissionSettingsStore"])->name("settings.commission.store");
+        Route::get("/settings/site-settings", [SettingController::class, "siteSettingsIndex"])->name("settings.site.index");
+        Route::put("/settings/site-settings", [SettingController::class, "siteSettingsStore"])->name("settings.site.store");
+        Route::get("/settings/logo-settings", [SettingController::class, "logoSettingsIndex"])->name("settings.logo.index");
+        Route::put("/settings/logo-settings", [SettingController::class, "logoSettingsStore"])->name("settings.logo.store");
 
         Route::get("/categories", [CategoryController::class, "index"])->name("categories.index");
         Route::post("/categories", [CategoryController::class, "store"])->name("categories.store");
@@ -125,9 +132,6 @@ Route::middleware(['auth:admin'])
         Route::post("/paypal-settings", [PaymentSettingController::class, "paypalSettings"])->name("paypal-settings.store");
         Route::get("/stripe-settings", [PaymentSettingController::class, "stripe"])->name("stripe-settings.index");
         Route::post("/stripe-settings", [PaymentSettingController::class, "stripeSettings"])->name("stripe-settings.store");
-
-        Route::get("/settings/commission-settings", [SettingController::class, "commissionSettingsIndex"])->name("settings.commission.index");
-        Route::put("/settings/commission-settings", [SettingController::class, "commissionSettingsStore"])->name("settings.commission.store");
 
         Route::get("/orders", [OrderController::class, "index"])->name("orders.index");
         Route::get("/orders/{order}", [OrderController::class, "show"])->name("orders.show");
@@ -171,6 +175,9 @@ Route::middleware(['auth:admin'])
         Route::post("/advertisement-banner", [AdvertisementController::class, "store"])->name("advertisement-banner.store");
 
         Route::resource("our-features", OurFeatureController::class);
+
+        Route::resource("social-links", SocialLinkController::class);
+
 
 
 

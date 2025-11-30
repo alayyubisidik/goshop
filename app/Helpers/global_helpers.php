@@ -5,6 +5,7 @@ use App\Models\Cart;
 use App\Models\Category;
 use App\Models\ShippingRule;
 use App\Models\User;
+use App\Models\Wishlist;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -106,5 +107,19 @@ if (!function_exists('getNestedCategories')) {
     {
         $categories = Category::getNested();
         return $categories;
+    }
+}
+
+if (!function_exists('cartCount')) {
+    function cartCount(): int
+    {
+        return Cart::where('user_id', user()?->id)->count();
+    }
+}
+
+if (!function_exists('wishlistCount')) {
+    function wishlistCount(): int
+    {
+        return Wishlist::where('user_id', user()?->id)->count();
     }
 }

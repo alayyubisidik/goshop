@@ -129,3 +129,16 @@ if (!function_exists('ratingPercent')) {
         return $rating / 5 * 100;
     }
 }
+
+if (!function_exists('calculateFileSize')) {
+    function calculateFileSize($bytes, $decimals = 2) {
+        if ($bytes < 1024) {
+            return $bytes . ' B';
+        }
+
+        $units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
+        $factor = floor((strlen($bytes) - 1) / 3);
+
+        return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . $units[$factor];
+    }
+}

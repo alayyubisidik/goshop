@@ -665,7 +665,7 @@
 
                 $.ajax({
                     method: 'POST',
-                    url: "{{ route('admin.products.update', ':id') }}".replace(':id',
+                    url: "{{ route('vendor.products.update', ':id') }}".replace(':id',
                         '{{ $product->id }}'),
                     data: data,
                     contentType: false,
@@ -690,7 +690,7 @@
         // dropzone image upload
         Dropzone.autoDiscover = false;
         const imageUploader = new Dropzone("#imageUploader", {
-            url: "{{ route('admin.products.images.upload', ':id') }}".replace(':id', '{{ $product->id }}'),
+            url: "{{ route('vendor.products.images.upload', ':id') }}".replace(':id', '{{ $product->id }}'),
             paramName: "image",
             maxFilesize: 10,
             acceptedFiles: "image/*",
@@ -719,7 +719,7 @@
         });
 
         const fileUploader = new Dropzone("#fileUploader", {
-            url: "{{ route('admin.products.digital.file.upload') }}",
+            url: "{{ route('vendor.products.digital.file.upload') }}",
             paramName: "file",
             maxFileSize: 1000,
             chunking: true,
@@ -790,7 +790,7 @@
             const id = $(this).attr('data-file-id');
             $.ajax({
                 method: 'DELETE',
-                url: "{{ route('admin.products.digital.file.destroy', ['product' => ':product', 'file' => ':file']) }}"
+                url: "{{ route('vendor.products.digital.file.destroy', ['product' => ':product', 'file' => ':file']) }}"
                     .replace(':product', '{{ $product->id }}')
                     .replace(':file', id),
                 headers: {
@@ -836,7 +836,7 @@
 
             $.ajax({
                 method: 'DELETE',
-                url: "{{ route('admin.products.images.destroy', ':id') }}".replace(':id', imageId),
+                url: "{{ route('vendor.products.images.destroy', ':id') }}".replace(':id', imageId),
                 headers: {
                     'X-CSRF-TOKEN': "{{ csrf_token() }}"
                 },
@@ -870,7 +870,7 @@
             });
 
             $.ajax({
-                url: "{{ route('admin.products.images.reorder') }}",
+                url: "{{ route('vendor.products.images.reorder') }}",
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': "{{ csrf_token() }}"

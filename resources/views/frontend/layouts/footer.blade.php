@@ -3,13 +3,13 @@
 
     $socialLinks = App\Models\Sociallink::where('is_active', true)->get();
 
-    // $pages = App\Models\CustomPage::where('is_active', true)->latest()->take(5)->get();
+    $pages = App\Models\CustomPage::where('is_active', true)->latest()->take(5)->get();
 
-    // $featuredCategories = App\Models\Category::withCount('products')
-    //     ->where('is_featured', true)
-    //     ->latest()
-    //     ->take(5)
-    //     ->get();
+    $featuredCategories = App\Models\Category::withCount('products')
+        ->where('is_featured', true)
+        ->latest()
+        ->take(5)
+        ->get();
 
 @endphp
 
@@ -97,7 +97,7 @@
                             <li><a href="{{ route('register') }}">Register</a></li>
                             <li><a href="{{ route('register') }}">Become a Seller</a></li>
                             <li><a href="{{ route('contact.index') }}">Contact Us</a></li>
-                            {{-- <li><a href="{{ route('flash-sale.index') }}">Flash Sales</a></li> --}}
+                            <li><a href="{{ route('flash-sale.index') }}">Flash Sales</a></li>
                         </ul>
                     </div>
                 </div>
@@ -105,11 +105,11 @@
                     <div class="footer-link-widget wow animate__animated animate__fadeInUp" data-wow-delay=".2s">
                         <h4 class="widget-title">More links</h4>
                         <ul class="footer-list mb-sm-5 mb-md-0">
-                            {{-- @foreach ($pages as $page)
+                            @foreach ($pages as $page)
                                 <li><a
                                         href="{{ route('custom-page.index', $page->slug ?? '') }}">{{ $page->title }}</a>
                                 </li>
-                            @endforeach --}}
+                            @endforeach
                         </ul>
                     </div>
                 </div>
@@ -117,11 +117,11 @@
                     <div class="footer-link-widget  wow animate__animated animate__fadeInUp" data-wow-delay=".3s">
                         <h4 class="widget-title">Popular Categories</h4>
                         <ul class="footer-list mb-sm-5 mb-md-0">
-                            {{-- @foreach ($featuredCategories as $category)
+                            @foreach ($featuredCategories as $category)
                                 <li><a
                                         href="{{ route('products.index', $category->slug ?? '') }}">{{ $category->name }}</a>
                                 </li>
-                            @endforeach --}}
+                            @endforeach
                         </ul>
                     </div>
                 </div>

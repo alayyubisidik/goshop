@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\Frontend\Dashboard\DashboardController;
-use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Frontend\Dashboard\AddressController;
+use App\Http\Controllers\Frontend\Dashboard\ProfileController;
 use App\Http\Controllers\Frontend\Dashboard\UserOrderController;
+use App\Http\Controllers\Frontend\Dashboard\UserPurchasedProductsController;
 use App\Http\Controllers\Frontend\Dashboard\UserReviewController;
+use App\Http\Controllers\Frontend\Dashboard\UserTrackOrderController;
 use App\Http\Controllers\Frontend\Pages\CartController;
 use App\Http\Controllers\Frontend\Pages\CheckoutController;
 use App\Http\Controllers\Frontend\Pages\ContactController;
@@ -81,6 +83,12 @@ Route::group(["middleware" => ["auth", "verified"]], function () {
     Route::resource('wishlist', WishlistController::class);
 
     Route::post("/newsletter", [NewsletterController::class, "store"])->name("newsletter.store");
+
+    Route::get("/purchased-products", [UserPurchasedProductsController::class, "index"])->name("purchased-products.index");
+    Route::get("/purchased-products/{id}", [UserPurchasedProductsController::class, "show"])->name("purchased-products.show");
+    Route::get("/purchased-products/{productId}/{fileId}", [UserPurchasedProductsController::class, "download"])->name("purchased-products.download");
+
+    Route::get("/track-order", [UserTrackOrderController::class, "index"])->name("track-order.index");
 
 });
 

@@ -30,7 +30,7 @@ class ProductController extends Controller
 
     public function index()
     {
-        $products = Product::latest()->paginate(20);
+        $products = Product::where('store_id', user()->store->id)->latest()->paginate(20);
         return view("vendor.dashboard.product.index", compact("products"));
     }
 

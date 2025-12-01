@@ -6,26 +6,26 @@
             <div class="card-header p-0 pb-10">
                 <h3 class="mb-0">Hello {{ user()->name }}!</h3>
             </div>
-            {{-- <div class="card-body p-0">
+            <div class="card-body p-0">
                 <p>
                     From your account dashboard. you can easily check &amp; view your <a
                         href="{{ route('orders.index') }}">recent orders</a>,<br />
                     manage your <a href="{{ route('address.index') }}">shipping and billing addresses</a> and <a
-                        href="{{ route('profile') }}">edit your password and
+                        href="{{ route('profile.index') }}">edit your password and
                         account details.</a>
                 </p>
-            </div> --}}
+            </div>
         </div>
         <div class="row">
 
             <div class="col-lg-4 col-sm-6">
                 <div class="dashboard_card blue">
                     <span><i class="fa-solid fa-cart-shopping"></i></span>
-                    <h3>10</h3>
+                    <h3>{{ $totalOrders }}</h3>
                     <p>Total Order</p>
                 </div>
             </div>
-{{--
+
             <div class="col-lg-4 col-sm-6">
                 <div class="dashboard_card red">
                     <span><i class="fa-solid fa-xmark"></i></span>
@@ -64,7 +64,7 @@
                     <h3>{{ $totalAddresses }}</h3>
                     <p>Total Addresses</p>
                 </div>
-            </div> --}}
+            </div>
 
         </div>
 

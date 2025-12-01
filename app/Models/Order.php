@@ -52,4 +52,10 @@ class Order extends Model
     {
         return $this->hasMany(OrderProduct::class);
     }
+
+    public function orderHistory(): HasMany
+    {
+        return $this->hasMany(OrderStatusHistory::class);
+    }
+
 }

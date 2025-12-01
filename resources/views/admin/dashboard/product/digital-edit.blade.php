@@ -771,7 +771,6 @@
                     }),
 
                     this.on("success", function(file, response) {
-                        location.reload();
                     }),
 
                     this.on("error", function(file, response) {
